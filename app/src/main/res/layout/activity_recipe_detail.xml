@@ -23,7 +23,6 @@
             android:layout_width="11dp"
             android:layout_height="21dp"
             android:layout_marginTop="2dp"
-            android:layout_weight="1"
             android:src="@drawable/backarrow_logo" />
 
         <TextView
@@ -34,7 +33,7 @@
             android:fontFamily="@font/ibm_plex_sans_kr_bold"
             android:gravity="center"
             android:text="title"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
     </LinearLayout>
 
     <ImageView

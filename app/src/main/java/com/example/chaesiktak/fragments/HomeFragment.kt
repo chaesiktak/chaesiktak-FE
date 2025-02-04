@@ -21,6 +21,7 @@ import com.example.chaesiktak.R
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chaesiktak.HomeActivity
+import com.example.chaesiktak.Ingredient
 import com.example.chaesiktak.RecipeDetailActivity
 import com.example.chaesiktak.RecommendRecipe
 import com.example.chaesiktak.SearchPanel
@@ -38,7 +39,6 @@ class HomeFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var tagrecyclerView: RecyclerView
 
-    private var recipeList: ArrayList<RecommendRecipe> = ArrayList()
     private var tagRecipeList: ArrayList<TagRecipe> = ArrayList()
 
     private lateinit var recommendrecipeAdapter: RecommendRecipeAdapter
@@ -68,17 +68,85 @@ class HomeFragment : Fragment() {
         tagrecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
 
         // RecyclerView 데이터 설정 > 추천 레시피 list
-        recipeList.apply {
-            add(RecommendRecipe(R.drawable.sample_image, "비건 김치찌개", "1인분, 20분", "250kcal"))
-            add(RecommendRecipe(R.drawable.sample_image, "된장 비빔밥", "2인분, 25분", "320kcal"))
-            add(RecommendRecipe(R.drawable.sample_image, "두부 스테이크", "3인분, 40분", "410kcal"))
-            add(RecommendRecipe(R.drawable.sample_image, "토마토 가지찜", "4인분, 35분", "270kcal"))
-            add(RecommendRecipe(R.drawable.sample_image, "비건 짜장면", "2인분, 30분", "450kcal"))
-            add(RecommendRecipe(R.drawable.sample_image, "채소 카레", "4인분, 50분", "380kcal"))
-            add(RecommendRecipe(R.drawable.sample_image, "비건 떡볶이", "3인분, 30분", "360kcal"))
-            add(RecommendRecipe(R.drawable.sample_image, "고구마 샐러드", "2인분, 15분", "290kcal"))
-            add(RecommendRecipe(R.drawable.sample_image, "버섯 크림 파스타", "2인분, 35분", "430kcal"))
+        val recipeList = arrayListOf<RecommendRecipe>().apply {
+            add(
+                RecommendRecipe(
+                    image = R.drawable.sample_image,
+                    title = "비건 김치찌개",
+                    subtext = "1인분, 20분",
+                    kcal = "250kcal",
+                    tag = "비건",
+                    isFavorite = false,
+                    ingredients = listOf(
+                        Ingredient("배추김치", "200g"),
+                        Ingredient("두부", "1/2모"),
+                        Ingredient("양파", "1개"),
+                        Ingredient("다진 마늘", "1큰술"),
+                        Ingredient("고춧가루", "1큰술"),
+                        Ingredient("소금", "약간")
+                    ),
+                    contents = listOf(
+                        "1. 냄비에 물을 넣고 끓인 후, 김치와 양파를 넣어 5분간 끓입니다.",
+                        "2. 다진 마늘과 고춧가루를 넣고 잘 저어줍니다.",
+                        "3. 두부를 먹기 좋은 크기로 잘라 넣고 3분간 더 끓입니다.",
+                        "4. 소금으로 간을 맞춘 후 완성된 김치찌개를 그릇에 담아 즐기세요!"
+                    )
+                )
+            )
+
+            add(
+                RecommendRecipe(
+                    image = R.drawable.sample_image,
+                    title = "채소 카레",
+                    subtext = "4인분, 50분",
+                    kcal = "380kcal",
+                    tag = "락토",
+                    isFavorite = false,
+                    ingredients = listOf(
+                        Ingredient("감자", "2개"),
+                        Ingredient("당근", "1개"),
+                        Ingredient("양파", "1개"),
+                        Ingredient("카레 가루", "3큰술"),
+                        Ingredient("물", "2컵"),
+                        Ingredient("소금", "약간")
+                    ),
+                    contents = listOf(
+                        "1. 감자, 당근, 양파를 깍둑썰기 하고 냄비에 기름을 두른 후 양파를 볶습니다.",
+                        "2. 감자와 당근을 넣고 3분간 더 볶은 후 물을 넣어 끓입니다.",
+                        "3. 감자가 익으면 카레 가루를 넣고 잘 저어줍니다.",
+                        "4. 약불에서 5분간 더 끓인 후 완성된 카레를 그릇에 담아 맛있게 드세요!"
+                    )
+                )
+            )
+
+            add(
+                RecommendRecipe(
+                    image = R.drawable.sample_image,
+                    title = "비건 떡볶이",
+                    subtext = "3인분, 30분",
+                    kcal = "360kcal",
+                    tag = "락토오보",
+                    isFavorite = false,
+                    ingredients = listOf(
+                        Ingredient("떡", "300g"),
+                        Ingredient("고추장", "2큰술"),
+                        Ingredient("간장", "1큰술"),
+                        Ingredient("설탕", "1큰술"),
+                        Ingredient("양파", "1/2개"),
+                        Ingredient("양배추", "1/4개"),
+                        Ingredient("물", "1컵"),
+                        Ingredient("올리고당", "1큰술")
+                    ),
+                    contents = listOf(
+                        "1. 냄비에 물을 넣고 끓인 후, 고추장, 간장, 설탕을 넣어 양념장을 만듭니다.",
+                        "2. 양파와 양배추를 썰어 냄비에 넣고 3분간 끓입니다.",
+                        "3. 떡을 넣고 약불에서 5분간 끓이며 잘 저어줍니다.",
+                        "4. 올리고당을 추가한 후 떡볶이를 접시에 담아 완성합니다!"
+                    )
+                )
+            )
         }
+
 
         // RecyclerView 데이터 설정 > 태그 레시피 list
         tagRecipeList.apply {
