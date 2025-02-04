@@ -36,6 +36,7 @@
     <color name="card_subtext">#C2C2C2</color>
     <color name="banner_bottom_indicator_grey">#D9D9D9</color>
     <color name="banner_bottom_indicator_green">#58BB65</color>
+    <color name="kcal_color">#759533</color>
 
 
 </resources>
