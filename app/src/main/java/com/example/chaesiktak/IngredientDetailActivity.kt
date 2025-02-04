@@ -23,6 +23,7 @@ class IngredientDetailActivity : AppCompatActivity() {
 
         if (recipe != null) {
             binding.ingredientDetailTitle.text = "${recipe.title} 재료"
+            binding.detailImageView2.setImageResource(recipe.image)
 
             // RecyclerView 설정
             val adapter = IngredientAdapter(recipe.ingredients)

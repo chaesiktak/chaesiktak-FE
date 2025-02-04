@@ -75,6 +75,7 @@
             android:textSize="18dp" />
 
         <ImageView
+            android:id="@+id/detailLike"
             android:layout_width="22dp"
             android:layout_height="22dp"
             android:src="@drawable/likebutton" />
