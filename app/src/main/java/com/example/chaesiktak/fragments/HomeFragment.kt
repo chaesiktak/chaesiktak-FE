@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.chaesiktak.BannerData
 import com.example.chaesiktak.R
@@ -22,6 +23,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.chaesiktak.HomeActivity
 import com.example.chaesiktak.RecommendRecipe
 import com.example.chaesiktak.SearchPanel
+import com.example.chaesiktak.TagRecipe
+import com.example.chaesiktak.TagRecipeAdapter
 import com.example.chaesiktak.databinding.FragmentHomeBinding
 import com.example.chaesiktak.databinding.HomeRecipeCardBinding
 import kotlinx.coroutines.cancelChildren
@@ -30,9 +33,15 @@ import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
+
     private lateinit var recyclerView: RecyclerView
+    private lateinit var tagrecyclerView: RecyclerView
+
     private var recipeList: ArrayList<RecommendRecipe> = ArrayList()
+    private var tagRecipeList: ArrayList<TagRecipe> = ArrayList()
+
     private lateinit var recommendrecipeAdapter: RecommendRecipeAdapter
+    private lateinit var tagRecipeAdapter: TagRecipeAdapter
     private lateinit var viewPager: ViewPager2
     private lateinit var adapter: BannerAdapter
 
@@ -49,11 +58,15 @@ class HomeFragment : Fragment() {
 
         // RecyclerView 설정
         recyclerView = binding.recipeRecyclerView
+        tagrecyclerView = binding.tagRecipeRecyclerView
+
         recyclerView.setHasFixedSize(true)
+        tagrecyclerView.setHasFixedSize(true)
+
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        tagrecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
 
-
-        // RecyclerView 데이터 설정
+        // RecyclerView 데이터 설정 > 추천 레시피 list
         recipeList.apply {
             add(RecommendRecipe(R.drawable.sample_image, "타이틀 1", "1인분, 15분"))
             add(RecommendRecipe(R.drawable.sample_image, "타이틀 2", "2인분, 30분"))
@@ -66,8 +79,23 @@ class HomeFragment : Fragment() {
             add(RecommendRecipe(R.drawable.sample_image, "타이틀 9", "4인분, 60분"))
         }
 
+        // RecyclerView 데이터 설정 > 태그 레시피 list
+        tagRecipeList.apply {
+            add(TagRecipe(R.color.card_subtext, "비건 레시피", "1인분, 15분", "비건"))
+            add(TagRecipe(R.color.card_subtext, "락토 레시피", "2인분, 30분", "락토"))
+            add(TagRecipe(R.color.card_subtext, "오보 레시피", "3인분, 45분", "오보"))
+            add(TagRecipe(R.color.card_subtext, "락토오보 레시피", "4인분, 60분", "락토오보"))
+            add(TagRecipe(R.color.card_subtext, "페스코 레시피", "4인분, 60분", "페스코"))
+            add(TagRecipe(R.color.card_subtext, "폴로 레시피", "4인분, 60분", "폴로"))
+        }
+
+        // Adapter 연결
         recommendrecipeAdapter = RecommendRecipeAdapter(recipeList)
         recyclerView.adapter = recommendrecipeAdapter
+
+        // 두 번째 RecyclerView에 TagRecipeAdapter 연결
+        tagRecipeAdapter = TagRecipeAdapter(tagRecipeList)
+        tagrecyclerView.adapter = tagRecipeAdapter  // 올바르게 어댑터 연결
 
         // 배너 데이터 설정
         val originalBanners = listOf(

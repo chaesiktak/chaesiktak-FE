@@ -15,12 +15,15 @@
         android:padding="6.5dp">
 
         <ImageView
+            android:clipToOutline="true"
             android:id="@+id/tag_recipe_card_img"
-            android:src="@color/banner_bottom_indicator_grey"
             android:layout_width="78dp"
-            android:layout_height="78dp" />
+            android:layout_height="78dp"
+            android:src="@color/banner_bottom_indicator_grey"
+            />
 
         <LinearLayout
+            android:layout_weight="10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -31,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ibm_plex_sans_kr_regular"
-                android:text="비건 바닐라 슈니발렌 쿠키"
+                android:text="recipe title"
                 android:textColor="@color/black_replacement"
                 android:textSize="14sp" />
 
@@ -40,24 +43,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ibm_plex_sans_kr_regular"
-                android:text="0인분, 0분"
+                android:text="subtitle"
                 android:textColor="@color/card_subtext"
                 android:textSize="14sp" />
 
         </LinearLayout>
 
         <TextView
-            android:layout_marginTop="10dp"
-            android:paddingHorizontal="8dp"
+            android:text="tag"
+            android:layout_weight="1"
             android:id="@+id/tag_recipe_card_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/ibm_plex_sans_kr_regular"
             android:gravity="center"
-            android:text="비건"
+            android:paddingHorizontal="8dp"
             android:textColor="@color/black_replacement"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:background="@drawable/rounded_background"
+            />
 
     </LinearLayout>
 

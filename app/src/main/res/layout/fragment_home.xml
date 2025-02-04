@@ -110,14 +110,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/tag_recipeRecyclerView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:overScrollMode="never"
-                android:clipToPadding="false"
-                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="500dp">
+
+                <HorizontalScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/tag_recipeRecyclerView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="313dp"
+                        android:clipToPadding="false"
+                        android:overScrollMode="never" />
+                </HorizontalScrollView>
+            </LinearLayout>
         </LinearLayout>
+
+
+
     </ScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout

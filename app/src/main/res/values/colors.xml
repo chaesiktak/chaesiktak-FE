@@ -19,6 +19,14 @@
     <color name="cancel_button_gradient_left">#CCCCCC</color>
     <color name="cancel_button_gradient_right">#A4A4A4</color>
 
+    <!-- tag color-->
+    <color name="color_vegan">#EBF1E9</color> <!-- 비건 -->
+    <color name="color_lacto">#F8F2D6</color> <!-- 락토 -->
+    <color name="color_ovo">#F8EAD8</color>   <!-- 오보 -->
+    <color name="color_lacto_ovo">#FBE8E9</color> <!-- 락토오보 -->
+    <color name="color_pesco">#E5F1F7</color> <!-- 페스코 -->
+    <color name="color_pollo">#EFEFED</color> <!-- 폴로 -->
+
     <!-- etc, 기타-->
     <color name="tooltip_box">#F4F4F4</color>
     <color name="saved_item_heart_onclick">#FF1F73</color>
