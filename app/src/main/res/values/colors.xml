@@ -7,6 +7,7 @@
 
     <!-- General Colors -->
     <color name="black_replacement">#4A4743</color>
+    <color name="ingredient_quantity_color">#6A6A6A</color>
 
     <!-- Default Buttons, 기본 버튼 -->
     <color name="default_button_lg_gradient_left">#80CC53</color>

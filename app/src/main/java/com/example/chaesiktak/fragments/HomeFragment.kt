@@ -71,7 +71,7 @@ class HomeFragment : Fragment() {
         val recipeList = arrayListOf<RecommendRecipe>().apply {
             add(
                 RecommendRecipe(
-                    image = R.drawable.sample_image,
+                    image = R.drawable.sample_image1,
                     title = "비건 김치찌개",
                     subtext = "1인분, 20분",
                     kcal = "250kcal",
@@ -96,7 +96,7 @@ class HomeFragment : Fragment() {
 
             add(
                 RecommendRecipe(
-                    image = R.drawable.sample_image,
+                    image = R.drawable.sample_image2,
                     title = "채소 카레",
                     subtext = "4인분, 50분",
                     kcal = "380kcal",
@@ -121,7 +121,7 @@ class HomeFragment : Fragment() {
 
             add(
                 RecommendRecipe(
-                    image = R.drawable.sample_image,
+                    image = R.drawable.sample_image3,
                     title = "비건 떡볶이",
                     subtext = "3인분, 30분",
                     kcal = "360kcal",
