@@ -85,7 +85,6 @@
                     app:ci_gravity="end" />
             </LinearLayout>
 
-
             <TextView
                 android:layout_marginStart="20sp"
                 android:layout_marginTop="41dp"
@@ -111,7 +110,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tag_recipeRecyclerView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:clipToPadding="false"
+                />
         </LinearLayout>
     </ScrollView>
 
