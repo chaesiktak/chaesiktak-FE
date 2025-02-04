@@ -27,6 +27,7 @@
             android:src="@drawable/backarrow_logo" />
 
         <TextView
+            android:id="@+id/detail_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="15"
@@ -37,7 +38,8 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:scaleType="centerCrop"
+        android:id="@+id/detail_imageView2"
         android:layout_width="match_parent"
         android:layout_height="325dp"
         android:src="@drawable/detail_sample"
@@ -46,33 +48,37 @@
 
     <LinearLayout
         android:id="@+id/titleLabel"
-        android:gravity="center"
-        android:paddingHorizontal="22dp"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="22dp"
+        app:layout_constraintTop_toBottomOf="@+id/detail_imageView2"
         tools:layout_editor_absoluteX="16dp">
-        <TextView
-            android:layout_marginEnd="10dp"
-            android:text="title"
-            android:textSize="20dp"
-            android:fontFamily="@font/ibm_plex_sans_kr_bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
 
         <TextView
-            android:layout_weight="70"
-            android:textColor="@color/kcal_color"
+            android:id="@+id/detaiL_title2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/ibm_plex_sans_kr_bold"
+            android:text="title"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/detail_kcal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="70"
             android:fontFamily="@font/ibm_plex_sans_kr_regular"
             android:text="000kcal"
+            android:textColor="@color/kcal_color"
             android:textSize="18dp" />
+
         <ImageView
-            android:src="@drawable/likebutton"
             android:layout_width="22dp"
-            android:layout_height="22dp"/>
+            android:layout_height="22dp"
+            android:src="@drawable/likebutton" />
     </LinearLayout>
 
     <View
@@ -88,28 +94,30 @@
 
     <LinearLayout
         android:id="@+id/ingredient_label"
-        android:gravity="center"
-        android:paddingHorizontal="22dp"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="90dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="22dp"
         app:layout_constraintTop_toBottomOf="@+id/divider1"
         tools:layout_editor_absoluteX="16dp">
+
         <TextView
-            android:layout_weight="9"
-            android:layout_marginEnd="10dp"
-            android:text="재료"
-            android:textSize="20dp"
-            android:fontFamily="@font/ibm_plex_sans_kr_bold"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="9"
+            android:fontFamily="@font/ibm_plex_sans_kr_bold"
+            android:text="재료"
+            android:textSize="20dp" />
 
 
         <ImageView
-            android:src="@drawable/nextarrow"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:src="@drawable/nextarrow" />
     </LinearLayout>
+
     <View
         android:id="@+id/divider2"
         android:layout_width="match_parent"
@@ -122,26 +130,29 @@
 
     <LinearLayout
         android:id="@+id/detail_recipe_label"
-        android:gravity="center"
-        android:paddingHorizontal="22dp"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="90dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="22dp"
         app:layout_constraintTop_toBottomOf="@+id/divider2"
         tools:layout_editor_absoluteX="16dp">
+
         <TextView
-            android:layout_weight="9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:text="레시피"
-            android:textSize="20dp"
+            android:layout_weight="9"
             android:fontFamily="@font/ibm_plex_sans_kr_bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:text="레시피"
+            android:textSize="20dp" />
+
         <ImageView
-            android:src="@drawable/nextarrow"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:src="@drawable/nextarrow" />
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -150,6 +161,26 @@
         app:layout_constraintBottom_toBottomOf="@+id/detail_recipe_label"
         app:layout_constraintTop_toBottomOf="@+id/detail_recipe_label"
         tools:layout_editor_absoluteX="0dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="16dp" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

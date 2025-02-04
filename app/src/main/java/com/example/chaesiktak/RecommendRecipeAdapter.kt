@@ -10,6 +10,8 @@ import com.example.chaesiktak.RecommendRecipe
 class RecommendRecipeAdapter(private val recipeList: ArrayList<RecommendRecipe>) :
     RecyclerView.Adapter<RecommendRecipeAdapter.FoodViewHolder>() {
 
+        var onItemClick : ((RecommendRecipe) -> Unit)? = null
+
     class FoodViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.home_recipe_card_imageview)
         val titleView: TextView = itemView.findViewById(R.id.recipe_card_title)
@@ -31,6 +33,10 @@ class RecommendRecipeAdapter(private val recipeList: ArrayList<RecommendRecipe>)
         holder.imageView.setImageResource(recipe.image)
         holder.titleView.text = recipe.title
         holder.subtextView.text = recipe.subtext
+
+        holder.itemView.setOnClickListener{
+            onItemClick?.invoke(recipe)
+        }
 
         // '좋아요' 버튼 상태 설정
         if (recipe.isFavorite) {

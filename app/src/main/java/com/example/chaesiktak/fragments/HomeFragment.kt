@@ -21,6 +21,7 @@ import com.example.chaesiktak.R
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chaesiktak.HomeActivity
+import com.example.chaesiktak.RecipeDetailActivity
 import com.example.chaesiktak.RecommendRecipe
 import com.example.chaesiktak.SearchPanel
 import com.example.chaesiktak.TagRecipe
@@ -68,15 +69,15 @@ class HomeFragment : Fragment() {
 
         // RecyclerView 데이터 설정 > 추천 레시피 list
         recipeList.apply {
-            add(RecommendRecipe(R.drawable.sample_image, "타이틀 1", "1인분, 15분"))
-            add(RecommendRecipe(R.drawable.sample_image, "타이틀 2", "2인분, 30분"))
-            add(RecommendRecipe(R.drawable.sample_image, "타이틀 3", "3인분, 45분"))
-            add(RecommendRecipe(R.drawable.sample_image, "타이틀 4", "4인분, 60분"))
-            add(RecommendRecipe(R.drawable.sample_image, "타이틀 5", "4인분, 60분"))
-            add(RecommendRecipe(R.drawable.sample_image, "타이틀 6", "4인분, 60분"))
-            add(RecommendRecipe(R.drawable.sample_image, "타이틀 7", "4인분, 60분"))
-            add(RecommendRecipe(R.drawable.sample_image, "타이틀 8", "4인분, 60분"))
-            add(RecommendRecipe(R.drawable.sample_image, "타이틀 9", "4인분, 60분"))
+            add(RecommendRecipe(R.drawable.sample_image, "비건 김치찌개", "1인분, 20분", "250kcal"))
+            add(RecommendRecipe(R.drawable.sample_image, "된장 비빔밥", "2인분, 25분", "320kcal"))
+            add(RecommendRecipe(R.drawable.sample_image, "두부 스테이크", "3인분, 40분", "410kcal"))
+            add(RecommendRecipe(R.drawable.sample_image, "토마토 가지찜", "4인분, 35분", "270kcal"))
+            add(RecommendRecipe(R.drawable.sample_image, "비건 짜장면", "2인분, 30분", "450kcal"))
+            add(RecommendRecipe(R.drawable.sample_image, "채소 카레", "4인분, 50분", "380kcal"))
+            add(RecommendRecipe(R.drawable.sample_image, "비건 떡볶이", "3인분, 30분", "360kcal"))
+            add(RecommendRecipe(R.drawable.sample_image, "고구마 샐러드", "2인분, 15분", "290kcal"))
+            add(RecommendRecipe(R.drawable.sample_image, "버섯 크림 파스타", "2인분, 35분", "430kcal"))
         }
 
         // RecyclerView 데이터 설정 > 태그 레시피 list
@@ -92,6 +93,14 @@ class HomeFragment : Fragment() {
         // Adapter 연결
         recommendrecipeAdapter = RecommendRecipeAdapter(recipeList)
         recyclerView.adapter = recommendrecipeAdapter
+
+        recommendrecipeAdapter.onItemClick = { recipe ->
+            val intent = Intent(requireContext(), RecipeDetailActivity::class.java).apply {
+                putExtra("RECIPE", recipe)  // 클릭된 레시피 객체 전달
+            }
+            startActivity(intent)
+        }
+
 
         // 두 번째 RecyclerView에 TagRecipeAdapter 연결
         tagRecipeAdapter = TagRecipeAdapter(tagRecipeList)
