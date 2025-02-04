@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="360dp"
-    android:layout_height="98dp"
+    android:layout_height="111dp"
     android:padding="6.5dp"
     app:cardElevation="1dp"
     app:cardCornerRadius="7dp"
@@ -12,15 +12,19 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="6.5dp">
+        android:padding="10dp"
+        >
 
+        <!-- ImageView에 둥근 배경 적용 -->
         <ImageView
             android:clipToOutline="true"
             android:id="@+id/tag_recipe_card_img"
-            android:layout_width="78dp"
-            android:layout_height="78dp"
+            android:scaleType="centerCrop"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:src="@color/banner_bottom_indicator_grey"
-            />
+            android:background="@drawable/rounded_image"
+        />
 
         <LinearLayout
             android:layout_weight="10"
@@ -49,21 +53,21 @@
 
         </LinearLayout>
 
-        <TextView
+        <android.widget.TextView
             android:text="tag"
             android:layout_weight="1"
             android:id="@+id/tag_recipe_card_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:paddingHorizontal="8dp"
             android:fontFamily="@font/ibm_plex_sans_kr_regular"
             android:gravity="center"
-            android:paddingHorizontal="8dp"
             android:textColor="@color/black_replacement"
             android:textSize="14sp"
-            android:background="@drawable/rounded_background"
-            />
+            android:background="@drawable/rounded_tag"
+        />
 
     </LinearLayout>
 
