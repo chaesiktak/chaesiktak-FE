@@ -1,12 +1,10 @@
-package com.example.chaesiktak
+package com.example.chaesiktak.activities
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.chaesiktak.adapters.IngredientAdapter
+import com.example.chaesiktak.RecommendRecipe
 import com.example.chaesiktak.databinding.ActivityIngredientDetailBinding
 
 class IngredientDetailActivity : AppCompatActivity() {
@@ -21,6 +19,7 @@ class IngredientDetailActivity : AppCompatActivity() {
 
         val recipe = intent.getParcelableExtra<RecommendRecipe>("RECIPE")
 
+        //리사이클러뷰 - 데이터랑 바인딩
         if (recipe != null) {
             binding.ingredientDetailTitle.text = "${recipe.title} 재료"
             binding.detailImageView2.setImageResource(recipe.image)
@@ -29,6 +28,11 @@ class IngredientDetailActivity : AppCompatActivity() {
             val adapter = IngredientAdapter(recipe.ingredients)
             binding.ingredientRecyclerView.layoutManager = LinearLayoutManager(this)
             binding.ingredientRecyclerView.adapter = adapter
+        }
+
+        //뒤로가기 (backarrow icon 클릭시)
+        binding.backArrowIcon.setOnClickListener {
+            finish()
         }
     }
 }

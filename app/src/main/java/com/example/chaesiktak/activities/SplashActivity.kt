@@ -1,4 +1,4 @@
-package com.example.chaesiktak
+package com.example.chaesiktak.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -8,7 +8,7 @@ import android.os.Looper
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.postDelayed
+import com.example.chaesiktak.R
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {

@@ -1,4 +1,4 @@
-package com.example.chaesiktak
+package com.example.chaesiktak.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.chaesiktak.R
+import com.example.chaesiktak.RecommendRecipe
 
 class TagRecipeAdapter(private val tagRecipeList: ArrayList<RecommendRecipe>) :
     RecyclerView.Adapter<TagRecipeAdapter.FoodViewHolder>() {
@@ -41,22 +43,34 @@ class TagRecipeAdapter(private val tagRecipeList: ArrayList<RecommendRecipe>) :
         // 태그 배경 색상 동적으로 설정
         when (recipe.tag) {
             "비건" -> {
-                holder.tagView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.color_vegan)) // 배경
+                holder.tagView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context,
+                    R.color.color_vegan
+                )) // 배경
             }
             "락토" -> {
-                holder.tagView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.color_lacto))
+                holder.tagView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context,
+                    R.color.color_lacto
+                ))
             }
             "오보" -> {
-                holder.tagView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.color_ovo))
+                holder.tagView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context,
+                    R.color.color_ovo
+                ))
             }
             "락토오보" -> {
-                holder.tagView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.color_lacto_ovo))
+                holder.tagView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context,
+                    R.color.color_lacto_ovo
+                ))
             }
             "페스코" -> {
-                holder.tagView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.color_pesco))
+                holder.tagView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context,
+                    R.color.color_pesco
+                ))
             }
             else -> {
-                holder.tagView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.color_pollo)) // 폴로 및 기타 태그
+                holder.tagView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context,
+                    R.color.color_pollo
+                )) // 폴로 및 기타 태그
             }
         }
 

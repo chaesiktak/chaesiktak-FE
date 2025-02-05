@@ -8,7 +8,7 @@
     android:background="#5DBD5B"
     android:orientation="vertical"
     android:paddingTop="160dp"
-    tools:context=".SplashActivity">
+    tools:context=".activities.SplashActivity">
 
     <TextView
         android:layout_width="wrap_content"

@@ -1,9 +1,11 @@
-package com.example.chaesiktak
+package com.example.chaesiktak.activities
 
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.chaesiktak.R
+import com.example.chaesiktak.RecommendRecipe
 import com.example.chaesiktak.databinding.ActivityRecipeDetailBinding
 
 class RecipeDetailActivity : AppCompatActivity() {
@@ -47,6 +49,20 @@ class RecipeDetailActivity : AppCompatActivity() {
                 }
                 startActivity(intent)
             }
+        }
+
+        binding.recipeArrow.setOnClickListener {
+            recipe?.let {
+                val intent = Intent(this, RecipeContentsActivity::class.java).apply {
+                    putExtra("RECIPE", it)
+                }
+                startActivity(intent)
+            }
+        }
+
+        //뒤로가기 (backarrow icon 클릭시)
+        binding.backArrowIcon.setOnClickListener {
+            finish()
         }
     }
 

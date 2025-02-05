@@ -1,13 +1,20 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!-- Base application theme -->
     <style name="Base.Theme.Chaesiktak" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Customize your light theme here. -->
+        <!-- Customize your light theme here -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.Chaesiktak" parent="Base.Theme.Chaesiktak" />
+    <!-- 메인 테마 -->
+    <style name="Theme.Chaesiktak" parent="Base.Theme.Chaesiktak">
+        <!-- 상태 바 아이콘을 흰색으로 변경 -->
+        <item name="android:windowLightStatusBar">false</item>
+        <!-- 상태 바 색상 설정 (원하는 색으로 변경 가능) -->
+        <item name="android:statusBarColor">@color/white</item>
 
+    </style>
+
+    <!-- NoActionBar 테마 -->
     <style name="Theme.Chaesiktak.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- 기존 테마에 액션 바를 제거 -->
     </style>
 </resources>

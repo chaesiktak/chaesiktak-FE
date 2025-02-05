@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RecipeDetailActivity">
+    tools:context=".activities.RecipeDetailActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -20,6 +20,7 @@
         tools:layout_editor_absoluteX="0dp">
 
         <ImageView
+            android:id="@+id/backArrowIcon"
             android:layout_width="11dp"
             android:layout_height="21dp"
             android:layout_marginTop="2dp"
@@ -37,10 +38,10 @@
     </LinearLayout>
 
     <ImageView
-        android:scaleType="centerCrop"
         android:id="@+id/detail_imageView2"
         android:layout_width="match_parent"
         android:layout_height="325dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/detail_sample"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         tools:layout_editor_absoluteX="0dp" />
@@ -53,7 +54,7 @@
         android:orientation="horizontal"
         android:paddingHorizontal="22dp"
         app:layout_constraintTop_toBottomOf="@+id/detail_imageView2"
-        tools:layout_editor_absoluteX="16dp">
+        tools:layout_editor_absoluteX="0dp">
 
         <TextView
             android:id="@+id/detaiL_title2"

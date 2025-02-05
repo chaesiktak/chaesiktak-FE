@@ -1,7 +1,6 @@
-package com.example.chaesiktak
+package com.example.chaesiktak.activities
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
@@ -10,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.chaesiktak.R
 
 class JoinActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -13,40 +13,43 @@
         android:theme="@style/Theme.Chaesiktak"
         tools:targetApi="31">
         <activity
-            android:name=".IngredientDetailActivity"
+            android:name=".activities.RecipeContentsActivity"
             android:exported="false" />
         <activity
-            android:name=".RecipeDetailActivity"
+            android:name=".activities.IngredientDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".SearchPanel"
+            android:name=".activities.RecipeDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".activities.SearchPanelActivity"
             android:exported="false" />
         <activity
-            android:name=".TOSActivity"
+            android:name=".activities.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".SignUpCompleteActivity"
+            android:name=".activities.TOSActivity"
             android:exported="false" />
         <activity
-            android:name=".FindingPasswordActivity2"
+            android:name=".activities.SignUpCompleteActivity"
             android:exported="false" />
         <activity
-            android:name=".FindingPasswordActivity"
+            android:name=".activities.FindingPasswordActivity2"
+            android:exported="false" />
+        <activity
+            android:name=".activities.FindingPasswordActivity"
             android:exported="false" />
         <activity
             android:name=".FindingPassword"
             android:exported="false" />
         <activity
-            android:name=".JoinActivity"
+            android:name=".activities.JoinActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="false" /> <!-- splash activity 선언 -->
         <activity
-            android:name=".SplashActivity"
+            android:name=".activities.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.Chaesiktak.NoActionBar">
             <intent-filter>
@@ -56,7 +59,7 @@
             </intent-filter>
         </activity> <!-- intro activity 선언 -->
         <activity
-            android:name=".IntroActivity"
+            android:name=".activities.IntroActivity"
             android:exported="true" />
     </application>
 
