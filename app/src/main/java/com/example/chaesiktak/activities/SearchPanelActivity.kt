@@ -1,21 +1,40 @@
 package com.example.chaesiktak.activities
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.chaesiktak.R
+import com.example.chaesiktak.activities.SearchResultActivity
+import com.example.chaesiktak.databinding.ActivitySearchPanelBinding
 
 class SearchPanelActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivitySearchPanelBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_search_panel)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        binding = ActivitySearchPanelBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.searchGoBtn.setOnClickListener {
+            val searchText = binding.searchInput.text.toString().trim()
+
+            if (searchText.isNotEmpty()) {
+                val intent = Intent(this, SearchResultActivity::class.java)
+                intent.putExtra("search_text", searchText)  // Intent에 검색어 저장
+                startActivity(intent)
+            } else {
+                binding.searchInput.error = "검색어를 입력하세요."
+            }
+        }
+
+        // 뒤로 가기
+        binding.backArrowIcon.setOnClickListener {
+            finish()
+        }
+
+        // 홈 버튼
+        binding.homeIcon.setOnClickListener {
+            finish()
         }
     }
 }
