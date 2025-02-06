@@ -61,7 +61,7 @@ class HomeFragment : Fragment() {
 
     private fun setupRecyclerViews() {
         recipeList.addAll(getSampleRecipes())
-        tagRecipeList.addAll(getSampleRecipes())
+        tagRecipeList.addAll(getTagRecipes())
 
         recommendRecipeAdapter = RecommendRecipeAdapter(recipeList).apply {
             onItemClick = { navigateToRecipeDetail(it) }
@@ -153,8 +153,17 @@ class HomeFragment : Fragment() {
         }
     }
 
-    //데이터 예시 - 일단 6개
+    //데이터 예시 - 추천 레시피 9개
     private fun getSampleRecipes(): List<RecommendRecipe> {
-        return SampleRecipes.recipes
+        val recipes = SampleRecipes.recipes
+        return if (recipes.size > 9) recipes.subList(0, 9) else recipes
     }
+
+    private fun getTagRecipes(): List<RecommendRecipe> {
+        val recipes = SampleRecipes.recipes
+        return if (recipes.size > 6) recipes.subList(0, 6) else recipes
+    }
+
+
+
 }

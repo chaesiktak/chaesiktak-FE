@@ -68,7 +68,7 @@
     <LinearLayout
         android:id="@+id/filterbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginVertical="20dp"
         android:gravity="center"
         android:orientation="horizontal"

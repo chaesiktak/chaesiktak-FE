@@ -57,21 +57,24 @@
             android:text="레시피 미리보기"
             android:textSize="10sp" />
 
-        <android.widget.TextView
-            android:id="@+id/searching_content_tag"
-            android:text="tag"
-            android:layout_width="70dp"
+        <androidx.cardview.widget.CardView
+            android:layout_marginVertical="2dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="8dp"
-            android:fontFamily="@font/ibm_plex_sans_kr_bold"
-            android:gravity="center"
-            android:textColor="@color/black_replacement"
-            android:textSize="12sp"
-            android:minHeight="0dp"
-            android:minWidth="0dp"
-            android:stateListAnimator="@null"
-            android:elevation="0dp"
-            />
+            app:cardCornerRadius="5dp">
+
+            <android.widget.TextView
+                android:id="@+id/searching_content_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ibm_plex_sans_kr_bold"
+                android:gravity="center"
+                android:paddingHorizontal="8dp"
+                android:stateListAnimator="@null"
+                android:text="tag"
+                android:textColor="@color/black_replacement"
+                android:textSize="12sp" />
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

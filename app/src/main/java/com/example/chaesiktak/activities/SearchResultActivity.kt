@@ -1,16 +1,13 @@
 package com.example.chaesiktak.activities
 
+import SearchingContentAdapter
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chaesiktak.RecommendRecipe
 import com.example.chaesiktak.SampleRecipes
-import com.example.chaesiktak.SearchingContentAdapter
 import com.example.chaesiktak.databinding.ActivitySearchResultBinding
 
 class SearchResultActivity : AppCompatActivity() {
@@ -25,7 +22,7 @@ class SearchResultActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Intent에서 검색어 받아오기
-        val searchText = intent.getStringExtra("search_text") ?: "검색 결과 없음"
+        val searchText = intent.getStringExtra("search_text")?.trim() ?: ""
 
         // searchInput에 검색어 출력
         binding.searchInput.setText(searchText)
@@ -35,8 +32,7 @@ class SearchResultActivity : AppCompatActivity() {
             val newSearchText = binding.searchInput.text.toString().trim()
 
             if (newSearchText.isNotEmpty()) {
-                binding.searchInput.setText(newSearchText)
-                binding.searchInput.setSelection(newSearchText.length) // 커서 이동
+                filterRecipes(newSearchText) // 새로운 검색어로 필터링 적용
             } else {
                 binding.searchInput.error = "검색어를 입력하세요."
             }
@@ -52,14 +48,15 @@ class SearchResultActivity : AppCompatActivity() {
             finish()
         }
 
-        // RecyclerView 설정
-        setupRecyclerViews()
+        // RecyclerView 설정 (초기 검색어 적용)
+        setupRecyclerViews(searchText)
     }
 
-    private fun setupRecyclerViews() {
-        recipeList.addAll(getSampleRecipes())
+    private fun setupRecyclerViews(searchText: String) {
+        val allRecipes = getSampleRecipes() // 전체 레시피 가져오기
+        val filteredRecipes = filterRecipeList(allRecipes, searchText) // 검색 필터 적용
 
-        searchingContentAdapter = SearchingContentAdapter(recipeList).apply {
+        searchingContentAdapter = SearchingContentAdapter(filteredRecipes.toMutableList()).apply {
             onItemClick = { navigateToRecipeDetail(it) }
         }
 
@@ -70,7 +67,6 @@ class SearchResultActivity : AppCompatActivity() {
         }
     }
 
-    // 데이터 예시 - 일단 6개
     private fun getSampleRecipes(): List<RecommendRecipe> {
         return SampleRecipes.recipes
     }
@@ -95,5 +91,22 @@ class SearchResultActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    // 레시피 타이틀 필터링 함수
+    private fun filterRecipeList(recipes: List<RecommendRecipe>, searchText: String): List<RecommendRecipe> {
+        return if (searchText.isNotEmpty()) {
+            recipes.filter { it.title.contains(searchText, ignoreCase = true) } // `recipes`로 필터링
+        } else {
+            recipes // 검색어가 없으면 전체 반환
+        }
+    }
+
+    // 검색어 입력 시 RecyclerView 업데이트
+    private fun filterRecipes(searchText: String) {
+        val allRecipes = getSampleRecipes()
+        val filteredRecipes = filterRecipeList(allRecipes, searchText)
+
+        searchingContentAdapter.updateList(filteredRecipes.toMutableList())
     }
 }
