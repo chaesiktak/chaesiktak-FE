@@ -10,6 +10,7 @@ class SearchPanelActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySearchPanelBinding
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchPanelBinding.inflate(layoutInflater)
@@ -26,7 +27,6 @@ class SearchPanelActivity : AppCompatActivity() {
                 binding.searchInput.error = "검색어를 입력하세요."
             }
         }
-
         // 뒤로 가기
         binding.backArrowIcon.setOnClickListener {
             finish()
