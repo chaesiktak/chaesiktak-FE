@@ -42,5 +42,9 @@
     <color name="banner_bottom_indicator_green">#58BB65</color>
     <color name="kcal_color">#759533</color>
 
+    <!-- filter-->
+    <color name="filter_unclicked">#B8B8B8</color>
+    <color name="filter_clicked">#58BB65</color>
+
 
 </resources>

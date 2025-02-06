@@ -15,9 +15,12 @@ class SearchResultActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Intent에서 검색어 받아오기
-        val searchText = intent.getStringExtra("search_text") ?: "검색 결과 없음"
+        var searchText = intent.getStringExtra("search_text") ?: "검색 결과 없음"
 
-        // TextView에 검색어 출력
-        binding.textTest.text = searchText
+        // searchInput에 검색어 출력
+        binding.searchInput.setText(searchText)
+        binding.searchInput.setSelection(searchText.length) //커서 이동
+
+
     }
 }

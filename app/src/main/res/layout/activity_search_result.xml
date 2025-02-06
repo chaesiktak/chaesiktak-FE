@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -63,14 +64,55 @@
 
     </LinearLayout>
 
+    <!-- 필터바 (총 00개) (필터) -->
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/filterbar"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        app:layout_constraintTop_toBottomOf="@+id/top_bar"
-        tools:layout_editor_absoluteX="0dp">
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp"
+        app:layout_constraintTop_toBottomOf="@id/top_bar">
 
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/abeezee_regular"
+            android:text="총 00개"
+            android:textColor="@color/filter_unclicked"
+            android:textSize="16sp" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/filter" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/abeezee_regular"
+                android:text="필터"
+                android:textColor="@color/filter_unclicked"
+                android:textSize="16sp" />
+        </LinearLayout>
     </LinearLayout>
 
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searching_content_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:nestedScrollingEnabled="false"
+        app:layout_constraintTop_toBottomOf="@id/filterbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
