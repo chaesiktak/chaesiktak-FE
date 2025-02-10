@@ -24,26 +24,33 @@ class SearchResultActivity : AppCompatActivity() {
         // Intent에서 검색어 받아오기
         val searchText = intent.getStringExtra("search_text")?.trim() ?: ""
 
+
         // searchInput에 검색어 출력
         binding.searchInput.setText(searchText)
-        binding.searchInput.setSelection(searchText.length) // 커서 이동
+        binding.searchInput.setSelection(searchText.length) // 커서 맨 마지막으로
 
+        setupRecyclerViews(searchText)
+
+        updateRecipeCountText()
+
+        //검색버튼 클릭 메서드
         binding.searchGoBtn.setOnClickListener {
             val newSearchText = binding.searchInput.text.toString().trim()
 
             if (newSearchText.isNotEmpty()) {
                 filterRecipes(newSearchText) // 새로운 검색어로 필터링 적용
+                updateRecipeCountText()
             } else {
                 binding.searchInput.error = "검색어를 입력하세요."
             }
         }
 
-        // 뒤로 가기 버튼
+        // 뒤로 가기 버튼 클릭 메서드
         binding.backArrowIcon.setOnClickListener {
             finish()
         }
 
-        // 홈 버튼
+        // 홈 버튼 클릭 메서드
         binding.homeIcon.setOnClickListener {
             finish()
         }
@@ -108,5 +115,15 @@ class SearchResultActivity : AppCompatActivity() {
         val filteredRecipes = filterRecipeList(allRecipes, searchText)
 
         searchingContentAdapter.updateList(filteredRecipes.toMutableList())
+
+        // 리스트 개수 업데이트 추가
+        updateRecipeCountText()
     }
+
+
+    private fun updateRecipeCountText() {
+        val displayedCount = searchingContentAdapter.getCurrentListsize()
+        binding.recipeCountText.text = "총 ${displayedCount}개"
+    }
+
 }

@@ -78,4 +78,11 @@ class SearchingContentAdapter(private var searchingContentList: MutableList<Reco
         searchingContentList.addAll(newList)
         notifyDataSetChanged()
     }
+
+    //리스트의 getItemCount()
+    fun getCurrentListsize():Int{
+        return searchingContentList.size
+    }
+
+
 }
