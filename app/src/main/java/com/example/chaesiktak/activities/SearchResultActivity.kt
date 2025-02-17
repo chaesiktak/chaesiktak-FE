@@ -4,11 +4,16 @@ import SearchingContentAdapter
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.chaesiktak.R
 import com.example.chaesiktak.RecommendRecipe
 import com.example.chaesiktak.SampleRecipes
 import com.example.chaesiktak.databinding.ActivitySearchResultBinding
+import com.example.chaesiktak.databinding.FilterBottomSheetBinding
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class SearchResultActivity : AppCompatActivity() {
 
@@ -16,9 +21,11 @@ class SearchResultActivity : AppCompatActivity() {
     private val recipeList: ArrayList<RecommendRecipe> = arrayListOf()
     private lateinit var searchingContentAdapter: SearchingContentAdapter
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchResultBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
 
         // Intent에서 검색어 받아오기
@@ -29,8 +36,8 @@ class SearchResultActivity : AppCompatActivity() {
         binding.searchInput.setText(searchText)
         binding.searchInput.setSelection(searchText.length) // 커서 맨 마지막으로
 
-        setupRecyclerViews(searchText)
 
+        setupRecyclerViews(searchText)
         updateRecipeCountText()
 
         //검색버튼 클릭 메서드
@@ -53,6 +60,11 @@ class SearchResultActivity : AppCompatActivity() {
         // 홈 버튼 클릭 메서드
         binding.homeIcon.setOnClickListener {
             finish()
+        }
+
+        //필터 버튼 클릭 메서드
+        binding.filterText.setOnClickListener {
+            showFilterBottomSheet(binding.filterText)
         }
 
         // RecyclerView 설정 (초기 검색어 적용)
@@ -124,6 +136,38 @@ class SearchResultActivity : AppCompatActivity() {
     private fun updateRecipeCountText() {
         val displayedCount = searchingContentAdapter.getCurrentListsize()
         binding.recipeCountText.text = "총 ${displayedCount}개"
+    }
+
+    private fun showFilterBottomSheet(tvFilter: ImageView) {
+        val dialog = BottomSheetDialog(this)
+        val filterbinding = FilterBottomSheetBinding.inflate(layoutInflater)
+        dialog.setContentView(filterbinding.root)
+
+
+        var isChecking = true
+        var checkedId = -1
+
+        filterbinding.firstGroup.setOnCheckedChangeListener { _, id ->
+            if (id != -1 && isChecking) {
+                isChecking = false
+                filterbinding.secondGroup.clearCheck()
+                checkedId = id
+            }
+            isChecking = true
+        }
+
+        filterbinding.secondGroup.setOnCheckedChangeListener { _, id ->
+            if (id != -1 && isChecking) {
+                isChecking = false
+                filterbinding.firstGroup.clearCheck()
+                checkedId = id
+            }
+            isChecking = true
+        }
+
+
+
+        dialog.show()
     }
 
 }
