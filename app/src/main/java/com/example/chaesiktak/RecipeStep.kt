@@ -1,3 +1,5 @@
+package com.example.chaesiktak
+
 import android.os.Parcel
 import android.os.Parcelable
 

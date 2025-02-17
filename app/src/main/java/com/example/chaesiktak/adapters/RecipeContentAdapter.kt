@@ -1,6 +1,6 @@
 package com.example.chaesiktak.adapters
 
-import RecipeStep
+import com.example.chaesiktak.RecipeStep
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

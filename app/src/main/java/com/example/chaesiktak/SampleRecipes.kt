@@ -1,7 +1,5 @@
 package com.example.chaesiktak
 
-import RecipeStep
-
 object SampleRecipes {
     val recipes = listOf(
         RecommendRecipe(

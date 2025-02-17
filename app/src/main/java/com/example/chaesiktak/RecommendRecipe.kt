@@ -1,7 +1,6 @@
 package com.example.chaesiktak
 
 
-import RecipeStep
 import android.os.Parcel
 import android.os.Parcelable
 
