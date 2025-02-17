@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.RadioButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -132,7 +133,6 @@ class SearchResultActivity : AppCompatActivity() {
         updateRecipeCountText()
     }
 
-
     private fun updateRecipeCountText() {
         val displayedCount = searchingContentAdapter.getCurrentListsize()
         binding.recipeCountText.text = "총 ${displayedCount}개"
@@ -143,7 +143,6 @@ class SearchResultActivity : AppCompatActivity() {
         val filterbinding = FilterBottomSheetBinding.inflate(layoutInflater)
         dialog.setContentView(filterbinding.root)
 
-
         var isChecking = true
         var checkedId = -1
 
@@ -152,6 +151,10 @@ class SearchResultActivity : AppCompatActivity() {
                 isChecking = false
                 filterbinding.secondGroup.clearCheck()
                 checkedId = id
+
+                //`RadioButton`의 `text` 값을 안전하게 가져오기
+                val selectedText = filterbinding.root.findViewById<RadioButton>(checkedId)?.text?.toString() ?: ""
+                filterRecipesByTag(selectedText)
             }
             isChecking = true
         }
@@ -161,13 +164,28 @@ class SearchResultActivity : AppCompatActivity() {
                 isChecking = false
                 filterbinding.firstGroup.clearCheck()
                 checkedId = id
+
+                //`RadioButton`의 `text` 값을 안전하게 가져오기
+                val selectedText = filterbinding.root.findViewById<RadioButton>(checkedId)?.text?.toString() ?: ""
+                filterRecipesByTag(selectedText)
             }
             isChecking = true
         }
 
-
-
         dialog.show()
     }
+
+
+    private fun filterRecipesByTag(selectedTag: String) {
+        val allRecipes = getSampleRecipes()
+
+        val filteredBySearchText = filterRecipeList(allRecipes, binding.searchInput.text.toString().trim())
+        val finalFilteredRecipes = filteredBySearchText.filter { it.tag == selectedTag }
+
+        searchingContentAdapter.updateList(finalFilteredRecipes.toMutableList())
+
+        updateRecipeCountText()
+    }
+
 
 }
