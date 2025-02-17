@@ -21,6 +21,7 @@ class SearchResultActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySearchResultBinding
     private val recipeList: ArrayList<RecommendRecipe> = arrayListOf()
     private lateinit var searchingContentAdapter: SearchingContentAdapter
+    private var selectedFilterID: Int = -1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +52,7 @@ class SearchResultActivity : AppCompatActivity() {
             } else {
                 binding.searchInput.error = "검색어를 입력하세요."
             }
+            updateFilterIcon(false)
         }
 
         // 뒤로 가기 버튼 클릭 메서드
@@ -67,6 +69,7 @@ class SearchResultActivity : AppCompatActivity() {
         binding.filterText.setOnClickListener {
             showFilterBottomSheet(binding.filterText)
         }
+
 
         // RecyclerView 설정 (초기 검색어 적용)
         setupRecyclerViews(searchText)
@@ -126,13 +129,11 @@ class SearchResultActivity : AppCompatActivity() {
     private fun filterRecipes(searchText: String) {
         val allRecipes = getSampleRecipes()
         val filteredRecipes = filterRecipeList(allRecipes, searchText)
-
         searchingContentAdapter.updateList(filteredRecipes.toMutableList())
-
-        // 리스트 개수 업데이트 추가
         updateRecipeCountText()
     }
 
+    //표시되는 레시피 수
     private fun updateRecipeCountText() {
         val displayedCount = searchingContentAdapter.getCurrentListsize()
         binding.recipeCountText.text = "총 ${displayedCount}개"
@@ -144,17 +145,19 @@ class SearchResultActivity : AppCompatActivity() {
         dialog.setContentView(filterbinding.root)
 
         var isChecking = true
-        var checkedId = -1
+        var selectedFilterText: String? = null
+
+        if (selectedFilterID != -1){
+            filterbinding.root.findViewById<RadioButton>(selectedFilterID)?.isChecked = true
+            selectedFilterText = filterbinding.root.findViewById<RadioButton>(selectedFilterID)?.text?.toString()
+        }
 
         filterbinding.firstGroup.setOnCheckedChangeListener { _, id ->
             if (id != -1 && isChecking) {
                 isChecking = false
                 filterbinding.secondGroup.clearCheck()
-                checkedId = id
-
-                //`RadioButton`의 `text` 값을 안전하게 가져오기
-                val selectedText = filterbinding.root.findViewById<RadioButton>(checkedId)?.text?.toString() ?: ""
-                filterRecipesByTag(selectedText)
+                selectedFilterID = id
+                selectedFilterText = filterbinding.root.findViewById<RadioButton>(id)?.text?.toString()
             }
             isChecking = true
         }
@@ -163,29 +166,59 @@ class SearchResultActivity : AppCompatActivity() {
             if (id != -1 && isChecking) {
                 isChecking = false
                 filterbinding.firstGroup.clearCheck()
-                checkedId = id
-
-                //`RadioButton`의 `text` 값을 안전하게 가져오기
-                val selectedText = filterbinding.root.findViewById<RadioButton>(checkedId)?.text?.toString() ?: ""
-                filterRecipesByTag(selectedText)
+                selectedFilterID = id
+                selectedFilterText = filterbinding.root.findViewById<RadioButton>(id)?.text?.toString()
             }
             isChecking = true
         }
+        filterbinding.goFilter.setOnClickListener {
+            selectedFilterText?.let { text ->
+                filterRecipesByTag(text)
+                updateFilterIcon(true)
+                dialog.dismiss()
+            }
+        }
 
+        filterbinding.filterReset.setOnClickListener{
+            selectedFilterID = -1
+            selectedFilterText = null
+            filterbinding.firstGroup.clearCheck()
+            filterbinding.secondGroup.clearCheck()
+
+            updateFilterIcon(false)
+            resetFilteredRecipes()
+            dialog.dismiss()
+        }
         dialog.show()
     }
 
-
     private fun filterRecipesByTag(selectedTag: String) {
         val allRecipes = getSampleRecipes()
-
         val filteredBySearchText = filterRecipeList(allRecipes, binding.searchInput.text.toString().trim())
         val finalFilteredRecipes = filteredBySearchText.filter { it.tag == selectedTag }
 
         searchingContentAdapter.updateList(finalFilteredRecipes.toMutableList())
-
         updateRecipeCountText()
     }
+
+    private fun updateFilterIcon(isFiltered: Boolean) {
+        if (isFiltered) {
+            binding.filterText.setImageResource(R.drawable.filter_text_selected)
+        } else {
+            binding.filterText.setImageResource(R.drawable.filter_text)
+        }
+    }
+
+    private fun resetFilteredRecipes() {
+        val allRecipes = getSampleRecipes()
+        val filteredBySearchText = filterRecipeList(allRecipes, binding.searchInput.text.toString().trim())
+
+
+        searchingContentAdapter.updateList(filteredBySearchText.toMutableList())
+        updateRecipeCountText()
+    }
+
+
 
 
 }
