@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -9,6 +10,8 @@
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
+        android:background="@color/white"
+        android:elevation="3dp"
         android:layout_height="100dp"
         android:gravity="center"
         android:orientation="horizontal"
@@ -38,8 +41,11 @@
     </LinearLayout>
 
     <!--나의 채식지향 타이틀 레이아웃-->
+
+
     <LinearLayout
         android:id="@+id/linearLayout2"
+        android:layout_marginTop="10dp"
         android:paddingHorizontal="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -124,10 +130,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="10dp"
-        android:layout_marginTop="4dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-        tools:layout_editor_absoluteX="0dp">
+        >
 
         <RadioGroup
             android:id="@+id/second_group"
@@ -160,21 +165,31 @@
                 android:textColor="@drawable/filter_text_color" />
         </RadioGroup>
     </LinearLayout>
+    <View
+        android:layout_marginTop="10dp"
+        android:id="@+id/view0"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:background="#FAFAFA"
+        />
 
     <LinearLayout
+        android:paddingVertical="10dp"
         android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+
         android:orientation="vertical"
         android:paddingHorizontal="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+        app:layout_constraintTop_toBottomOf="@+id/view0"
         tools:layout_editor_absoluteX="0dp">
 
         <!--선호 재료 추가 타이틀 horizontal 레이아웃-->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -183,10 +198,10 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginEnd="10dp"
-                    android:src="@drawable/plus" />
+                    android:src="@drawable/thumbs_up" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -197,29 +212,122 @@
             </LinearLayout>
         </LinearLayout>
 
+        <LinearLayout
+            android:paddingStart="10dp"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <android.widget.CheckBox
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/add_checkbox"
+                android:button="@android:color/transparent" />
+            <TextView
+                android:text="시금치"
+                android:layout_marginStart="7dp"
+                android:textSize="14sp"
+                android:fontFamily="@font/ibm_plex_sans_kr_regular"
+                android:textColor="@color/black_replacement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <android.widget.CheckBox
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/add_checkbox"
+                android:button="@android:color/transparent" />
+            <TextView
+                android:text="배추"
+                android:layout_marginStart="7dp"
+                android:textSize="14sp"
+                android:fontFamily="@font/ibm_plex_sans_kr_regular"
+                android:textColor="@color/black_replacement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <android.widget.CheckBox
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/add_checkbox"
+                android:button="@android:color/transparent" />
+            <TextView
+                android:text="감자"
+                android:layout_marginStart="7dp"
+                android:textSize="14sp"
+                android:fontFamily="@font/ibm_plex_sans_kr_regular"
+                android:textColor="@color/black_replacement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <android.widget.CheckBox
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/add_checkbox"
+                android:button="@android:color/transparent" />
+            <TextView
+                android:layout_marginStart="7dp"
+                android:text="가지"
+                android:textSize="14sp"
+                android:fontFamily="@font/ibm_plex_sans_kr_regular"
+                android:textColor="@color/black_replacement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
+    <View
+        android:id="@+id/view1"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:background="#FAFAFA"
+        />
     <LinearLayout
+        android:paddingVertical="10dp"
         android:id="@+id/linearlayout6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:orientation="vertical"
         android:paddingHorizontal="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
+        app:layout_constraintTop_toBottomOf="@+id/view1"
         tools:layout_editor_absoluteX="0dp">
 
         <!--비선호 재료 제외 타이틀 horizontal 레이아웃-->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:gravity="center">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginEnd="10dp"
-                android:src="@drawable/minus_fill" />
+                android:src="@drawable/thumbs_down" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -227,19 +335,118 @@
                 android:fontFamily="@font/ibm_plex_sans_kr_medium"
                 android:text="비선호 재료 제외"
                 android:textColor="@color/black_replacement" />
+
+
+        </LinearLayout>
+
+
+    <LinearLayout
+        android:paddingStart="10dp"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <android.widget.CheckBox
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/subtract_checkbox"
+                android:button="@android:color/transparent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:fontFamily="@font/ibm_plex_sans_kr_regular"
+                android:text="고수"
+                android:textColor="@color/black_replacement"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <android.widget.CheckBox
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/subtract_checkbox"
+                android:button="@android:color/transparent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:fontFamily="@font/ibm_plex_sans_kr_regular"
+                android:text="생강"
+                android:textColor="@color/black_replacement"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <android.widget.CheckBox
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/subtract_checkbox"
+                android:button="@android:color/transparent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:fontFamily="@font/ibm_plex_sans_kr_regular"
+                android:text="오이"
+                android:textColor="@color/black_replacement"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <android.widget.CheckBox
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/subtract_checkbox"
+                android:button="@android:color/transparent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:fontFamily="@font/ibm_plex_sans_kr_regular"
+                android:text="샐러리"
+                android:textColor="@color/black_replacement"
+                android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
+    </LinearLayout>
 
-    <!--적용 및 초기화 레이아웃-->
     <LinearLayout
+        app:layout_constraintTop_toBottomOf="@+id/linearlayout6"
         android:layout_width="match_parent"
         android:layout_height="85dp"
+        android:background="@color/white"
+        android:elevation="8dp"
         android:gravity="center"
         android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearlayout6"
-        app:layout_constraintVertical_bias="0.512"
-        tools:layout_editor_absoluteX="0dp">
+        >
 
         <LinearLayout
             android:layout_width="match_parent"

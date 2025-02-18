@@ -5,10 +5,7 @@
         <layer-list>
             <item
                 android:drawable="@drawable/minus_unchecked"
-                android:top="4dp"
-                android:right="4dp"
-                android:bottom="4dp"
-                android:left="4dp" />
+                />
         </layer-list>
     </item>
 
@@ -18,10 +15,7 @@
             <!-- 이미지 영역 -->
             <item
                 android:drawable="@drawable/minus_fill"
-                android:top="4dp"
-                android:right="4dp"
-                android:bottom="4dp"
-                android:left="4dp" />
+                />
         </layer-list>
     </item>
 </selector>
