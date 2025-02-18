@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".account_deactivation">
+
+    <!-- 상단바 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="95dp"
+        android:background="@color/white">
+
+        <!-- Back Arrow Icon -->
+        <ImageView
+            android:id="@+id/backArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/backarrow_logo"
+            android:layout_centerVertical="true"
+            android:layout_margin="16dp"/>
+
+        <TextView
+            android:id="@+id/MyPage"
+            android:layout_width="wrap_content"
+            android:layout_height="58dp"
+            android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+            android:gravity="center"
+            android:text="탈퇴하기"
+            android:textColor="#4A4743"
+            android:textSize="20dp"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <!-- 탈퇴 안내문 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:paddingVertical="15dp">
+
+        <TextView
+            android:id="@+id/nicknameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#닉네임#님 정말 탈퇴하실건가요?"
+            android:textSize="24sp"
+            android:paddingLeft="25dp"
+            android:fontFamily="@font/ibm_plex_sans_kr_bold"
+            android:textColor="#4A4743" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="채식탁 탈퇴 전 확인하세요!"
+            android:textSize="18sp"
+            android:paddingLeft="25dp"
+            android:paddingTop="10dp"
+            android:fontFamily="@font/ibm_plex_sans_kr_bold"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="탈퇴하시면 모든 활동 정보와 서비스 이용기록이 모두 삭제되며 모든 데이터는 복구 불가능합니다."
+            android:textSize="18sp"
+            android:paddingHorizontal="25dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+            android:textColor="#4F4F4F" />
+
+        <!-- 탈퇴 동의 체크 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="25dp"
+            android:baselineAligned="true">
+
+            <android.widget.CheckBox
+                android:id="@+id/deactiveAgreeCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/checkbox"
+                android:button="@android:color/transparent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="안내 사항을 모두 확인하였으며, 이에 동의합니다."
+                android:paddingLeft="5dp" />
+        </LinearLayout>
+
+        <!-- 탈퇴 이유 체크 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:padding="25dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="채식탁을 탈퇴하시려는 이유가 궁금해요"
+                android:textSize="16sp"
+                android:fontFamily="@font/ibm_plex_sans_kr_bold"
+                android:textColor="#4A4743"/>
+
+            <Spinner
+                android:id="@+id/reasonSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/default_edit_text"/>
+
+
+            <!-- 탈퇴하기 버튼 -->
+            <android.widget.Button
+                android:id="@+id/deactivateButton"
+                android:layout_width="309dp"
+                android:layout_height="61dp"
+                android:layout_marginTop="57dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="24dp"
+                android:layout_gravity="center"
+                android:text="탈퇴하기"
+                android:textSize="25sp"
+                android:fontFamily="@font/inter_bold"
+                android:textColor="@color/white"
+                android:background="@drawable/default_button_lg"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

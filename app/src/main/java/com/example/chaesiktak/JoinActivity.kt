@@ -25,6 +25,10 @@ class JoinActivity : AppCompatActivity() {
         val checkEmailbutton: Button = findViewById(R.id.checkEmailButton)
         val checkNickname: Button = findViewById(R.id.checkNicknameButton)
 
+        // 현재 설정된 이름과 닉네임
+        val currentName = "현재 이름"
+        val currentNickname = "현재 닉네임"
+
         checkEmailbutton.setOnClickListener {
             checkEmailbutton.isEnabled = false
             checkEmailbutton.setBackgroundResource(R.drawable.button_disabled_background)

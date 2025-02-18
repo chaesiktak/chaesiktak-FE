@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <!-- 상단바 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="@color/white">
+
+        <ImageButton
+            android:id="@+id/backArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/backarrow_logo"
+            android:background="@color/white"
+            android:layout_centerVertical="true"
+            android:layout_margin="16dp"/>
+
+        <TextView
+            android:id="@+id/MyPage"
+            android:layout_width="wrap_content"
+            android:layout_height="58dp"
+            android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+            android:gravity="center"
+            android:text="프로필 편집"
+            android:textColor="#4A4743"
+            android:textSize="20dp"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+
+
+    <!-- 이름, 닉네임 수정 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="15dp"
+        android:paddingHorizontal="27dp">
+
+        <!-- 디폴트 프로필 이미지 -->
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/profile"
+            android:layout_gravity="center_horizontal"/>
+
+        <!-- 이름 설정란 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingVertical="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 이름  "
+                android:textSize="16sp"
+                android:layout_margin="15dp"
+                android:fontFamily="@font/abeezee_regular"
+                android:textColor="#4F4F4F" />
+
+
+            <EditText
+                android:id="@+id/nameEditText"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/default_edit_text"
+                android:hint="#현재 설정한 이름#"
+                android:inputType="textEmailAddress"
+                android:padding="15dp"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <!-- 닉네임 설정란 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingVertical="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="닉네임"
+                android:textSize="16sp"
+                android:layout_margin="15dp"
+                android:fontFamily="@font/abeezee_regular"
+                android:textColor="#4F4F4F"/>
+
+            <EditText
+                android:id="@+id/nicknameEditText"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/default_edit_text"
+                android:hint="#현재 설정한 닉네임#"
+                android:inputType="textEmailAddress"
+                android:padding="15dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+        <!-- 수정 버튼 -->
+        <android.widget.Button
+            android:id="@+id/updateButton"
+            android:layout_width="309dp"
+            android:layout_height="61dp"
+            android:layout_marginTop="57dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="24dp"
+            android:layout_gravity="center"
+            android:text="수정"
+            android:textSize="25sp"
+            android:fontFamily="@font/inter_bold"
+            android:textColor="@color/white"
+            android:background="@drawable/default_button_lg"
+            />
+
+        <!-- 취소 버튼 (아직 미확정)-->
+        <android.widget.Button
+            android:id="@+id/cancelButton"
+            android:layout_width="319dp"
+            android:layout_height="71dp"
+            android:layout_gravity="center"
+            android:text="취소"
+            android:textSize="25sp"
+            android:fontFamily="@font/inter_bold"
+            android:textColor="@color/white"
+            android:background="@drawable/button_cancellation"
+            />
+
+
+    </LinearLayout>
+
+</LinearLayout>

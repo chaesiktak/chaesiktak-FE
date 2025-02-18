@@ -13,6 +13,30 @@
         android:theme="@style/Theme.Chaesiktak"
         tools:targetApi="31">
         <activity
+            android:name=".NoticeDetail"
+            android:exported="false" />
+        <activity
+            android:name=".NoticeItem"
+            android:exported="false" />
+        <activity
+            android:name=".NoticeBoard"
+            android:exported="false" />
+        <activity
+            android:name=".ResetPassword2"
+            android:exported="false" />
+        <activity
+            android:name=".ResetPassword"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BookmarkActivity"
+            android:exported="false" />
+        <activity
+            android:name=".account_deactivation"
+            android:exported="false" />
+        <activity
             android:name=".HomeActivity"
             android:exported="false" />
         <activity
