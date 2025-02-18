@@ -23,7 +23,6 @@ class SearchResultActivity : AppCompatActivity() {
     private lateinit var searchingContentAdapter: SearchingContentAdapter
     private var selectedFilterID: Int = -1
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchResultBinding.inflate(layoutInflater)
@@ -33,11 +32,9 @@ class SearchResultActivity : AppCompatActivity() {
         // Intent에서 검색어 받아오기
         val searchText = intent.getStringExtra("search_text")?.trim() ?: ""
 
-
         // searchInput에 검색어 출력
         binding.searchInput.setText(searchText)
         binding.searchInput.setSelection(searchText.length) // 커서 맨 마지막으로
-
 
         setupRecyclerViews(searchText)
         updateRecipeCountText()
@@ -70,7 +67,6 @@ class SearchResultActivity : AppCompatActivity() {
             showFilterBottomSheet(binding.filterText)
         }
 
-
         // RecyclerView 설정 (초기 검색어 적용)
         setupRecyclerViews(searchText)
     }
@@ -83,6 +79,7 @@ class SearchResultActivity : AppCompatActivity() {
             onItemClick = { navigateToRecipeDetail(it) }
         }
 
+        // 2열 배치
         binding.searchingContentRecyclerview.apply {
             layoutManager = GridLayoutManager(this@SearchResultActivity, 2)
             adapter = searchingContentAdapter
@@ -119,11 +116,17 @@ class SearchResultActivity : AppCompatActivity() {
     // 레시피 타이틀 필터링 함수
     private fun filterRecipeList(recipes: List<RecommendRecipe>, searchText: String): List<RecommendRecipe> {
         return if (searchText.isNotEmpty()) {
-            recipes.filter { it.title.contains(searchText, ignoreCase = true) } // `recipes`로 필터링
+            recipes.filter { recipe ->
+                // 제목 비교
+                recipe.title.contains(searchText, ignoreCase = true) ||
+                        // ingredients의 detail_name 비교
+                        recipe.ingredients.any { it.detail_name.contains(searchText, ignoreCase = true) }
+            }
         } else {
             recipes // 검색어가 없으면 전체 반환
         }
     }
+
 
     // 검색어 입력 시 RecyclerView 업데이트
     private fun filterRecipes(searchText: String) {
@@ -171,6 +174,7 @@ class SearchResultActivity : AppCompatActivity() {
             }
             isChecking = true
         }
+
         filterbinding.goFilter.setOnClickListener {
             selectedFilterText?.let { text ->
                 filterRecipesByTag(text)
@@ -183,7 +187,6 @@ class SearchResultActivity : AppCompatActivity() {
             dialog.dismiss()
         }
 
-
         filterbinding.filterReset.setOnClickListener{
             selectedFilterID = -1
             selectedFilterText = null
@@ -195,7 +198,6 @@ class SearchResultActivity : AppCompatActivity() {
 
             filterbinding.firstGroup.post { filterbinding.firstGroup.clearCheck() }
             filterbinding.secondGroup.post { filterbinding.secondGroup.clearCheck() }
-
 
             updateFilterIcon(false)
             resetFilteredRecipes()
@@ -227,8 +229,4 @@ class SearchResultActivity : AppCompatActivity() {
         searchingContentAdapter.updateList(filteredBySearchText.toMutableList())
         updateRecipeCountText()
     }
-
-
-
-
 }
