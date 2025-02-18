@@ -179,11 +179,23 @@ class SearchResultActivity : AppCompatActivity() {
             }
         }
 
+        filterbinding.filterClose.setOnClickListener {
+            dialog.dismiss()
+        }
+
+
         filterbinding.filterReset.setOnClickListener{
             selectedFilterID = -1
             selectedFilterText = null
+
+            isChecking = false
             filterbinding.firstGroup.clearCheck()
             filterbinding.secondGroup.clearCheck()
+            isChecking = true
+
+            filterbinding.firstGroup.post { filterbinding.firstGroup.clearCheck() }
+            filterbinding.secondGroup.post { filterbinding.secondGroup.clearCheck() }
+
 
             updateFilterIcon(false)
             resetFilteredRecipes()
@@ -212,8 +224,6 @@ class SearchResultActivity : AppCompatActivity() {
     private fun resetFilteredRecipes() {
         val allRecipes = getSampleRecipes()
         val filteredBySearchText = filterRecipeList(allRecipes, binding.searchInput.text.toString().trim())
-
-
         searchingContentAdapter.updateList(filteredBySearchText.toMutableList())
         updateRecipeCountText()
     }
