@@ -1,6 +1,10 @@
 package com.example.chaesiktak
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -28,6 +32,12 @@ class NoticeDetail : AppCompatActivity() {
         writerTextView.text = "작성자: $noticeWriter"
         dateTextView.text = "작성일: $noticeDate"
 
+        // 뒤로가기 버튼 클릭 시 공지사항 목록 탭으로 이동
+        val backArrow = findViewById<ImageButton>(R.id.backArrow)
+        backArrow.setOnClickListener {
+            val intent = Intent(this, NoticeBoard::class.java)
+            startActivity(intent)
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

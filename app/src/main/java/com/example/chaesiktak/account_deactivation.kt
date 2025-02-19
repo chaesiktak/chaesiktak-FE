@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
@@ -12,6 +14,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.chaesiktak.fragments.MyInfoFragment
 
 class account_deactivation : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,17 +27,14 @@ class account_deactivation : AppCompatActivity() {
         val nicknameTextView: TextView = findViewById(R.id.nicknameTextView)
         nicknameTextView.text = "$nickname 님 정말 탈퇴하실건가요?"
 
-        // 체크박스의 on/off && 탈퇴하기 버튼
+        // 체크박스 on/off && 탈퇴하기 버튼
         val deactiveAgreeCheckBox: CheckBox = findViewById(R.id.deactiveAgreeCheckBox)
         val deactivateButton: Button = findViewById(R.id.deactivateButton)
 
-        // Spinner에 탈퇴 이유 목록 추가
-        val reasonSpinner: Spinner = findViewById(R.id.reasonSpinner)
-        val items = arrayOf("선택해주세요", "원하는 비건 정보가 부족해요", "앱을 사용하는데에 불편이 있어요", "기타")
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, items)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        reasonSpinner.adapter = adapter
+        // 탈퇴 사유 작성란
+        val deactiveEditText: EditText = findViewById(R.id.deactiveEditText)
 
+        // 탈퇴하기 버튼 클릭
         deactiveAgreeCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (deactiveAgreeCheckBox.isChecked) {
                 // 체크박스가 체크되었을 때
@@ -47,6 +47,13 @@ class account_deactivation : AppCompatActivity() {
                 // 체크박스가 체크 해제되었을 때
                 Toast.makeText(this@account_deactivation, "탈퇴사항에 동의하여주세요.", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        // 뒤로가기 버튼 클릭 시 마이페이지 탭으로 이동
+        val backArrow = findViewById<ImageButton>(R.id.backArrow)
+        backArrow.setOnClickListener {
+            val intent = Intent(this, MyInfoFragment::class.java)
+            startActivity(intent)
         }
     }
 }

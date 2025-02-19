@@ -10,9 +10,11 @@
 
     <!-- 상단바 -->
     <RelativeLayout
+        android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:background="@color/white">
+        android:background="@color/white"
+        tools:ignore="MissingConstraints">
 
         <ImageButton
             android:id="@+id/backArrow"
@@ -24,7 +26,6 @@
             android:layout_margin="16dp"/>
 
         <TextView
-            android:id="@+id/top_bar"
             android:layout_width="wrap_content"
             android:layout_height="58dp"
             android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
@@ -33,6 +34,19 @@
             android:textColor="#4A4743"
             android:textSize="20dp"
             android:layout_centerInParent="true"/>
+
+        <!-- 공지사항 추가 버튼 -->
+        <Button
+            android:id="@+id/addNoticeButton"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="null"
+            android:fontFamily="@font/ibm_plex_sans_kr_regular"
+            android:text="+"
+            android:textColor="#A4A4A4"
+            android:textSize="34dp" />
 
     </RelativeLayout>
 
@@ -47,11 +61,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-
         android:clipToPadding="false"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
 
     </androidx.recyclerview.widget.RecyclerView>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

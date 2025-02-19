@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -13,10 +14,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.chaesiktak.fragments.MyInfoFragment
 import org.json.JSONObject
 
 // 데이터 클래스
-data class NoticeItem(
+data class Noticeitem(
     val noticeWriter: String,
     val noticeHits: Int,
     val noticeTime: String,
@@ -25,7 +27,7 @@ data class NoticeItem(
     val noticeContent: String )
 
 // 어댑터 클래스
-class NoticeAdapter(private val itemList: List<NoticeItem>) :
+class NoticeAdapter(private val itemList: List<Noticeitem>) :
     RecyclerView.Adapter<NoticeAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -67,11 +69,11 @@ class NoticeBoard : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_notice_board)
 
-        // 뒤로가기 버튼 클릭 리스너 설정
+        // 뒤로 가기 버튼 클릭 시 마이페이지로 이동
         val backArrow = findViewById<ImageButton>(R.id.backArrow)
         backArrow.setOnClickListener {
-            // 현재 액티비티 종료하여 이전 화면으로 돌아가기
-            finish()
+            val intent = Intent(this, MyInfoFragment::class.java)
+            startActivity(intent)
         }
 
         // JSON 데이터를 파싱하여 NoticeItem 리스트 생성
@@ -129,16 +131,22 @@ class NoticeBoard : AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.noticeRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = NoticeAdapter(noticeList)
+
+        val addNoticeButton = findViewById<Button>(R.id.addNoticeButton)
+        addNoticeButton.setOnClickListener {
+            val intent = Intent(this, AddNotice::class.java)
+            startActivity(intent)
+        }
     }
 
-    private fun parseNoticeJson(jsonString: String): List<NoticeItem> {
+    private fun parseNoticeJson(jsonString: String): List<Noticeitem> {
         val jsonObject = JSONObject(jsonString)
         val dataArray = jsonObject.getJSONArray("data")
-        val noticeList = mutableListOf<NoticeItem>()
+        val noticeList = mutableListOf<Noticeitem>()
 
         for (i in 0 until dataArray.length()) {
             val dataObject = dataArray.getJSONObject(i)
-            val noticeItem = NoticeItem(
+            val noticeItem = Noticeitem(
                 noticeWriter = dataObject.getString("noticeWriter"),
                 noticeHits = dataObject.getInt("noticeHits"),
                 noticeTime = dataObject.getString("noticeTime"),

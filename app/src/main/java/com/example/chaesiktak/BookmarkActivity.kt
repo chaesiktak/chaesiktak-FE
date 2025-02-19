@@ -42,7 +42,7 @@ class BookmarkAdapter(private val itemList: List<BookmarkItem>) :
         // 즐겨찾기 아이콘 클릭 리스너 설정
         holder.favoriteIcon.setOnClickListener {
             // 목록에서 항목 제거
-            itemList.removeAt(position)
+            //itemList.removeAt(position)
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, itemList.size)
 

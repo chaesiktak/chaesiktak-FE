@@ -11,7 +11,7 @@
     <!-- 상단바 -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="95dp"
+        android:layout_height="90dp"
         android:background="@color/white">
 
         <!-- Back Arrow Icon -->
@@ -19,69 +19,68 @@
             android:id="@+id/backArrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/backarrow_logo"
             android:layout_centerVertical="true"
-            android:layout_margin="16dp"/>
+            android:layout_margin="16dp"
+            android:src="@drawable/backarrow_logo" />
 
         <TextView
-            android:id="@+id/MyPage"
             android:layout_width="wrap_content"
             android:layout_height="58dp"
+            android:layout_centerInParent="true"
             android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
             android:gravity="center"
             android:text="탈퇴하기"
             android:textColor="#4A4743"
-            android:textSize="20dp"
-            android:layout_centerInParent="true"/>
+            android:textSize="20dp" />
 
     </RelativeLayout>
 
     <!-- 탈퇴 안내문 -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="match_parent"
         android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:padding="30dp"
         android:paddingVertical="15dp">
 
         <TextView
             android:id="@+id/nicknameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/ibm_plex_sans_kr_bold"
             android:text="#닉네임#님 정말 탈퇴하실건가요?"
-            android:textSize="24sp"
-            android:paddingLeft="25dp"
-            android:fontFamily="@font/ibm_plex_sans_kr_bold"
-            android:textColor="#4A4743" />
+            android:textColor="#4A4743"
+            android:textSize="24sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/ibm_plex_sans_kr_bold"
+            android:paddingTop="8dp"
+
             android:text="채식탁 탈퇴 전 확인하세요!"
-            android:textSize="18sp"
-            android:paddingLeft="25dp"
-            android:paddingTop="10dp"
-            android:fontFamily="@font/ibm_plex_sans_kr_bold"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="탈퇴하시면 모든 활동 정보와 서비스 이용기록이 모두 삭제되며 모든 데이터는 복구 불가능합니다."
-            android:textSize="18sp"
-            android:paddingHorizontal="25dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
-            android:textColor="#4F4F4F" />
+
+            android:text="탈퇴하시면 모든 활동 정보와 서비스 이용기록이\n모두 삭제되며 모든 데이터는 복구 불가능합니다."
+            android:textColor="#4F4F4F"
+            android:textSize="18sp" />
 
         <!-- 탈퇴 동의 체크 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:baselineAligned="true"
             android:gravity="center_vertical"
-            android:padding="25dp"
-            android:baselineAligned="true">
+            android:orientation="horizontal"
+            android:paddingVertical="25dp">
 
             <android.widget.CheckBox
                 android:id="@+id/deactiveAgreeCheckBox"
@@ -89,54 +88,59 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/checkbox"
                 android:button="@android:color/transparent" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="안내 사항을 모두 확인하였으며, 이에 동의합니다."
-                android:paddingLeft="5dp" />
+                android:paddingLeft="5dp"
+                android:text="안내 사항을 모두 확인하였으며, 이에 동의합니다." />
         </LinearLayout>
 
         <!-- 탈퇴 이유 체크 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:gravity="center_vertical"
-            android:padding="25dp">
+            android:orientation="vertical"
+            android:layout_marginTop="15dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="채식탁을 탈퇴하시려는 이유가 궁금해요"
-                android:textSize="16sp"
-                android:fontFamily="@font/ibm_plex_sans_kr_bold"
-                android:textColor="#4A4743"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ibm_plex_sans_kr_bold"
+            android:text="채식탁을 탈퇴하시려는 이유가 궁금해요"
+            android:textColor="#4A4743"
+            android:textSize="18sp" />
 
-            <Spinner
-                android:id="@+id/reasonSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/default_edit_text"/>
+        <EditText
+            android:id="@+id/deactiveEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/default_edit_text"
+            android:fontFamily="@font/abeezee_regular"
+            android:hint="서비스 탈퇴 사유를 작성해주세요.\n서비스를 개선하는데에 큰 도움이 됩니다!"
+            android:padding="15dp"
+            android:textColor="#6A6A6A"
+            android:textSize="16sp"
 
 
-            <!-- 탈퇴하기 버튼 -->
-            <android.widget.Button
-                android:id="@+id/deactivateButton"
-                android:layout_width="309dp"
-                android:layout_height="61dp"
-                android:layout_marginTop="57dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="24dp"
-                android:layout_gravity="center"
-                android:text="탈퇴하기"
-                android:textSize="25sp"
-                android:fontFamily="@font/inter_bold"
-                android:textColor="@color/white"
-                android:background="@drawable/default_button_lg"
-                />
-
-        </LinearLayout>
+        <!-- 탈퇴하기 버튼 -->
+        <android.widget.Button
+            android:id="@+id/deactivateButton"
+            android:layout_width="309dp"
+            android:layout_height="61dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="57dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/default_button_lg"
+            android:fontFamily="@font/inter_bold"
+            android:text="탈퇴하기"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
 
     </LinearLayout>
+
+</LinearLayout>
 </LinearLayout>

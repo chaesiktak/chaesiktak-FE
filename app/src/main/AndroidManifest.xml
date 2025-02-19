@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Chaesiktak"
         tools:targetApi="31">
         <activity
+            android:name=".AddNotice"
+            android:exported="false" />
+        <activity
             android:name=".NoticeDetail"
             android:exported="false" />
         <activity
