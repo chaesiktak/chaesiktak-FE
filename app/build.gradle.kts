@@ -56,6 +56,11 @@ dependencies {
     //indicator library
     implementation("me.relex:circleindicator:2.1.6")
 
+    //retrofit library
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
