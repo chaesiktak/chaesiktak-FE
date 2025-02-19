@@ -98,7 +98,7 @@
 
                 <!-- Email Input Field -->
                 <EditText
-                    android:id="@+id/textEmailInput"
+                    android:id="@+id/emailEditText"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -128,7 +128,8 @@
                 android:fontFamily="@font/inter"
                 android:textColor="@color/error_message_red"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <!-- Password Form Section -->
@@ -160,7 +161,7 @@
 
                 <!-- Password Input Field -->
                 <EditText
-                    android:id="@+id/passwordInput"
+                    android:id="@+id/passwordEditText"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/default_edit_text"
@@ -173,7 +174,7 @@
 
                 <!-- Password Confirmation Input Field -->
                 <EditText
-                    android:id="@+id/confirmPasswordInput"
+                    android:id="@+id/confirmPasswordEditText"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/default_edit_text"
@@ -182,6 +183,17 @@
                     android:padding="12dp"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/passwordError"
+                    android:text="⚠ 에러메시지 처리"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/inter"
+                    android:textColor="@color/error_message_red"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -291,7 +303,8 @@
                 android:fontFamily="@font/inter"
                 android:text="⚠ 에러메시지 처리"
                 android:textColor="@color/error_message_red"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <LinearLayout
@@ -305,6 +318,7 @@
             android:paddingVertical="12dp">
 
             <android.widget.CheckBox
+                android:id="@+id/toscheckbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/checkbox"
