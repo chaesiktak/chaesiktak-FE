@@ -5,6 +5,77 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".activities.SignUpCompleteActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- 채식탁회원가입 타이틀 -->
+        <LinearLayout
+            android:layout_marginVertical="33dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_marginEnd="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ibm_plex_sans_kr_bold"
+                android:text="채식탁"
+                android:textColor="@color/default_button_sm"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ibm_plex_sans_kr_bold"
+                android:text="회원가입"
+                android:textColor="@color/black_replacement"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_marginBottom="46dp"
+            android:src="@drawable/complete_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:layout_marginBottom="25dp"
+            android:background="#E6F5DD"
+            android:layout_width="48dp"
+            android:layout_height="1dp"/>
+
+        <TextView
+            android:layout_marginBottom="92dp"
+            android:textColor="@color/black_replacement"
+            android:fontFamily="@font/ibm_plex_sans_kr_regular"
+            android:textAlignment="center"
+            android:text="회원가입 완료를 위해, \n
+인증메일을 발송하였습니다."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <!-- 로그인 버튼 -->
+        <android.widget.Button
+            android:id="@+id/Login_button"
+            android:layout_width="309dp"
+            android:layout_height="61dp"
+            android:text="로그인 하기"
+            android:textSize="25sp"
+            android:fontFamily="@font/inter_bold"
+            android:textColor="@color/white"
+            android:background="@drawable/default_button_lg"
+            />
+
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
