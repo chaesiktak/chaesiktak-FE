@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 
-// 메인 액티비티 클래스
 class BookmarkActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +27,6 @@ class BookmarkActivity : AppCompatActivity() {
             // 현재 액티비티 종료하여 이전 화면으로 돌아가기
             finish()
         }
-
 
         // 예제 북마크 항목 리스트
         val bookmarkItemList = mutableListOf(

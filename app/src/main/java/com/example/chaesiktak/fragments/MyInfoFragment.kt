@@ -13,10 +13,14 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.chaesiktak.BookmarkActivity
 import com.example.chaesiktak.NoticeBoard
 import com.example.chaesiktak.ProfileEditActivity
 import com.example.chaesiktak.R
+import com.example.chaesiktak.RecentAdapter
+import com.example.chaesiktak.RecentRecipeData
 import com.example.chaesiktak.ResetPassword
 import com.example.chaesiktak.account_deactivation
 
@@ -31,9 +35,12 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class MyInfoFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    // 최근 본 항목 받아오기
+    private lateinit var recentRecyclerView: RecyclerView
+    private lateinit var recentAdapter: RecentAdapter
+    private val recentItems = listOf(
+        RecentRecipeData(R.drawable.food1)
+    )
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -55,12 +62,19 @@ class MyInfoFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_my_info, container, false)
 
+        recentRecyclerView = view.findViewById(R.id.recentRecyclerView)
+        recentRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        recentAdapter = RecentAdapter(recentItems)
+        recentRecyclerView.adapter = recentAdapter
+
         // 프로필 버튼 클릭 이벤트 설정
         val profileButton = view.findViewById<RelativeLayout>(R.id.profileButton)
         profileButton.setOnClickListener {
             val intent = Intent(activity, ProfileEditActivity::class.java)
             startActivity(intent)
         }
+
+
         // 공지사항 버튼 클릭 이벤트
         val noticeButton = view.findViewById<ImageButton>(R.id.noticeButton)
         noticeButton.setOnClickListener {

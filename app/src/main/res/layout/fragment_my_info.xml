@@ -117,38 +117,14 @@
             android:textSize="18dp"
             android:textColor="#4A4743"/>
 
-        <HorizontalScrollView
-            android:id="@+id/RecentItem"
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recentRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/Profile">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_margin="5dp">
-
-                <ImageView
-                    android:layout_width="145dp"
-                    android:layout_height="145dp"
-                    android:padding="10dp"
-                    android:src="@drawable/food1"/>
-                <ImageView
-                    android:layout_width="145dp"
-                    android:layout_height="145dp"
-                    android:padding="10dp"
-                    android:src="@drawable/food1"/>
-
-                <ImageView
-                    android:layout_width="145dp"
-                    android:layout_height="145dp"
-                    android:padding="10dp"
-                    android:src="@drawable/food1" />
-
-            </LinearLayout>
-
-        </HorizontalScrollView>
+            android:layout_height="145dp"
+            android:layout_below="@+id/Profile"
+            android:layout_margin="5dp"
+            android:orientation="horizontal" />
 
 
 
