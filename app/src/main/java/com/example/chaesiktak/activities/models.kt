@@ -19,10 +19,17 @@ data class LoginRequest(
 )
 
 data class LoginResponse(
-    val accessToken: String,
-    val refreshToken: String,
-    val email: String
-)
+    val status: Int,
+    val success: Boolean,
+    val message: String,
+    val data: TokenData?
+) {
+    data class TokenData(
+        val accessToken: String,
+        val refreshToken: String,
+        val email: String
+    )
+}
 
 data class ProtectedData(
     val message: String
@@ -34,3 +41,5 @@ data class ApiResponse<T>(
     val message: String,
     val data: T?
 )
+
+
