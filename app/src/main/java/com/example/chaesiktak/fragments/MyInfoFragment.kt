@@ -8,11 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.navigation.findNavController
 import com.example.chaesiktak.BookmarkActivity
+import com.example.chaesiktak.NoticeBoard
 import com.example.chaesiktak.ProfileEditActivity
 import com.example.chaesiktak.R
 import com.example.chaesiktak.ResetPassword
@@ -53,6 +55,12 @@ class MyInfoFragment : Fragment() {
         val profileButton = view.findViewById<RelativeLayout>(R.id.profileButton)
         profileButton.setOnClickListener {
             val intent = Intent(activity, ProfileEditActivity::class.java)
+            startActivity(intent)
+        }
+        // 공지사항 버튼 클릭 이벤트
+        val noticeButton = view.findViewById<ImageButton>(R.id.noticeButton)
+        noticeButton.setOnClickListener {
+            val intent = Intent(activity, NoticeBoard::class.java)
             startActivity(intent)
         }
         // 비밀번호 재설정 버튼 클릭 이벤트 설정

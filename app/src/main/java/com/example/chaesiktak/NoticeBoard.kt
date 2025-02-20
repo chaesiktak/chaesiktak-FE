@@ -17,51 +17,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.chaesiktak.fragments.MyInfoFragment
 import org.json.JSONObject
 
-// 데이터 클래스
-data class Noticeitem(
-    val noticeWriter: String,
-    val noticeHits: Int,
-    val noticeTime: String,
-    val noticeTitle: String,
-    val url: String,
-    val noticeContent: String )
-
-// 어댑터 클래스
-class NoticeAdapter(private val itemList: List<Noticeitem>) :
-    RecyclerView.Adapter<NoticeAdapter.ViewHolder>() {
-
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val noticeTitle: TextView = itemView.findViewById(R.id.noticeTitle)
-        val noticeDate: TextView = itemView.findViewById(R.id.noticeDate)
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.activity_notice_item, parent, false)
-        return ViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = itemList[position]
-        holder.noticeTitle.text = item.noticeTitle
-        holder.noticeDate.text = item.noticeTime.split("T")[0] // 날짜만 표시
-
-        // 항목 클릭 리스너 설정
-        holder.itemView.setOnClickListener {
-            val context = holder.itemView.context
-            val intent = Intent(context, NoticeDetail::class.java).apply {
-                putExtra("noticeTitle", item.noticeTitle)
-                putExtra("noticeContent", item.noticeContent)
-                putExtra("noticeWriter", item.noticeWriter)
-                putExtra("noticeDate", item.noticeTime.split("T")[0])
-            }
-            context.startActivity(intent)
-        }
-    }
-
-    override fun getItemCount() = itemList.size
-}
-
 // 메인 액티비티 클래스
 class NoticeBoard : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

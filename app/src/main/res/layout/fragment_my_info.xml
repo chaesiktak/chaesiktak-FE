@@ -4,8 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#673AB7"
+    android:background="@color/white"
     tools:context=".fragments.MyInfoFragment">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment"
+        android:layout_width="3dp"
+        android:layout_height="wrap_content"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph" />
 
 
     <LinearLayout
@@ -33,6 +40,7 @@
 
             <!-- 공지사항 버튼 -->
             <ImageButton
+                android:id="@+id/noticeButton"
                 android:layout_width="40dp"
                 android:layout_height="60dp"
                 android:src="@drawable/notification_icon"
