@@ -164,4 +164,17 @@ data class RecipeStep(
     }
 }
 
+// 비밀번호 찾기 - 요청 데이터 클래스
+data class ResetPasswordRequest(
+    val email: String,
+    val userName: String
+)
+
+// 비밀번호 찾기 - 응답 데이터 클래스
+data class ResetPasswordResponse(
+    val status: Int,
+    val success: Boolean,
+    val message: String,
+    val data: String?
+)
 

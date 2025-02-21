@@ -170,6 +170,7 @@ class SearchResultActivity : AppCompatActivity() {
         }
     }
 
+    //필터 클릭시 , 하단에서 bottom sheet
     private fun showFilterBottomSheet(tvFilter: ImageView) {
         val dialog = BottomSheetDialog(this)
         val filterbinding = FilterBottomSheetBinding.inflate(layoutInflater)
@@ -183,6 +184,7 @@ class SearchResultActivity : AppCompatActivity() {
             selectedFilterText = filterbinding.root.findViewById<RadioButton>(selectedFilterID)?.text?.toString()
         }
 
+        //첫 번째 linear layout의 태그 선택 시, 두 번째 linear layout 그룹의 태그 선택 해제
         filterbinding.firstGroup.setOnCheckedChangeListener { _, id ->
             if (id != -1 && isChecking) {
                 isChecking = false
@@ -193,6 +195,7 @@ class SearchResultActivity : AppCompatActivity() {
             isChecking = true
         }
 
+        //두 번째 linear layout의 태그 선택 시, 첫 번째 linear layout 그룹의 태그 선택 해제
         filterbinding.secondGroup.setOnCheckedChangeListener { _, id ->
             if (id != -1 && isChecking) {
                 isChecking = false
@@ -211,10 +214,12 @@ class SearchResultActivity : AppCompatActivity() {
             }
         }
 
+        // 'X' 버튼 누르면 bottom sheet dismiss
         filterbinding.filterClose.setOnClickListener {
             dialog.dismiss()
         }
 
+        // 선택 초기화 >> 원래 'searchText'로 호출했던 리사이클 뷰 생성 및 radiobutton false값으로 초기화
         filterbinding.filterReset.setOnClickListener{
             selectedFilterID = -1
             selectedFilterText = null

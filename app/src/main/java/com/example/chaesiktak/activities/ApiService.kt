@@ -4,6 +4,8 @@ import com.example.chaesiktak.LoginRequest
 import com.example.chaesiktak.LoginResponse
 import com.example.chaesiktak.Recipe
 import com.example.chaesiktak.RecipeDetailResponse
+import com.example.chaesiktak.ResetPasswordRequest
+import com.example.chaesiktak.ResetPasswordResponse
 import com.example.chaesiktak.SignUpRequest
 import com.example.chaesiktak.User
 import retrofit2.Call
@@ -34,6 +36,13 @@ interface ApiService {
 
     @GET("recipe/{id}")
     suspend fun getRecipeDetail(@Path("id") recipeId: Int): Response<RecipeDetailResponse>
+
+    //비밀번호 찾기
+
+    @POST("api/verify/reset-password")
+    suspend fun resetPassword(
+        @Body request: ResetPasswordRequest
+    ): Response<ResetPasswordResponse>
 
 
 }
