@@ -1,5 +1,6 @@
 package com.example.chaesiktak.fragments
 
+import ApiResponse
 import com.example.chaesiktak.adapters.BannerAdapter
 import RecommendRecipeAdapter
 import android.app.Activity
@@ -8,6 +9,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
@@ -21,6 +23,9 @@ import com.example.chaesiktak.adapters.TagRecipeAdapter
 import com.example.chaesiktak.databinding.FragmentHomeBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
@@ -44,6 +49,8 @@ class HomeFragment : Fragment() {
         setupRecyclerViews()
         setupBanner()
         setupBottomNavigation()
+
+        fetchRecommendedRecipes()
 
         return binding.root
     }
@@ -162,6 +169,33 @@ class HomeFragment : Fragment() {
     private fun getTagRecipes(): List<RecommendRecipe> {
         val recipes = SampleRecipes.recipes
         return if (recipes.size > 6) recipes.subList(0, 6) else recipes
+    }
+
+    private fun fetchRecommendedRecipes() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                val response = RetrofitClient.instance.getRecommendedRecipes().execute()
+                if (response.isSuccessful && response.body() != null) {
+                    val apiResponse = response.body()
+                    if (apiResponse!!.success) {
+                        recipeList.clear()
+                        recipeList.addAll((apiResponse.data ?: emptyList()) as Collection<RecommendRecipe>)
+                        recommendRecipeAdapter.notifyDataSetChanged()
+                    } else {
+                        showError("추천 레시피를 불러오지 못했습니다.")
+                    }
+                } else {
+                    showError("서버 응답이 올바르지 않습니다.")
+                }
+            } catch (e: Exception) {
+                showError("네트워크 오류: ${e.message}")
+            }
+        }
+    }
+
+
+    private fun showError(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
 

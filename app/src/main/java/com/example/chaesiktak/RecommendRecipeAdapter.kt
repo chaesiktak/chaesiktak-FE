@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chaesiktak.R
 import com.example.chaesiktak.RecommendRecipe
+import coil.load
 
 class RecommendRecipeAdapter(private val recipeList: ArrayList<RecommendRecipe>) :
     RecyclerView.Adapter<RecommendRecipeAdapter.FoodViewHolder>() {
@@ -30,34 +31,25 @@ class RecommendRecipeAdapter(private val recipeList: ArrayList<RecommendRecipe>)
 
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
         val recipe = recipeList[position]
-        holder.imageView.setImageResource(recipe.image)
+
+        // Coil을 사용한 이미지 로딩 (null 처리)
+        holder.imageView.load(recipe.image) {
+            placeholder(R.drawable.placeholder_image)
+            error(R.drawable.sample_image)
+            fallback(R.drawable.sample_image)
+        }
+
         holder.titleView.text = recipe.title
         holder.subtextView.text = recipe.subtext
 
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
             onItemClick?.invoke(recipe)
         }
 
-        // '좋아요' 버튼 상태 설정
-        if (recipe.isFavorite) {
-            holder.likebtnView.setImageResource(R.drawable.likebutton_onclicked)
-        } else {
-            holder.likebtnView.setImageResource(R.drawable.likebutton)
-        }
+        holder.likebtnView.setImageResource(if (recipe.isFavorite) R.drawable.likebutton_onclicked else R.drawable.likebutton)
 
-        // '좋아요' 클릭 리스너
         holder.likebtnView.setOnClickListener {
-            // 상태 토글
             recipe.isFavorite = !recipe.isFavorite
-
-            // 하트 아이콘 변경
-            if (recipe.isFavorite) {
-                holder.likebtnView.setImageResource(R.drawable.likebutton_onclicked)
-            } else {
-                holder.likebtnView.setImageResource(R.drawable.likebutton)
-            }
-
-            // 상태 변경 후 해당 아이템만 새로고침
             notifyItemChanged(position)
         }
     }

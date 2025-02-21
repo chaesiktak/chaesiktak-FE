@@ -3,6 +3,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface ApiService {
 
@@ -15,5 +16,15 @@ interface ApiService {
 
     @POST("api/login")
     suspend fun login(@Body request: LoginRequest):Response<LoginResponse>
+
+    //레시피 목록 조회
+
+    @GET("recipe/")
+    fun getRecommendedRecipes() :Call<ApiResponse<List<Recipe>>>
+
+    //세부 레시피
+
+    @GET("recipe/{id}")
+    fun getRecipeDetail(@Path("id") recipeID: Int) :Call<RecipeDetailResponse>
 
 }

@@ -44,8 +44,9 @@ android {
 dependencies {
     val camerax_version = "1.3.0"
 
-
-
+    //coil 라이브러리
+    implementation("io.coil-kt:coil:2.5.0") // 최신 버전 사용 가능
+    
     implementation("androidx.camera:camera-core:$camerax_version")
     implementation("androidx.camera:camera-camera2:$camerax_version")
     implementation("androidx.camera:camera-lifecycle:$camerax_version")
