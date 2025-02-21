@@ -5,6 +5,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.chaesiktak.R
 import com.example.chaesiktak.RecommendRecipe
 
@@ -33,7 +34,14 @@ class SearchingContentAdapter(private var searchingContentList: MutableList<Reco
 
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
         val recipe = searchingContentList[position]
-        holder.imageView.setImageResource(recipe.image)
+
+        // Coil을 사용한 이미지 로딩 (null 처리)
+        holder.imageView.load(recipe.image) {
+            placeholder(R.drawable.placeholder_image)
+            error(R.drawable.placeholder_image)
+            fallback(R.drawable.placeholder_image)
+        }
+
         holder.titleView.text = recipe.title
         holder.prevtextView.text = recipe.prevtext
 

@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.chaesiktak.R
 import com.example.chaesiktak.RecommendRecipe
 
@@ -33,7 +34,14 @@ class TagRecipeAdapter(private val tagRecipeList: ArrayList<RecommendRecipe>) :
 
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
         val recipe = tagRecipeList[position]
-        holder.imageView.setImageResource(recipe.image)
+
+        // Coil을 사용한 이미지 로딩 (null 처리)
+        holder.imageView.load(recipe.image) {
+            placeholder(R.drawable.placeholder_image)
+            error(R.drawable.placeholder_image)
+            fallback(R.drawable.placeholder_image)
+        }
+
         holder.titleView.text = recipe.title
         holder.subtextView.text = recipe.subtext
 
@@ -42,27 +50,27 @@ class TagRecipeAdapter(private val tagRecipeList: ArrayList<RecommendRecipe>) :
 
         // 태그 배경 색상 동적으로 설정
         when (recipe.tag) {
-            "비건" -> {
+            "VEGAN" -> {
                 holder.tagView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context,
                     R.color.color_vegan
                 )) // 배경
             }
-            "락토" -> {
+            "LACTO" -> {
                 holder.tagView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context,
                     R.color.color_lacto
                 ))
             }
-            "오보" -> {
+            "OVO" -> {
                 holder.tagView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context,
                     R.color.color_ovo
                 ))
             }
-            "락토오보" -> {
+            "LACTO_OVO" -> {
                 holder.tagView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context,
                     R.color.color_lacto_ovo
                 ))
             }
-            "페스코" -> {
+            "PESCO" -> {
                 holder.tagView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context,
                     R.color.color_pesco
                 ))

@@ -35,8 +35,8 @@ class RecommendRecipeAdapter(private val recipeList: ArrayList<RecommendRecipe>)
         // Coil을 사용한 이미지 로딩 (null 처리)
         holder.imageView.load(recipe.image) {
             placeholder(R.drawable.placeholder_image)
-            error(R.drawable.sample_image)
-            fallback(R.drawable.sample_image)
+            error(R.drawable.placeholder_image)
+            fallback(R.drawable.placeholder_image)
         }
 
         holder.titleView.text = recipe.title

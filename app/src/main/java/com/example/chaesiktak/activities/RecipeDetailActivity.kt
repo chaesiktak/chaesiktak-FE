@@ -98,4 +98,3 @@ class RecipeDetailActivity : AppCompatActivity() {
         finish()
     }
 }
-
