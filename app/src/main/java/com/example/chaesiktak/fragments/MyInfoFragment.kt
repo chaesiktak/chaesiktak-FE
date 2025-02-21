@@ -42,17 +42,6 @@ class MyInfoFragment : Fragment() {
         RecentRecipeData(R.drawable.food1)
     )
 
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,7 +57,7 @@ class MyInfoFragment : Fragment() {
         recentRecyclerView.adapter = recentAdapter
 
         // 프로필 버튼 클릭 이벤트 설정
-        val profileButton = view.findViewById<RelativeLayout>(R.id.profileButton)
+        val profileButton = view.findViewById<Button>(R.id.profileButton)
         profileButton.setOnClickListener {
             val intent = Intent(activity, ProfileEditActivity::class.java)
             startActivity(intent)
@@ -76,7 +65,7 @@ class MyInfoFragment : Fragment() {
 
 
         // 공지사항 버튼 클릭 이벤트
-        val noticeButton = view.findViewById<ImageButton>(R.id.noticeButton)
+        val noticeButton = view.findViewById<Button>(R.id.noticeButton)
         noticeButton.setOnClickListener {
             val intent = Intent(activity, NoticeBoard::class.java)
             startActivity(intent)

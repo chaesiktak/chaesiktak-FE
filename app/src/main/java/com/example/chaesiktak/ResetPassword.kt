@@ -20,6 +20,14 @@ class ResetPassword : AppCompatActivity() {
         val newPasswordInput = findViewById<EditText>(R.id.newPasswordInput)
         val confirmPasswordInput = findViewById<EditText>(R.id.confirmPasswordInput)
         val resetButton = findViewById<Button>(R.id.finding_password_button)
+        val cancelButton = findViewById<Button>(R.id.cancelButton)
+
+        // 취소 버튼 클릭 리스너 설정
+        cancelButton.setOnClickListener {
+            // 현재 액티비티 종료하여 이전 프래그먼트로 돌아가기
+            finish()
+        }
+
 
         // 사용자의 기존 비밀번호 (예: 서버나 데이터베이스에서 가져온 값)
         val userCurrentPassword = "user_password123"

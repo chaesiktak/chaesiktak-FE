@@ -21,16 +21,24 @@ class NoticeDetail : AppCompatActivity() {
         val noticeContent = intent.getStringExtra("noticeContent")
         val noticeWriter = intent.getStringExtra("noticeWriter")
         val noticeDate = intent.getStringExtra("noticeDate")
+        val noticeHits = intent.getIntExtra("noticeHits",0)
+        val noticeUpdate = intent.getStringExtra("noticeUpdate")
+
 
         val titleTextView = findViewById<TextView>(R.id.noticeDetailTitle)
         val contentTextView = findViewById<TextView>(R.id.noticeDetailContent)
         val writerTextView = findViewById<TextView>(R.id.noticeDetailWriter)
         val dateTextView = findViewById<TextView>(R.id.noticeDetailDate)
+        val hitsTextView = findViewById<TextView>(R.id.noticeDetailHits)
+        val UpdatedTime = findViewById<TextView>(R.id.noticeDetailUpdatedTime)
+
 
         titleTextView.text = noticeTitle
         contentTextView.text = noticeContent
         writerTextView.text = "작성자: $noticeWriter"
         dateTextView.text = "작성일: $noticeDate"
+        hitsTextView.text = "조회수: $noticeHits"
+        UpdatedTime.text = "수정일: $noticeUpdate"
 
         // 뒤로가기 버튼 클릭 시 공지사항 목록 탭으로 이동
         val backArrow = findViewById<ImageButton>(R.id.backArrow)

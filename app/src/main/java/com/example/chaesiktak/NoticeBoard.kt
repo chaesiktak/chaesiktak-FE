@@ -1,5 +1,6 @@
 package com.example.chaesiktak
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,6 +20,11 @@ import org.json.JSONObject
 
 // 메인 액티비티 클래스
 class NoticeBoard : AppCompatActivity() {
+
+    private lateinit var noticeRecyclerView: RecyclerView
+    private lateinit var noticeAdapter: NoticeAdapter
+    private val noticeList = mutableListOf<Noticeitem>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -39,6 +45,7 @@ class NoticeBoard : AppCompatActivity() {
             "message": "공지사항 조회 성공",
             "data": [
                 {
+                    "id": 1,
                     "noticeWriter": "관리자",
                     "noticeHits": 3,
                     "noticeTime": "2025-02-07T12:51:07.212947",
@@ -47,6 +54,7 @@ class NoticeBoard : AppCompatActivity() {
                     "url": "/notice/5"
                 },
                 {
+                    "id": 2,
                     "noticeWriter": "관리자",
                     "noticeHits": 1,
                     "noticeTime": "2025-02-06T21:24:56.3299",
@@ -55,6 +63,7 @@ class NoticeBoard : AppCompatActivity() {
                     "url": "/notice/4"
                 },
                 {
+                    "id": 3,
                     "noticeWriter": "관리자",
                     "noticeHits": 0,
                     "noticeTime": "2025-02-06T20:52:19.766921",
@@ -63,6 +72,7 @@ class NoticeBoard : AppCompatActivity() {
                     "url": "/notice/3"
                 },
                 {
+                    "id": 4,
                     "noticeWriter": "관리자",
                     "noticeHits": 0,
                     "noticeTime": "2025-02-06T20:52:11.565033",
@@ -71,6 +81,7 @@ class NoticeBoard : AppCompatActivity() {
                     "url": "/notice/2"
                 },
                 {
+                    "id": 0,
                     "noticeWriter": "관리자",
                     "noticeHits": 1,
                     "noticeTime": "2025-02-07T13:14:44.468816",
@@ -81,19 +92,41 @@ class NoticeBoard : AppCompatActivity() {
             ]
         }
         """
-        val noticeList = parseNoticeJson(jsonString)
 
-        val recyclerView = findViewById<RecyclerView>(R.id.noticeRecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = NoticeAdapter(noticeList)
+        val parsedNotices = parseNoticeJson(jsonString)
+        noticeList.addAll(parsedNotices)
 
+        noticeRecyclerView = findViewById(R.id.noticeRecyclerView)
+        noticeRecyclerView.layoutManager = LinearLayoutManager(this)
+        noticeAdapter = NoticeAdapter(noticeList)
+        noticeRecyclerView.adapter = noticeAdapter
+
+        // AddNoticeActivity로부터 데이터 받기
         val addNoticeButton = findViewById<Button>(R.id.addNoticeButton)
         addNoticeButton.setOnClickListener {
             val intent = Intent(this, AddNotice::class.java)
-            startActivity(intent)
+            //startActivity(intent)
+            startActivityForResult(intent, REQUEST_ADD_NOTICE)
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_ADD_NOTICE && resultCode == Activity.RESULT_OK) {
+            data?.getParcelableExtra<Noticeitem>("new_notice")?.let {
+                noticeList.add(it)
+                noticeAdapter.notifyDataSetChanged()
+            }
+        }
+    }
+
+    companion object {
+        const val REQUEST_ADD_NOTICE = 1
+    }
+
+
+
+    // ?
     private fun parseNoticeJson(jsonString: String): List<Noticeitem> {
         val jsonObject = JSONObject(jsonString)
         val dataArray = jsonObject.getJSONArray("data")
@@ -102,12 +135,13 @@ class NoticeBoard : AppCompatActivity() {
         for (i in 0 until dataArray.length()) {
             val dataObject = dataArray.getJSONObject(i)
             val noticeItem = Noticeitem(
+                id = dataObject.optInt("id",0),
                 noticeWriter = dataObject.getString("noticeWriter"),
-                noticeHits = dataObject.getInt("noticeHits"),
-                noticeTime = dataObject.getString("noticeTime"),
                 noticeTitle = dataObject.getString("noticeTitle"),
                 noticeContent = dataObject.getString("noticeContent"),
-                url = dataObject.getString("url")
+                noticeHits = dataObject.getInt("noticeHits"),
+                noticeCreatedTime = dataObject.getString("noticeTime"),
+                //noticeUpdatedTime = dataObject.getString("noticeUpdatedTime")
             )
             noticeList.add(noticeItem)
         }

@@ -1,15 +1,20 @@
 package com.example.chaesiktak
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class AddNotice : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,6 +25,11 @@ class AddNotice : AppCompatActivity() {
         val noticeTitleEditText = findViewById<EditText>(R.id.noticeDetailTitle)
         val noticeContentEditText = findViewById<EditText>(R.id.noticeDetailContent)
         val addButton = findViewById<Button>(R.id.saveButton)
+
+        // 현재 날짜를 가져와 TextView에 설정
+        val noticeDateTextView = findViewById<TextView>(R.id.noticeDetailDate)
+        val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        noticeDateTextView.text = "작성일: $currentDate"
 
         // 뒤로가기 버튼 클릭 시 공지사항 목록 탭으로 이동
         val backArrow = findViewById<ImageButton>(R.id.backArrow)
@@ -32,19 +42,31 @@ class AddNotice : AppCompatActivity() {
         addButton.setOnClickListener {
             val noticeTitle = noticeTitleEditText.text.toString()
             val noticeContent = noticeContentEditText.text.toString()
+            val noticeWriter = "관리자"
+            val noticeHits = 0 // 초기조회수
+            val noticeCreatedTime = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).format(Date())
+            val noticeUpdatedTime = noticeCreatedTime // 처음에는 생성시간과 동일하게 설정
+
+
 
             if (noticeTitle.isBlank() || noticeContent.isBlank()) {
                 Toast.makeText(this, "공지사항 제목과 내용을 입력해주세요.", Toast.LENGTH_SHORT).show()
             } else {
-                // 공지사항 저장 로직 구현
-                val noticeData = mapOf(
-                    "noticeTitle" to noticeTitle,
-                    "noticeContent" to noticeContent
+                // 공지사항 리스트로 데이터 전달
+                val notice = Noticeitem(
+                    id = 0, // 실제 ID는 서버나 데이터베이스에서 할당할 것
+                    noticeWriter = noticeWriter,
+                    noticeTitle = noticeTitle,
+                    noticeContent = noticeContent,
+                    noticeHits = noticeHits,
+                    noticeCreatedTime = noticeCreatedTime,
+                    //noticeUpdatedTime = noticeUpdatedTime
                 )
 
-                // 서버에 데이터 전송 또는 로컬 데이터베이스에 저장
-                // 예제) Toast 메시지로 대체
-                Toast.makeText(this, "공지사항이 저장되었습니다.", Toast.LENGTH_SHORT).show()
+                val intent = Intent()
+                intent.putExtra("new_notice", notice)
+                setResult(Activity.RESULT_OK, intent)
+                finish()
 
                 // 공지사항 목록으로 돌아가기
                 finish()

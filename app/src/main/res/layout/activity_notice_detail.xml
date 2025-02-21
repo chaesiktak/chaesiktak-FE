@@ -72,19 +72,38 @@
             android:textSize="14sp"
             android:textColor="#717171"
             android:fontFamily="@font/ibm_plex_sans_kr_regular"
-            app:layout_constraintTop_toBottomOf="@id/noticeDetailWriter"
+            app:layout_constraintTop_toBottomOf="@id/noticeDetailWriter" />
+
+        <TextView
+            android:id="@+id/noticeDetailHits"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="조회수: 0"
+            android:textSize="14sp"
+            android:textColor="#717171"
+            android:fontFamily="@font/ibm_plex_sans_kr_regular"
+            app:layout_constraintTop_toBottomOf="@id/noticeDetailDate"
             android:layout_marginBottom="16dp"/>
 
         <TextView
             android:id="@+id/noticeDetailContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="공지사항 내용\n\n\n\n\n\n"
+            android:text="공지사항 내용"
             android:textSize="18sp"
             android:textColor="#4A4743"
             android:fontFamily="@font/ibm_plex_sans_kr_regular"
             app:layout_constraintTop_toBottomOf="@id/noticeDetailTitle"
             android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/noticeDetailUpdatedTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="수정일: 2025-02-21"
+            android:textSize="14sp"
+            android:textColor="#717171"
+            android:fontFamily="@font/ibm_plex_sans_kr_regular" />
 
 
         <RelativeLayout

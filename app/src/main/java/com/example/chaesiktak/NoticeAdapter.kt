@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 class NoticeAdapter(private val itemList: List<Noticeitem>) :
     RecyclerView.Adapter<NoticeAdapter.ViewHolder>() {
 
+
+
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val noticeTitle: TextView = itemView.findViewById(R.id.noticeTitle)
         val noticeDate: TextView = itemView.findViewById(R.id.noticeDate)
@@ -24,7 +26,7 @@ class NoticeAdapter(private val itemList: List<Noticeitem>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = itemList[position]
         holder.noticeTitle.text = item.noticeTitle
-        holder.noticeDate.text = item.noticeTime.split("T")[0] // 날짜만 표시
+        holder.noticeDate.text = item.noticeCreatedTime.split("T")[0] // 날짜만 표시
 
         // 항목 클릭 리스너 설정
         holder.itemView.setOnClickListener {
@@ -33,7 +35,9 @@ class NoticeAdapter(private val itemList: List<Noticeitem>) :
                 putExtra("noticeTitle", item.noticeTitle)
                 putExtra("noticeContent", item.noticeContent)
                 putExtra("noticeWriter", item.noticeWriter)
-                putExtra("noticeDate", item.noticeTime.split("T")[0])
+                putExtra("noticeDate", item.noticeCreatedTime.split("T")[0])
+                putExtra("noticeHits", item.noticeHits)
+                //putExtra("noticeUpdatedTime", item.noticeUpdatedTime)
             }
             context.startActivity(intent)
         }

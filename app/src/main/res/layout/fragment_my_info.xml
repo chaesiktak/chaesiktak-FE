@@ -38,15 +38,6 @@
                 android:textColor="#4A4743"
                 android:textSize="20dp"/>
 
-            <!-- 공지사항 버튼 -->
-            <ImageButton
-                android:id="@+id/noticeButton"
-                android:layout_width="40dp"
-                android:layout_height="60dp"
-                android:src="@drawable/notification_icon"
-                android:background="@color/white"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"/>
 
         </RelativeLayout>
 
@@ -156,11 +147,25 @@
                 android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
                 android:textSize="16dp"
                 android:textColor="#4A4743"/>
+            <!-- 공지사항 버튼 -->
+            <Button
+                android:id="@+id/noticeButton"
+                android:layout_width="match_parent"
+                android:layout_height="66.5dp"
+                android:layout_below="@+id/likeListBtn"
+                android:background="@color/white"
+                android:text="공지사항"
+                android:gravity="center_vertical"
+                android:paddingLeft="50dp"
+                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+                android:textSize="16dp"
+                android:textColor="#4A4743" />
+
             <Button
                 android:id="@+id/deactivationBtn"
                 android:layout_width="match_parent"
                 android:layout_height="66.5dp"
-                android:layout_below="@+id/likeListBtn"
+                android:layout_below="@+id/noticeButton"
                 android:background="@color/white"
                 android:text="탈퇴하기"
                 android:gravity="center_vertical"
@@ -168,6 +173,7 @@
                 android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
                 android:textSize="16dp"
                 android:textColor="#4A4743"/>
+
             <Button
                 android:id="@+id/logoutBtn"
                 android:layout_width="match_parent"
