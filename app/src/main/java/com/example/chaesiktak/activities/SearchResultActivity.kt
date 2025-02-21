@@ -77,11 +77,27 @@ class SearchResultActivity : AppCompatActivity() {
 
     private fun fetchAndSetupRecipes(searchText: String) {
         lifecycleScope.launch {
-            val allRecipes = fetchAllRecipes()
-            setupRecyclerViews(searchText)
+            // recipeList에 데이터가 없는 경우만 API 호출
+            if (recipeList.isEmpty()) {
+                recipeList.addAll(fetchAllRecipes())
+            }
+
+            val filteredRecipes = filterRecipeList(recipeList, searchText)
+
+            searchingContentAdapter = SearchingContentAdapter(filteredRecipes.toMutableList()).apply {
+                onItemClick = { navigateToRecipeDetail(it) }
+            }
+
+            binding.searchingContentRecyclerview.apply {
+                layoutManager = GridLayoutManager(this@SearchResultActivity, 2)
+                adapter = searchingContentAdapter
+                setHasFixedSize(true)
+            }
+
             updateRecipeCountText()
         }
     }
+
 
     //표시되는 레시피 수
     private fun updateRecipeCountText() {
@@ -154,10 +170,6 @@ class SearchResultActivity : AppCompatActivity() {
         }
     }
 
-
-
-
-
     private fun showFilterBottomSheet(tvFilter: ImageView) {
         val dialog = BottomSheetDialog(this)
         val filterbinding = FilterBottomSheetBinding.inflate(layoutInflater)
@@ -224,14 +236,14 @@ class SearchResultActivity : AppCompatActivity() {
 
     private fun filterRecipesByTag(selectedTag: String) {
         lifecycleScope.launch {
-            val allRecipes = fetchAllRecipes()
-            val filteredBySearchText = filterRecipeList(allRecipes, binding.searchInput.text.toString().trim())
+            val filteredBySearchText = filterRecipeList(recipeList, binding.searchInput.text.toString().trim())
             val finalFilteredRecipes = filteredBySearchText.filter { it.tag?.equals(selectedTag) == true }
 
             searchingContentAdapter.updateList(finalFilteredRecipes.toMutableList())
             updateRecipeCountText()
         }
     }
+
 
     private fun updateFilterIcon(isFiltered: Boolean) {
         if (isFiltered) {
@@ -251,13 +263,14 @@ class SearchResultActivity : AppCompatActivity() {
 
     private suspend fun fetchAllRecipes(): List<RecommendRecipe> {
         return try {
-            val response = RetrofitClient.instance(this).getRecommendedRecipes()
-            if (response.isSuccessful) {
-                response.body()?.data?.mapNotNull { fetchRecipeDetail(it.recipeId) } ?: emptyList()
-            } else {
-                showError("서버 응답 오류: ${response.code()}")
-                emptyList()
+            val recipeIds = listOf(1, 2, 3, 4, 5, 6, 7, 8) // 하드코딩된 ID 사용
+            val recipeDetails = recipeIds.mapNotNull { fetchRecipeDetail(it) }
+
+            if (recipeDetails.isEmpty()) {
+                showError("레시피 데이터를 불러올 수 없습니다.")
             }
+
+            recipeDetails
         } catch (e: Exception) {
             showError("네트워크 오류: ${e.message}")
             emptyList()
@@ -271,7 +284,7 @@ class SearchResultActivity : AppCompatActivity() {
             if (response.isSuccessful) {
                 response.body()?.data
             } else {
-                showError("서버 응답 오류: ${response.code()}") // ✅ response.code()도 사용 가능!
+                showError("서버 응답 오류: ${response.code()}")
                 null
             }
         } catch (e: Exception) {

@@ -71,11 +71,11 @@ class SearchingContentAdapter(private var searchingContentList: MutableList<Reco
     // 태그에 맞는 색상 반환
     private fun getTagColor(tag: String): Int {
         return when (tag) {
-            "비건" -> R.color.color_vegan
-            "락토" -> R.color.color_lacto
-            "오보" -> R.color.color_ovo
-            "락토오보" -> R.color.color_lacto_ovo
-            "페스코" -> R.color.color_pesco
+            "VEGAN" -> R.color.color_vegan
+            "LACTO" -> R.color.color_lacto
+            "OVO" -> R.color.color_ovo
+            "LACTO_OVO" -> R.color.color_lacto_ovo
+            "PESCO" -> R.color.color_pesco
             else -> R.color.color_pollo
         }
     }
