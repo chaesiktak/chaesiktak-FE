@@ -1,6 +1,8 @@
 package com.example.chaesiktak.fragments
 
+import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,7 +13,9 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,6 +39,9 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class MyInfoFragment : Fragment() {
+
+    private lateinit var nicknameTextView: TextView
+
     // 최근 본 항목 받아오기
     private lateinit var recentRecyclerView: RecyclerView
     private lateinit var recentAdapter: RecentAdapter
@@ -50,6 +57,36 @@ class MyInfoFragment : Fragment() {
 
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_my_info, container, false)
+
+        // Nickname 텍스트뷰
+        nicknameTextView = view.findViewById(R.id.Nickname)
+
+        // SharedPreferences에서 현재 설정된 이름과 닉네임 가져오기
+        val sharedPref = requireActivity().getSharedPreferences("UserProfile", Context.MODE_PRIVATE)
+        val currentName = sharedPref.getString("name", "이름") ?: "이름"
+        val currentNickname = sharedPref.getString("nickname", "닉네임") ?: "닉네임"
+
+        nicknameTextView.text = currentNickname  // Nickname 설정
+
+        // 프로필 수정 결과 처리
+        val editProfileLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data = result.data
+                val newNickname = data?.getStringExtra("newNickname")
+
+                if (!newNickname.isNullOrBlank()) {
+                    // 변경된 이름과 닉네임을 SharedPreferences에 저장
+                    with(sharedPref.edit()) {
+                        putString("nickname", newNickname)
+                        apply()
+                    }
+
+                    nicknameTextView.text = newNickname  // Nickname 설정
+                }
+            }
+        }
 
         recentRecyclerView = view.findViewById(R.id.recentRecyclerView)
         recentRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -117,6 +154,14 @@ class MyInfoFragment : Fragment() {
         }
         // Inflate the layout for this fragment
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Fragment가 다시 보일 때마다 닉네임을 업데이트
+        val sharedPref = requireActivity().getSharedPreferences("UserProfile", Context.MODE_PRIVATE)
+        val currentNickname = sharedPref.getString("nickname", "닉네임") ?: "닉네임"
+        nicknameTextView.text = currentNickname
     }
 
     companion object {
