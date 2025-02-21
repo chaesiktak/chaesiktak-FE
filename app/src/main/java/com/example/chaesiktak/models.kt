@@ -143,8 +143,8 @@ data class Ingredient(
 //레시피 순서
 
 data class RecipeStep(
-    val stepNumber: Int, // 1 -> Step 1
-    val stepContent: String
+    val step: Int, // 1 -> Step 1
+    val description: String
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
@@ -152,8 +152,8 @@ data class RecipeStep(
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeInt(stepNumber)
-        parcel.writeString(stepContent)
+        parcel.writeInt(step)
+        parcel.writeString(description)
     }
 
     override fun describeContents(): Int = 0

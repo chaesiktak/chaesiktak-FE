@@ -1,9 +1,7 @@
 package com.example.chaesiktak.activities
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.os.Parcelable
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
@@ -48,7 +46,6 @@ class RecipeDetailActivity : AppCompatActivity() {
                 startActivity(intent)
             } ?: Toast.makeText(this, "레시피 정보를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show()
         }
-
 
         binding.recipeArrow.setOnClickListener {
             recipe?.let {
