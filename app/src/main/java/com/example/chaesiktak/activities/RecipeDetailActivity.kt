@@ -3,66 +3,92 @@ package com.example.chaesiktak.activities
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Parcelable
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.chaesiktak.R
 import com.example.chaesiktak.RecommendRecipe
 import com.example.chaesiktak.databinding.ActivityRecipeDetailBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class RecipeDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRecipeDetailBinding
-    private var recipe: RecommendRecipe? = null  // recipe 데이터를 멤버 변수로 설정
+    private var recipe: RecommendRecipe? = null
+    private var recipeId: Int = -1  // 레시피 ID 저장
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // ViewBinding 설정
         binding = ActivityRecipeDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // API 33 이상 대응 (Parcelable)
-        recipe = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra("RECIPE", RecommendRecipe::class.java)
+        // Intent에서 레시피 ID 가져오기
+        recipeId = intent.getIntExtra("RECIPE_ID", -1)
+
+        if (recipeId != -1) {
+            fetchRecipeDetail(recipeId) // API 호출
         } else {
-            intent.getParcelableExtra("RECIPE")
+            Toast.makeText(this, "레시피 정보를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show()
+            finish()
         }
 
+        binding.backArrowIcon.setOnClickListener {
+            finish()
+        }
+    }
+
+    private fun fetchRecipeDetail(recipeId: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = RetrofitClient.instance(this@RecipeDetailActivity)
+                    .getRecipeDetail(recipeId)
+
+                if (response.isSuccessful && response.body() != null) {
+                    val responseBody = response.body()!!
+
+                    if (responseBody.success) {
+                        recipe = responseBody.data // RecommendRecipe 데이터 가져오기
+
+                        withContext(Dispatchers.Main) {
+                            bindRecipeData()
+                        }
+                    } else {
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(this@RecipeDetailActivity, "오류: ${responseBody.message}", Toast.LENGTH_SHORT).show()
+                            finish()
+                        }
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(this@RecipeDetailActivity, "서버 응답 오류", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@RecipeDetailActivity, "네트워크 오류: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun bindRecipeData() {
         recipe?.let {
             binding.detailTitle.text = it.title
             binding.detaiLTitle2.text = it.title
             binding.detailKcal.text = it.kcal
+
             binding.detailImageView2.setImageResource(it.image)
 
-            // 좋아요 버튼 UI 업데이트
+
             updateLikeButtonUI(it.isFavorite)
 
-            // 좋아요 버튼 클릭 이벤트 추가
             binding.detailLike.setOnClickListener {
                 toggleLike()
             }
-        }
-
-        // 재료 상세 페이지로 이동
-        binding.ingredientArrow.setOnClickListener {
-            recipe?.let {
-                val intent = Intent(this, IngredientDetailActivity::class.java).apply {
-                    putExtra("RECIPE", it)
-                }
-                startActivity(intent)
-            }
-        }
-
-        binding.recipeArrow.setOnClickListener {
-            recipe?.let {
-                val intent = Intent(this, RecipeContentsActivity::class.java).apply {
-                    putExtra("RECIPE", it)
-                }
-                startActivity(intent)
-            }
-        }
-
-        //뒤로가기 (backarrow icon 클릭시)
-        binding.backArrowIcon.setOnClickListener {
-            finish()
         }
     }
 
@@ -74,27 +100,13 @@ class RecipeDetailActivity : AppCompatActivity() {
 
     private fun toggleLike() {
         recipe?.let {
-            it.isFavorite = !it.isFavorite  // 상태 변경
-            updateLikeButtonUI(it.isFavorite)  // UI 업데이트
+            it.isFavorite = !it.isFavorite
+            updateLikeButtonUI(it.isFavorite)
 
-            // 변경된 데이터를 HomeFragment로 전달
             val resultIntent = Intent().apply {
                 putExtra("UPDATED_RECIPE", it)
             }
             setResult(RESULT_OK, resultIntent)
         }
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        setResultAndFinish()
-    }
-
-    private fun setResultAndFinish() {
-        val resultIntent = Intent().apply {
-            putExtra("UPDATED_RECIPE", recipe)
-        }
-        setResult(RESULT_OK, resultIntent)
-        finish()
     }
 }

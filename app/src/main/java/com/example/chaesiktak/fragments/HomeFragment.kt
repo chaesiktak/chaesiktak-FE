@@ -139,10 +139,11 @@ class HomeFragment : Fragment() {
 
     private fun navigateToRecipeDetail(recipe: RecommendRecipe) {
         val intent = Intent(requireContext(), RecipeDetailActivity::class.java).apply {
-            putExtra("RECIPE", recipe)
+            putExtra("RECIPE_ID", recipe.id) // ID만 전달
         }
         recipeDetailLauncher.launch(intent)
     }
+
 
     private val recipeDetailLauncher = registerForActivityResult(
         androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult()
@@ -150,7 +151,7 @@ class HomeFragment : Fragment() {
         if (result.resultCode == Activity.RESULT_OK) {
             val updatedRecipe = result.data?.getParcelableExtra<RecommendRecipe>("UPDATED_RECIPE")
             updatedRecipe?.let { updated ->
-                val index = recipeList.indexOfFirst { it.title == updated.title }
+                val index = recipeList.indexOfFirst { it.id == updated.id }
                 if (index != -1) {
                     recipeList[index] = updated
                     recommendRecipeAdapter.notifyItemChanged(index)
@@ -186,39 +187,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    //대기
-//    private fun fetchAllRecipes() {
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            try {
-//                val response = RetrofitClient.instance(requireContext()).getRecommendedRecipes()
-//                if (response.isSuccessful) {
-//                    response.body()?.let { apiResponse ->
-//                        if (apiResponse.success) {
-//                            val recipeIds = apiResponse.data?.map { it.recipeId } ?: emptyList()
-//
-//                            // 병렬로 개별 레시피 정보 요청
-//                            val recipeDetails = recipeIds.map { id ->
-//                                async { fetchRecipeDetail(id) }
-//                            }.awaitAll()
-//
-//                            // null 제거 후 리스트 추가
-//                            recipeList.clear()
-//                            recipeList.addAll(recipeDetails.filterNotNull())
-//
-//                            // 어댑터 갱신
-//                            recommendRecipeAdapter.notifyDataSetChanged()
-//                        } else {
-//                            Log.e("에러", "레시피를 불러올 수 없습니다.")
-//                        }
-//                    } ?: Log.e("에러", "서버가 응답하지 않습니다. ")
-//                } else {
-//                    showError("서버 응답이 올바르지 않습니다. 코드: ${response.code()}")
-//                }
-//            } catch (e: Exception) {
-//                showError("네트워크 오류: ${e.message}")
-//            }
-//        }
-//    }
 
     private suspend fun fetchRecipeDetail(recipeId: Int): RecommendRecipe? {
         return try {
@@ -241,24 +209,6 @@ class HomeFragment : Fragment() {
             null
         }
     }
-
-
-
-//    private suspend fun fetchRecipeDetail(recipeId: Int): RecommendRecipe? {
-//        return try {
-//            val response = RetrofitClient.instance(requireContext()).getRecipeDetail(recipeId)
-//
-//            if (response.isSuccessful) {
-//                response.body()?.data
-//            } else {
-//                showError("서버 응답 오류: ${response.code()}")
-//                null
-//            }
-//        } catch (e: Exception) {
-//            showError("네트워크 오류: ${e.message}")
-//            null
-//        }
-//    }
 
     private fun showError(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
