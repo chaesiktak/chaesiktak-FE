@@ -25,7 +25,7 @@ class IngredientAdapter(private val ingredientList: List<Ingredient>) :
 
     override fun onBindViewHolder(holder: IngredientViewHolder, position: Int) {
         val ingredient = ingredientList[position]
-        holder.nameView.text = ingredient.detail_name
-        holder.quantityView.text = ingredient.detail_quantity
+        holder.nameView.text = ingredient.name
+        holder.quantityView.text = ingredient.amount
     }
 }

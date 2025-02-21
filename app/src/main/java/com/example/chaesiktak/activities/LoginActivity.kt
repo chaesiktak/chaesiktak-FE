@@ -1,6 +1,5 @@
 package com.example.chaesiktak.activities
 
-import LoginRequest
 import RetrofitClient
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -15,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
+import com.example.chaesiktak.LoginRequest
 import com.example.chaesiktak.R
 import kotlinx.coroutines.launch
 
@@ -51,7 +51,6 @@ class LoginActivity : AppCompatActivity() {
         }
 
         // 클릭 이벤트 설정 : 로그인 액션
-
         LoginButton.setOnClickListener {
 
             val ID = IDEditText.text.toString().trim()
@@ -62,31 +61,32 @@ class LoginActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            Log.d("Login", "로그인 버튼 클릭")
             login(ID, PWD)
-
-            val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
         }
 
     }
+
     // 로그인 API 호출
     private fun login(email: String, password: String) {
         lifecycleScope.launch {
             try {
-                val response = RetrofitClient.instance.login((LoginRequest(email, password)))
+                val response = RetrofitClient.instance(this@LoginActivity).login(LoginRequest(email, password))
+
                 if (response.isSuccessful) {
                     val loginResponse = response.body()
-                    loginResponse?.data?.let { tokenData ->
-                        Log.d("Login", "로그인 성공: AccessToken=${tokenData.accessToken}")
-                        Toast.makeText(this@LoginActivity, "로그인 성공!", Toast.LENGTH_SHORT).show()
+                    val accessToken = loginResponse?.data?.accessToken ?: ""
 
-                        // 홈 화면으로 이동
-                        val intent = Intent(this@LoginActivity, HomeActivity::class.java)
-                        startActivity(intent)
+                    if (accessToken.isNotEmpty()) {
+                        saveAccessToken(accessToken)
+                        Log.d("Login", "로그인 성공: AccessToken=$accessToken")
+                        startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
                         finish()
+                    } else {
+                        Toast.makeText(this@LoginActivity, "로그인 실패: 토큰 없음", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(this@LoginActivity, "로그인 실패: ${response.message()}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@LoginActivity, "일치하는 정보가 존재하지 않습니다.: ${response.message()}", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Toast.makeText(this@LoginActivity, "네트워크 오류: ${e.message}", Toast.LENGTH_SHORT).show()
@@ -94,4 +94,13 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun saveAccessToken(token: String) {
+        val sharedPref = getSharedPreferences("AppPrefs", MODE_PRIVATE)
+        with(sharedPref.edit()) {
+            putString("accessToken", token)
+            apply()
+        }
+    }
+
 }

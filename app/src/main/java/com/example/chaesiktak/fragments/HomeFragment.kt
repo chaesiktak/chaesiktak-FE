@@ -1,6 +1,5 @@
 package com.example.chaesiktak.fragments
 
-import ApiResponse
 import com.example.chaesiktak.adapters.BannerAdapter
 import RecommendRecipeAdapter
 import android.app.Activity
@@ -21,11 +20,10 @@ import com.example.chaesiktak.activities.RecipeDetailActivity
 import com.example.chaesiktak.activities.SearchPanelActivity
 import com.example.chaesiktak.adapters.TagRecipeAdapter
 import com.example.chaesiktak.databinding.FragmentHomeBinding
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
@@ -50,7 +48,7 @@ class HomeFragment : Fragment() {
         setupBanner()
         setupBottomNavigation()
 
-        fetchRecommendedRecipes()
+        fetchAllRecipes()
 
         return binding.root
     }
@@ -67,9 +65,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerViews() {
-        recipeList.addAll(getSampleRecipes())
-        tagRecipeList.addAll(getTagRecipes())
-
         recommendRecipeAdapter = RecommendRecipeAdapter(recipeList).apply {
             onItemClick = { navigateToRecipeDetail(it) }
         }
@@ -82,12 +77,14 @@ class HomeFragment : Fragment() {
         tagRecipeAdapter = TagRecipeAdapter(tagRecipeList).apply {
             onItemClick = { navigateToRecipeDetail(it) }
         }
+
         binding.tagRecipeRecyclerView.apply {
             layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = tagRecipeAdapter
             setHasFixedSize(true)
         }
     }
+
 
     private fun setupBanner() {
         val banners = listOf(
@@ -160,32 +157,32 @@ class HomeFragment : Fragment() {
         }
     }
 
-    //데이터 예시 - 추천 레시피 9개
-    private fun getSampleRecipes(): List<RecommendRecipe> {
-        val recipes = SampleRecipes.recipes
-        return if (recipes.size > 9) recipes.subList(0, 9) else recipes
-    }
-
-    private fun getTagRecipes(): List<RecommendRecipe> {
-        val recipes = SampleRecipes.recipes
-        return if (recipes.size > 6) recipes.subList(0, 6) else recipes
-    }
-
-    private fun fetchRecommendedRecipes() {
+    private fun fetchAllRecipes() {
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                val response = RetrofitClient.instance.getRecommendedRecipes().execute()
-                if (response.isSuccessful && response.body() != null) {
-                    val apiResponse = response.body()
-                    if (apiResponse!!.success) {
-                        recipeList.clear()
-                        recipeList.addAll((apiResponse.data ?: emptyList()) as Collection<RecommendRecipe>)
-                        recommendRecipeAdapter.notifyDataSetChanged()
-                    } else {
-                        showError("추천 레시피를 불러오지 못했습니다.")
-                    }
+                val response = RetrofitClient.instance(requireContext()).getRecommendedRecipes()
+                if (response.isSuccessful) {
+                    response.body()?.let { apiResponse ->
+                        if (apiResponse.success) {
+                            val recipeIds = apiResponse.data?.map { it.recipeId } ?: emptyList()
+
+                            // 병렬로 개별 레시피 정보 요청
+                            val recipeDetails = recipeIds.map { id ->
+                                async { fetchRecipeDetail(id) }
+                            }.awaitAll()
+
+                            // null 제거 후 리스트 추가
+                            recipeList.clear()
+                            recipeList.addAll(recipeDetails.filterNotNull())
+
+                            // 어댑터 갱신
+                            recommendRecipeAdapter.notifyDataSetChanged()
+                        } else {
+                            showError("전체 레시피를 불러오지 못했습니다.")
+                        }
+                    } ?: showError("서버 응답이 올바르지 않습니다.")
                 } else {
-                    showError("서버 응답이 올바르지 않습니다.")
+                    showError("서버 응답이 올바르지 않습니다. 코드: ${response.code()}")
                 }
             } catch (e: Exception) {
                 showError("네트워크 오류: ${e.message}")
@@ -194,10 +191,25 @@ class HomeFragment : Fragment() {
     }
 
 
-    private fun showError(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    private suspend fun fetchRecipeDetail(recipeId: Int): RecommendRecipe? {
+        return try {
+            val response = RetrofitClient.instance(requireContext()).getRecipeDetail(recipeId)
+
+            if (response.isSuccessful) {
+                response.body()?.data
+            } else {
+                showError("서버 응답 오류: ${response.code()}")
+                null
+            }
+        } catch (e: Exception) {
+            showError("네트워크 오류: ${e.message}")
+            null
+        }
     }
 
 
 
+    private fun showError(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
 }

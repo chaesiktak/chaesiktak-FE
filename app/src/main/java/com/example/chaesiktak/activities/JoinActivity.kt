@@ -1,8 +1,5 @@
 package com.example.chaesiktak.activities
 
-import ApiResponse
-import SignUpRequest
-import User
 import android.content.Intent
 import android.os.Bundle
 import android.os.Message
@@ -20,7 +17,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
+import com.example.chaesiktak.ApiResponse
 import com.example.chaesiktak.R
+import com.example.chaesiktak.SignUpRequest
+import com.example.chaesiktak.User
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -156,12 +158,13 @@ class JoinActivity : AppCompatActivity() {
 
     private fun performSignUp() {
         hideErrors()
+
         if (!tosCheckbox.isChecked) {
             Toast.makeText(this, "약관에 동의해주세요.", Toast.LENGTH_LONG).show()
             return
         }
 
-        //EditText에서 값 가져오기
+        // EditText에서 값 가져오기
         val email = emailEditText.text.toString().trim()
         val password = passwordEditText.text.toString().trim()
         val confirmPassword = confirmPasswordEditText.text.toString().trim()
@@ -173,14 +176,15 @@ class JoinActivity : AppCompatActivity() {
             showPasswordError("비밀번호가 일치하지 않습니다.")
             return
         }
+
         Log.d("API Request", "email: $email, password: $password, name: $name, nickname: $nickname")
         val request = SignUpRequest(email, password, name, nickname)
 
-        RetrofitClient.instance.signUp(request).enqueue(object : Callback<ApiResponse<User>> {
-            override fun onResponse(
-                call: Call<ApiResponse<User>>,
-                response: Response<ApiResponse<User>>
-            ) {
+        // RetrofitClient의 getInstance(this) 사용
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitClient.instance(this@JoinActivity).signUp(request)
+
                 if (response.isSuccessful) {
                     val user = response.body()?.data
                     Toast.makeText(
@@ -205,16 +209,14 @@ class JoinActivity : AppCompatActivity() {
                         ).show()
                     }
                 }
+            } catch (e: Exception) {
+                Toast.makeText(this@JoinActivity, "오류 발생: ${e.message}", Toast.LENGTH_LONG).show()
+                Log.e("JoinActivity", "회원가입 요청 실패", e)
             }
+        }
 
-            override fun onFailure(call: Call<ApiResponse<User>>, t: Throwable) {
-                Toast.makeText(this@JoinActivity, "오류 발생: ${t.message}", Toast.LENGTH_LONG).show()
-                Log.e("JoinActivity", "회원가입 요청 실패", t)
-            }
-
-
-        })
     }
+
 
 
 }
