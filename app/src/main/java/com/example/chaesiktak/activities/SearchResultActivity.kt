@@ -244,7 +244,6 @@ class SearchResultActivity : AppCompatActivity() {
         }
     }
 
-
     private fun updateFilterIcon(isFiltered: Boolean) {
         if (isFiltered) {
             binding.filterText.setImageResource(R.drawable.filter_text_selected)

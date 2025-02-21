@@ -82,7 +82,7 @@
             android:button="@null"
             android:layout_marginHorizontal="6dp"
             android:background="@drawable/filter_tag_selector"
-            android:text="비건"
+            android:text="VEGAN"
             android:textAlignment="center"
             android:textColor="@drawable/filter_text_color" />
 
@@ -94,36 +94,26 @@
             android:layout_marginHorizontal="6dp"
             android:background="@drawable/filter_tag_selector"
             android:button="@null"
-            android:text="락토"
+            android:text="LACTO"
             android:textAlignment="center"
             android:textColor="@drawable/filter_text_color" />
 
-        <RadioButton
-            android:paddingHorizontal="20dp"
-            android:id="@+id/radio_ovo"
-            android:layout_width="wrap_content"
-            android:layout_height="37dp"
-            android:layout_marginHorizontal="6dp"
-            android:background="@drawable/filter_tag_selector"
-            android:button="@null"
-            android:text="오보"
-            android:textAlignment="center"
-            android:textColor="@drawable/filter_text_color" />
+            <RadioButton
+                android:id="@+id/radio_pesco"
+                android:layout_width="wrap_content"
+                android:layout_height="37dp"
+                android:layout_marginHorizontal="6dp"
+                android:background="@drawable/filter_tag_selector"
+                android:button="@null"
+                android:paddingHorizontal="20dp"
+                android:text="PESCO"
+                android:textAlignment="center"
+                android:textColor="@drawable/filter_text_color" />
 
-        <RadioButton
-            android:paddingHorizontal="20dp"
-            android:id="@+id/radio_lacto_ovo"
-            android:layout_width="wrap_content"
-            android:layout_height="37dp"
-            android:layout_marginHorizontal="6dp"
-            android:background="@drawable/filter_tag_selector"
-            android:button="@null"
-            android:text="락토오보"
-            android:textAlignment="center"
-            android:textColor="@drawable/filter_text_color" />
         </RadioGroup>
     </LinearLayout>
         <!-- 두 번째 줄 -->
+
     <LinearLayout
         android:paddingHorizontal="20dp"
         android:id="@+id/linearLayout4"
@@ -140,17 +130,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/radio_pesco"
-                android:layout_width="wrap_content"
-                android:layout_height="37dp"
-                android:layout_marginHorizontal="6dp"
-                android:background="@drawable/filter_tag_selector"
-                android:button="@null"
-                android:paddingHorizontal="20dp"
-                android:text="페스코"
-                android:textAlignment="center"
-                android:textColor="@drawable/filter_text_color" />
+
+
 
             <RadioButton
                 android:id="@+id/radio_flexitarian"
@@ -160,7 +141,31 @@
                 android:background="@drawable/filter_tag_selector"
                 android:button="@null"
                 android:paddingHorizontal="20dp"
-                android:text="플렉시 테리언"
+                android:text="FLEXITARIAN"
+                android:textAlignment="center"
+                android:textColor="@drawable/filter_text_color" />
+
+            <RadioButton
+                android:paddingHorizontal="20dp"
+                android:id="@+id/radio_ovo"
+                android:layout_width="wrap_content"
+                android:layout_height="37dp"
+                android:layout_marginHorizontal="6dp"
+                android:background="@drawable/filter_tag_selector"
+                android:button="@null"
+                android:text="OVO"
+                android:textAlignment="center"
+                android:textColor="@drawable/filter_text_color" />
+
+            <RadioButton
+                android:paddingHorizontal="20dp"
+                android:id="@+id/radio_lacto_ovo"
+                android:layout_width="wrap_content"
+                android:layout_height="37dp"
+                android:layout_marginHorizontal="6dp"
+                android:background="@drawable/filter_tag_selector"
+                android:button="@null"
+                android:text="LACTO_OVO"
                 android:textAlignment="center"
                 android:textColor="@drawable/filter_text_color" />
         </RadioGroup>
