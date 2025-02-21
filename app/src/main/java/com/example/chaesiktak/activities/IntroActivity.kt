@@ -18,17 +18,11 @@ class IntroActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_intro)
 
-
         val startButton: Button = findViewById(R.id.start_button)
         startButton.setOnClickListener {
             startActivity(Intent(this@IntroActivity, LoginActivity::class.java))
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
     }
 }
 

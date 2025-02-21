@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import coil.load
 import com.example.chaesiktak.R
 import com.example.chaesiktak.RecommendRecipe
 import com.example.chaesiktak.databinding.ActivityRecipeDetailBinding
@@ -38,7 +39,27 @@ class RecipeDetailActivity : AppCompatActivity() {
         binding.backArrowIcon.setOnClickListener {
             finish()
         }
-    }
+
+        binding.ingredientArrow.setOnClickListener {
+            recipe?.let {
+                val intent = Intent(this@RecipeDetailActivity, IngredientDetailActivity::class.java).apply {
+                    putExtra("RECIPE_ID", it.id) // recipeId 전달
+                }
+                startActivity(intent)
+            } ?: Toast.makeText(this, "레시피 정보를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show()
+        }
+
+
+        binding.recipeArrow.setOnClickListener {
+            recipe?.let {
+                val intent =
+                    Intent(this@RecipeDetailActivity, RecipeContentsActivity::class.java).apply {
+                        putExtra("RECIPE_ID", it.id) // recipeId 전달
+                    }
+                startActivity(intent)
+            } ?: Toast.makeText(this, "레시피 정보를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show()
+        }
+        }
 
     private fun fetchRecipeDetail(recipeId: Int) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -81,8 +102,11 @@ class RecipeDetailActivity : AppCompatActivity() {
             binding.detaiLTitle2.text = it.title
             binding.detailKcal.text = it.kcal
 
-            binding.detailImageView2.setImageResource(it.image)
-
+            binding.detailImageView2.load(it.image) {
+                placeholder(R.drawable.placeholder_image)
+                error(R.drawable.placeholder_image)
+                fallback(R.drawable.placeholder_image)
+            }
 
             updateLikeButtonUI(it.isFavorite)
 
