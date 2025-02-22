@@ -101,6 +101,17 @@
                 android:background="@drawable/filter_tag_selector"
                 android:button="@null"
                 android:paddingHorizontal="20dp"
+                android:text="양파"
+                android:textAlignment="center"
+                android:textColor="@drawable/filter_text_color" />
+
+            <RadioButton
+                android:layout_marginEnd="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="37dp"
+                android:background="@drawable/filter_tag_selector"
+                android:button="@null"
+                android:paddingHorizontal="20dp"
                 android:text="두부"
                 android:textAlignment="center"
                 android:textColor="@drawable/filter_text_color" />
@@ -114,16 +125,7 @@
                 android:text="토마토"
                 android:textAlignment="center"
                 android:textColor="@drawable/filter_text_color" />
-            <RadioButton
-                android:layout_marginEnd="6dp"
-                android:layout_width="wrap_content"
-                android:layout_height="37dp"
-                android:background="@drawable/filter_tag_selector"
-                android:button="@null"
-                android:paddingHorizontal="20dp"
-                android:text="양파"
-                android:textAlignment="center"
-                android:textColor="@drawable/filter_text_color" />
+
         </RadioGroup>
     </LinearLayout>
 

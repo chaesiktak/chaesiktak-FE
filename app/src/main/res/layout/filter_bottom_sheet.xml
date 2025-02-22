@@ -228,7 +228,9 @@
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <android.widget.CheckBox
+                android:id="@+id/checkboxSpinach"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:background="@drawable/add_checkbox"
@@ -249,6 +251,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <android.widget.CheckBox
+                android:id="@+id/checkboxCabbage"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:background="@drawable/add_checkbox"
@@ -269,6 +272,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <android.widget.CheckBox
+                android:id="@+id/checkboxPotato"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:background="@drawable/add_checkbox"
@@ -288,6 +292,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <android.widget.CheckBox
+                android:id="@+id/checkboxEggplant"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:background="@drawable/add_checkbox"
@@ -358,6 +363,7 @@
             android:orientation="horizontal">
 
             <android.widget.CheckBox
+                android:id="@+id/checkboxCoriander"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:background="@drawable/subtract_checkbox"
@@ -381,6 +387,7 @@
             android:orientation="horizontal">
 
             <android.widget.CheckBox
+                android:id="@+id/checkboxGinger"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:background="@drawable/subtract_checkbox"
@@ -404,6 +411,7 @@
             android:orientation="horizontal">
 
             <android.widget.CheckBox
+                android:id="@+id/checkboxCucumber"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:background="@drawable/subtract_checkbox"
@@ -426,6 +434,7 @@
             android:orientation="horizontal">
 
             <android.widget.CheckBox
+                android:id="@+id/checkboxCelery"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:background="@drawable/subtract_checkbox"
