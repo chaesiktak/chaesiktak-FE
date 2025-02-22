@@ -141,7 +141,6 @@ data class Ingredient(
 }
 
 //레시피 순서
-
 data class RecipeStep(
     val step: Int, // 1 -> Step 1
     val description: String
@@ -176,5 +175,10 @@ data class ResetPasswordResponse(
     val success: Boolean,
     val message: String,
     val data: String?
+)
+
+//LLM
+data class ImageRequestBody(
+    val image: String
 )
 

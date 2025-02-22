@@ -1,5 +1,6 @@
 package com.example.chaesiktak.activities
 
+import LoadingDialog
 import RetrofitClient
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -11,24 +12,19 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.chaesiktak.LoginRequest
 import com.example.chaesiktak.R
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
+    private lateinit var loadingDialog: LoadingDialog
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // 레이아웃을 설정
-
         setContentView(R.layout.activity_login)
-
-        // 텍스트 뷰 참조
 
         val signUpText: TextView = findViewById(R.id.sign_up_text)
         val forgotPasswordText: TextView = findViewById(R.id.forgot_password_text)
@@ -36,23 +32,18 @@ class LoginActivity : AppCompatActivity() {
         val IDEditText: EditText = findViewById(R.id.username_input)
         val PWEditText: EditText = findViewById(R.id.password_input)
 
-        // 클릭 이벤트 설정 ('비밀번호 찾기' 텍스트 클릭 시, FindingPasswordActivity로 이동)
+        // 로딩 다이얼로그 초기화
+        loadingDialog = LoadingDialog(this)
 
         forgotPasswordText.setOnClickListener {
-            val intent = Intent(this, FindingPasswordActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, FindingPasswordActivity::class.java))
         }
-
-        // 클릭 이벤트 ('회원가입 텍스트' 클릭 시, JoinActivity로 이동)
 
         signUpText.setOnClickListener {
-            val intent = Intent(this, JoinActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, JoinActivity::class.java))
         }
 
-        // 클릭 이벤트 설정 : 로그인 액션
         LoginButton.setOnClickListener {
-
             val ID = IDEditText.text.toString().trim()
             val PWD = PWEditText.text.toString().trim()
 
@@ -62,16 +53,19 @@ class LoginActivity : AppCompatActivity() {
             }
 
             Log.d("Login", "로그인 버튼 클릭")
+            loadingDialog.show()
+            loadingDialog.startAnimation()
+
             login(ID, PWD)
         }
-
     }
 
     // 로그인 API 호출
     private fun login(email: String, password: String) {
         lifecycleScope.launch {
             try {
-                val response = RetrofitClient.instance(this@LoginActivity).login(LoginRequest(email, password))
+                val response = RetrofitClient.instance(this@LoginActivity)
+                    .login(LoginRequest(email, password))
 
                 Log.d("Login", "HTTP 응답 코드: ${response.code()}")
                 Log.d("Login", "서버 응답 메시지: ${response.message()}")
@@ -85,17 +79,27 @@ class LoginActivity : AppCompatActivity() {
                     if (accessToken.isNotEmpty()) {
                         saveAccessToken(accessToken)
                         Log.d("Login", "로그인 성공: AccessToken=$accessToken")
+
+                        // ✅ 다이얼로그 닫기
+                        loadingDialog.stopAnimation()
+
                         startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
                         finish()
                     } else {
                         Log.d("Login", "로그인 실패: 서버에서 토큰을 받지 못함")
+                        Toast.makeText(this@LoginActivity, "로그인 실패", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     val errorBody = response.errorBody()?.string()
                     Log.d("ServerResponse", "서버 응답 (실패): $errorBody")
+                    Toast.makeText(this@LoginActivity, "로그인 실패: ${response.message()}", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Log.e("Login", "네트워크 오류", e)
+                Toast.makeText(this@LoginActivity, "네트워크 오류 발생", Toast.LENGTH_SHORT).show()
+            } finally {
+
+                loadingDialog.stopAnimation()
             }
         }
     }
@@ -109,9 +113,9 @@ class LoginActivity : AppCompatActivity() {
         val isSaved = editor.commit()
 
         if (isSaved) {
-            Log.d("Token", "✅ 토큰이 정상적으로 저장됨: $token")
+            Log.d("Token", "토큰이 정상적으로 저장됨: $token")
         } else {
-            Log.e("Token", "❌ 토큰 저장 실패!")
+            Log.e("Token", "토큰 저장 실패")
         }
 
         // 저장된 값 다시 확인

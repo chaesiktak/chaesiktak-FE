@@ -8,11 +8,14 @@ import com.example.chaesiktak.ResetPasswordRequest
 import com.example.chaesiktak.ResetPasswordResponse
 import com.example.chaesiktak.SignUpRequest
 import com.example.chaesiktak.User
-import retrofit2.Call
+import okhttp3.MultipartBody
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface ApiService {
@@ -44,5 +47,10 @@ interface ApiService {
         @Body request: ResetPasswordRequest
     ): Response<ResetPasswordResponse>
 
-
+    // LLM 이미지 분석
+    @Multipart
+    @POST("analyze-image")
+    suspend fun uploadImage(
+        @Part image: MultipartBody.Part
+    ): Response<ResponseBody>
 }
