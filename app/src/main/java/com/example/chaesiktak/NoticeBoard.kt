@@ -1,6 +1,7 @@
 package com.example.chaesiktak
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -37,6 +38,100 @@ class NoticeBoard : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // SharedPreferences에서 공지사항 불러오기
+        loadNoticesFromSharedPreferences()
+
+        noticeRecyclerView = findViewById(R.id.noticeRecyclerView)
+        noticeRecyclerView.layoutManager = LinearLayoutManager(this)
+        noticeAdapter = NoticeAdapter(noticeList)
+        noticeRecyclerView.adapter = noticeAdapter
+
+        // AddNoticeActivity로부터 데이터 받기
+        val addNoticeButton = findViewById<Button>(R.id.addNoticeButton)
+        addNoticeButton.setOnClickListener {
+            val intent = Intent(this, AddNotice::class.java)
+            startActivityForResult(intent, REQUEST_ADD_NOTICE)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_ADD_NOTICE && resultCode == Activity.RESULT_OK) {
+            data?.getParcelableExtra<Noticeitem>("new_notice")?.let { newNotice ->
+                // 같은 ID를 가진 공지사항이 있는지 확인
+                val existingNoticeIndex = noticeList.indexOfFirst { it.id == newNotice.id }
+
+                if (existingNoticeIndex != -1) {
+                    // 기존 공지사항을 수정하는 경우
+                    noticeList[existingNoticeIndex] = newNotice
+                } else {
+                    // 새 공지사항인 경우 추가
+                    noticeList.add(newNotice)
+                }
+                noticeAdapter.notifyDataSetChanged()
+            }
+        }
+    }
+
+    companion object {
+        const val REQUEST_ADD_NOTICE = 1
+    }
+
+    private fun loadNoticesFromSharedPreferences() {
+        val sharedPreferences = getSharedPreferences("NoticePrefs", Context.MODE_PRIVATE)
+        val totalNotices = sharedPreferences.getInt("totalNotices", 0)
+
+        for (index in 0 until totalNotices) {
+            val title = sharedPreferences.getString("noticeTitle_$index", null)
+            val content = sharedPreferences.getString("noticeContent_$index", null)
+            if (title != null && content != null) {
+                noticeList.add(Noticeitem(
+                    id = index, // 인덱스를 ID로 사용
+                    noticeWriter = "관리자", // 작성자 정보를 수정할 필요가 있다면 추가
+                    noticeTitle = title,
+                    noticeContent = content,
+                    noticeHits = 0, // 초기 조회수
+                    noticeCreatedTime = "2025-02-07T12:51:07.212947" // 생성시간은 필요한 형식으로 수정
+                ))
+            }
+        }
+    }
+
+    private fun saveNoticeToSharedPreferences(notice: Noticeitem) {
+        val sharedPreferences = getSharedPreferences("NoticePrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val totalNotices = sharedPreferences.getInt("totalNotices", 0)
+
+        // 공지사항 추가
+        editor.putString("noticeTitle_$totalNotices", notice.noticeTitle)
+        editor.putString("noticeContent_$totalNotices", notice.noticeContent)
+        editor.putInt("totalNotices", totalNotices + 1) // 공지사항 개수 증가
+        editor.apply() // 변경 사항 적용
+    }
+
+    private fun parseNoticeJson(jsonString: String): List<Noticeitem> {
+        val jsonObject = JSONObject(jsonString)
+        val dataArray = jsonObject.getJSONArray("data")
+        val noticeList = mutableListOf<Noticeitem>()
+
+        for (i in 0 until dataArray.length()) {
+            val dataObject = dataArray.getJSONObject(i)
+            val noticeItem = Noticeitem(
+                id = dataObject.optInt("id", 0),
+                noticeWriter = dataObject.getString("noticeWriter"),
+                noticeTitle = dataObject.getString("noticeTitle"),
+                noticeContent = dataObject.getString("noticeContent"),
+                noticeHits = dataObject.getInt("noticeHits"),
+                noticeCreatedTime = dataObject.getString("noticeTime"),
+                // noticeUpdatedTime = dataObject.getString("noticeUpdatedTime")
+            )
+            noticeList.add(noticeItem)
+        }
+        return noticeList
+
+
+        /*
         // JSON 데이터를 파싱하여 NoticeItem 리스트 생성
         val jsonString = """
         {
@@ -146,5 +241,7 @@ class NoticeBoard : AppCompatActivity() {
             noticeList.add(noticeItem)
         }
         return noticeList
+
+         */
     }
 }

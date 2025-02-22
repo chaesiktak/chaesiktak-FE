@@ -112,7 +112,7 @@
 
             <!-- 수정 버튼 -->
             <android.widget.Button
-                android:id="@+id/deactivateButton"
+                android:id="@+id/deleteButton"
                 android:layout_width="309dp"
                 android:layout_height="61dp"
                 android:layout_gravity="center"
@@ -123,7 +123,7 @@
                 android:layout_alignParentBottom="true"
                 android:background="@drawable/default_button_lg"
                 android:fontFamily="@font/inter_bold"
-                android:text="수정"
+                android:text="삭제"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
         </RelativeLayout>

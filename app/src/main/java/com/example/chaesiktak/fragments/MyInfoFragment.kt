@@ -24,6 +24,7 @@ import com.example.chaesiktak.NoticeBoard
 import com.example.chaesiktak.ProfileEditActivity
 import com.example.chaesiktak.R
 import com.example.chaesiktak.RecentAdapter
+import com.example.chaesiktak.RecentItem
 import com.example.chaesiktak.RecentRecipeData
 import com.example.chaesiktak.ResetPassword
 import com.example.chaesiktak.account_deactivation
@@ -41,8 +42,6 @@ private const val ARG_PARAM2 = "param2"
 class MyInfoFragment : Fragment() {
 
     private lateinit var nicknameTextView: TextView
-
-    // 최근 본 항목 받아오기
     private lateinit var recentRecyclerView: RecyclerView
     private lateinit var recentAdapter: RecentAdapter
     private val recentItems = listOf(
@@ -88,10 +87,25 @@ class MyInfoFragment : Fragment() {
             }
         }
 
+        // 최근 본 항목 받기
         recentRecyclerView = view.findViewById(R.id.recentRecyclerView)
         recentRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        recentAdapter = RecentAdapter(recentItems)
+        //recentAdapter = RecentAdapter(recentItems)
+        //recentRecyclerView.adapter = recentAdapter
+        val recentRecipes = listOf(
+            RecentRecipeData(R.drawable.food1),
+            RecentRecipeData(R.drawable.banner_icon),
+            RecentRecipeData(R.drawable.profile)
+        ) // 예제 데이터
+
+        recentAdapter = RecentAdapter(recentRecipes) { recentRecipeData ->
+            val intent = Intent(requireContext(), RecentItem::class.java).apply {
+                putExtra("RECIPE_IMAGE", recentRecipeData.imageResId)
+            }
+            startActivity(intent)
+        }
         recentRecyclerView.adapter = recentAdapter
+
 
         // 프로필 버튼 클릭 이벤트 설정
         val profileButton = view.findViewById<Button>(R.id.profileButton)
@@ -99,7 +113,6 @@ class MyInfoFragment : Fragment() {
             val intent = Intent(activity, ProfileEditActivity::class.java)
             startActivity(intent)
         }
-
 
         // 공지사항 버튼 클릭 이벤트
         val noticeButton = view.findViewById<Button>(R.id.noticeButton)
@@ -156,9 +169,9 @@ class MyInfoFragment : Fragment() {
         return view
     }
 
+    // Fragment 다시 보일 때마다 닉네임 업데이트
     override fun onResume() {
         super.onResume()
-        // Fragment가 다시 보일 때마다 닉네임을 업데이트
         val sharedPref = requireActivity().getSharedPreferences("UserProfile", Context.MODE_PRIVATE)
         val currentNickname = sharedPref.getString("nickname", "닉네임") ?: "닉네임"
         nicknameTextView.text = currentNickname

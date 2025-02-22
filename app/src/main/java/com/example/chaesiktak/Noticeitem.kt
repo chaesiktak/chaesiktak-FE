@@ -1,12 +1,7 @@
 package com.example.chaesiktak
 
-import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 // 데이터 클래스
 data class Noticeitem(

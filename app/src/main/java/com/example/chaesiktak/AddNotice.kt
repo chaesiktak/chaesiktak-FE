@@ -1,6 +1,7 @@
 package com.example.chaesiktak
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -31,6 +32,13 @@ class AddNotice : AppCompatActivity() {
         val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
         noticeDateTextView.text = "작성일: $currentDate"
 
+        val existingNotice = intent.getParcelableExtra<Noticeitem>("edit_notice")
+        val noticeCreatedTime = existingNotice?.noticeCreatedTime ?:
+        SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
+
+
+
+
         // 뒤로가기 버튼 클릭 시 공지사항 목록 탭으로 이동
         val backArrow = findViewById<ImageButton>(R.id.backArrow)
         backArrow.setOnClickListener {
@@ -52,6 +60,26 @@ class AddNotice : AppCompatActivity() {
             if (noticeTitle.isBlank() || noticeContent.isBlank()) {
                 Toast.makeText(this, "공지사항 제목과 내용을 입력해주세요.", Toast.LENGTH_SHORT).show()
             } else {
+                // 공지사항을 SharedPreferences에 저장
+                val sharedPreferences = getSharedPreferences("NoticePrefs", Context.MODE_PRIVATE)
+                val editor = sharedPreferences.edit()
+
+                // 저장된 공지사항 개수를 카운트하기 위한 기본값 가져오기
+                val totalNotices = sharedPreferences.getInt("totalNotices", 0)
+
+                // 공지사항 추가
+                editor.putString("noticeTitle_$totalNotices", noticeTitle)
+                editor.putString("noticeContent_$totalNotices", noticeContent)
+                editor.putInt("totalNotices", totalNotices + 1) // 공지사항 개수 증가
+                editor.apply() // 변경 사항 적용
+
+                // 공지사항 목록으로 돌아가기
+                val intent = Intent()
+                intent.putExtra("new_notice", Noticeitem(0, noticeWriter, noticeTitle, noticeContent, noticeHits, noticeCreatedTime))
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+
+                /*
                 // 공지사항 리스트로 데이터 전달
                 val notice = Noticeitem(
                     id = 0, // 실제 ID는 서버나 데이터베이스에서 할당할 것
@@ -70,6 +98,8 @@ class AddNotice : AppCompatActivity() {
 
                 // 공지사항 목록으로 돌아가기
                 finish()
+
+                 */
             }
         }
     }

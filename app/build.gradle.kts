@@ -37,6 +37,7 @@ android {
 }
 
 dependencies {
+
     //ViewPager2
     implementation("androidx.viewpager2:viewpager2:1.1.0")
     implementation("androidx.cardview:cardview:1.0.0")
@@ -46,6 +47,9 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    // OkHttp 라이브러리 추가
+    implementation("com.squareup.okhttp3:okhttp:4.9.1")
+
     dependencies {
         implementation(libs.androidx.core.ktx) // Core KTX
         implementation(libs.androidx.appcompat) // AppCompat

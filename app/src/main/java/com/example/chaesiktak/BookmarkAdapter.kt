@@ -1,5 +1,6 @@
 package com.example.chaesiktak
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,18 +30,26 @@ class BookmarkAdapter(private val itemList: List<BookmarkItem>) :
         holder.itemImage.setImageResource(item.imageResId)
         holder.itemName.text = item.name
 
+        // SharedPreferences 초기화
+        val sharedPreferences = holder.itemView.context.getSharedPreferences("Bookmarks", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
         // 즐겨찾기 아이콘 클릭 리스너 설정
         holder.favoriteIcon.setOnClickListener {
             // 목록에서 항목 제거
-            //itemList.removeAt(position)
+            (itemList as MutableList).removeAt(position)
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, itemList.size)
+
+            // 삭제된 항목을 SharedPreferences에서 제거
+            editor.remove(item.name) // 항목 이름을 키로 사용하여 삭제
+            editor.apply() // 변경 사항을 적용
 
             // 토스트 메시지 표시
             Toast.makeText(holder.itemView.context, "${item.name}를 즐겨찾기에서 제거했습니다.", Toast.LENGTH_SHORT).show()
 
             // 하트 아이콘 변경
-            holder.favoriteIcon.setImageResource(R.drawable.likebutton) // 비워진 하트 아이콘 리소스 사용
+            holder.favoriteIcon.setImageResource(R.drawable.likebutton) // 비워진 하트 아이콘 사용
         }
     }
 

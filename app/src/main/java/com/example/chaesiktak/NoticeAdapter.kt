@@ -4,12 +4,12 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class NoticeAdapter(private val itemList: List<Noticeitem>) :
     RecyclerView.Adapter<NoticeAdapter.ViewHolder>() {
-
 
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

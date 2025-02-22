@@ -52,36 +52,35 @@ class ProfileEditActivity : AppCompatActivity() {
         // 수정 버튼 클릭 시 이름과 닉네임 변경
         val updateButton = findViewById<Button>(R.id.updateButton)
         updateButton.setOnClickListener {
-            val newName = nameEditText.text.toString()
-            val newNickname = nicknameEditText.text.toString()
+            val newName = nameEditText.text.toString().trim()
+            val newNickname = nicknameEditText.text.toString().trim()
 
-            if (newName.isBlank() || newNickname.isBlank()) {
-                // 이름 또는 닉네임이 비어 있을 경우 처리
-                Toast.makeText(this, "이름과 닉네임을 입력해주세요.", Toast.LENGTH_SHORT).show()
-            } else if (!isValidName(newName)) {
-                // 입력 제한 조건
-                Toast.makeText(this, "이름은 한글 또는 영문만 가능합니다.", Toast.LENGTH_SHORT).show()
+            val finalName = if (newName.isBlank()) currentName else newName  // 이름이 비어 있으면 기존 이름 유지
+
+            if (newNickname.isBlank()) {
+                Toast.makeText(this, "닉네임을 입력해주세요.", Toast.LENGTH_SHORT).show()
             } else if (!isValidNickname(newNickname)) {
                 Toast.makeText(this, "닉네임은 2글자 이상 8글자 이하이며, 한글, 영문, 숫자만 가능합니다.", Toast.LENGTH_SHORT).show()
             } else if (isNicknameDuplicate(newNickname)) {
                 Toast.makeText(this, "중복된 닉네임입니다.", Toast.LENGTH_SHORT).show()
             } else {
                 // SharedPreferences에 이름과 닉네임 저장
-                with (sharedPref.edit()) {
-                    putString("name", newName)
+                with(sharedPref.edit()) {
+                    putString("name", finalName)  // 변경되지 않았다면 기존 이름 저장
                     putString("nickname", newNickname)
                     apply()
                 }
 
                 // 이름과 닉네임을 변경하고 메인 액티비티로 전달
                 val resultIntent = Intent().apply {
-                    putExtra("newName", newName)
+                    putExtra("newName", finalName)
                     putExtra("newNickname", newNickname)
                 }
                 setResult(RESULT_OK, resultIntent)
                 finish()
             }
         }
+
     }
 
     // 이름 유효성 검사

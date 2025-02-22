@@ -54,7 +54,7 @@
                 android:id="@+id/profileButton"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:background="@color/white" />
+                android:background="@drawable/border_button"/>
 
             <ImageView
                 android:id="@+id/profileImage"
@@ -101,7 +101,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
+            android:paddingLeft="22dp"
             android:paddingTop="15dp"
             android:text="최근 본 레시피"
             android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
@@ -120,30 +120,34 @@
 
 
         <!-- 환경설정 목록 (진행중)-->
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="267dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="95dp">
 
             <Button
                 android:id="@+id/passwordChangeBtn"
                 android:layout_width="match_parent"
-                android:layout_height="66.5dp"
-                android:background="@color/white"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/border_button"
                 android:text="비밀번호 재설정"
                 android:gravity="center_vertical"
-                android:paddingLeft="50dp"
+                android:paddingLeft="30dp"
                 android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
                 android:textSize="16dp"
                 android:textColor="#4A4743"/>
             <Button
                 android:id="@+id/likeListBtn"
                 android:layout_width="match_parent"
-                android:layout_height="66.5dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_below="@+id/passwordChangeBtn"
-                android:background="@color/white"
+                android:background="@drawable/border_button"
                 android:text="저장한 항목"
                 android:gravity="center_vertical"
-                android:paddingLeft="50dp"
+                android:paddingLeft="30dp"
                 android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
                 android:textSize="16dp"
                 android:textColor="#4A4743"/>
@@ -151,12 +155,13 @@
             <Button
                 android:id="@+id/noticeButton"
                 android:layout_width="match_parent"
-                android:layout_height="66.5dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_below="@+id/likeListBtn"
-                android:background="@color/white"
+                android:background="@drawable/border_button"
                 android:text="공지사항"
                 android:gravity="center_vertical"
-                android:paddingLeft="50dp"
+                android:paddingLeft="30dp"
                 android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
                 android:textSize="16dp"
                 android:textColor="#4A4743" />
@@ -164,12 +169,13 @@
             <Button
                 android:id="@+id/deactivationBtn"
                 android:layout_width="match_parent"
-                android:layout_height="66.5dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_below="@+id/noticeButton"
-                android:background="@color/white"
+                android:background="@drawable/border_button"
                 android:text="탈퇴하기"
                 android:gravity="center_vertical"
-                android:paddingLeft="50dp"
+                android:paddingLeft="30dp"
                 android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
                 android:textSize="16dp"
                 android:textColor="#4A4743"/>
@@ -177,19 +183,17 @@
             <Button
                 android:id="@+id/logoutBtn"
                 android:layout_width="match_parent"
-                android:layout_height="66.5dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_below="@+id/deactivationBtn"
-                android:background="@color/white"
+                android:background="@drawable/border_button"
                 android:text="로그아웃"
                 android:gravity="center_vertical"
-                android:paddingLeft="50dp"
+                android:paddingLeft="30dp"
                 android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
                 android:textSize="16dp"
                 android:textColor="#4A4743"/>
-        </RelativeLayout>
-
-
-
+        </LinearLayout>
 
     </LinearLayout>
 
