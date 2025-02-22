@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.RadioButton
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
@@ -17,13 +16,8 @@ import com.example.chaesiktak.RecommendRecipe
 import com.example.chaesiktak.databinding.ActivitySearchResultBinding
 import com.example.chaesiktak.databinding.FilterBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
-import androidx.lifecycle.lifecycleScope
-import com.example.chaesiktak.*
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.launch
+
 
 
 
@@ -46,7 +40,6 @@ class SearchResultActivity : AppCompatActivity() {
         binding.searchInput.setText(searchText)
         binding.searchInput.setSelection(searchText.length) // 커서 맨 마지막으로
 
-        setupRecyclerViews(searchText)
         fetchAndSetupRecipes(searchText)
 
         //검색버튼 클릭 메서드
@@ -57,7 +50,7 @@ class SearchResultActivity : AppCompatActivity() {
                 filterRecipes(newSearchText) // 새로운 검색어로 필터링 적용
                 updateRecipeCountText()
             } else {
-                binding.searchInput.error = "검색어를 입력하세요."
+                Toast.makeText(this,"검색어를 입력하세요", Toast.LENGTH_LONG).show()
             }
             updateFilterIcon(false)
         }
@@ -66,13 +59,12 @@ class SearchResultActivity : AppCompatActivity() {
         binding.backArrowIcon.setOnClickListener { finish() }
 
         // 홈 버튼 클릭 메서드
-        binding.homeIcon.setOnClickListener { finish() }
+        binding.homeIcon.setOnClickListener { startActivity(Intent(this, HomeActivity::class.java)) }
 
         //필터 버튼 클릭 메서드
         binding.filterText.setOnClickListener { showFilterBottomSheet(binding.filterText) }
 
-        // RecyclerView 설정 (초기 검색어 적용)
-        setupRecyclerViews(searchText)
+
     }
 
     private fun fetchAndSetupRecipes(searchText: String) {
@@ -105,31 +97,9 @@ class SearchResultActivity : AppCompatActivity() {
         binding.recipeCountText.text = "총 ${displayedCount}개"
     }
 
-    private fun setupRecyclerViews(searchText: String) {
-        lifecycleScope.launch {
-            val allRecipes = fetchAllRecipes()
-            recipeList.clear()
-            recipeList.addAll(allRecipes)
-
-            val filteredRecipes = filterRecipeList(recipeList, searchText)
-
-            searchingContentAdapter = SearchingContentAdapter(filteredRecipes.toMutableList()).apply {
-                onItemClick = { navigateToRecipeDetail(it) }
-            }
-
-            binding.searchingContentRecyclerview.apply {
-                layoutManager = GridLayoutManager(this@SearchResultActivity, 2)
-                adapter = searchingContentAdapter
-                setHasFixedSize(true)
-            }
-
-            updateRecipeCountText()
-        }
-    }
-
     private fun navigateToRecipeDetail(recipe: RecommendRecipe) {
         val intent = Intent(this, RecipeDetailActivity::class.java).apply {
-            putExtra("RECIPE", recipe)
+            putExtra("RECIPE_ID", recipe.id) // ID만 전달
         }
         recipeDetailLauncher.launch(intent)
     }

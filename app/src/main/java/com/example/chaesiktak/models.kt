@@ -60,7 +60,7 @@ data class Recipe(
 // 개별 레시피 조회 (/recipe/{id})
 data class RecommendRecipe(
     val id: Int,
-    val image: Int,       // 이미지 리소스 ID
+    val image: String,       // 이미지 리소스 ID
     val title: String,    // 레시피 제목
     val subtext: String,  // 서브 텍스트 (0인분, 0시간)
     val kcal: String,     // 칼로리
@@ -72,7 +72,7 @@ data class RecommendRecipe(
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(), // id 읽기
-        parcel.readInt(),
+        parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
@@ -89,7 +89,7 @@ data class RecommendRecipe(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id) // id 저장
-        parcel.writeInt(image)
+        parcel.writeString(image)
         parcel.writeString(title)
         parcel.writeString(subtext)
         parcel.writeString(kcal)

@@ -19,11 +19,11 @@
             app:cardCornerRadius="18dp">
 
             <ImageView
+                android:src="@drawable/placeholder_image"
                 android:scaleType="centerCrop"
                 android:id="@+id/searching_content_img"
                 android:layout_width="162dp"
-                android:layout_height="162dp"
-                android:background="@color/banner_bottom_indicator_grey" />
+                android:layout_height="162dp" />
         </androidx.cardview.widget.CardView>
 
         <LinearLayout

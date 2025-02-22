@@ -73,8 +73,13 @@ class LoginActivity : AppCompatActivity() {
             try {
                 val response = RetrofitClient.instance(this@LoginActivity).login(LoginRequest(email, password))
 
+                Log.d("Login", "HTTP 응답 코드: ${response.code()}")
+                Log.d("Login", "서버 응답 메시지: ${response.message()}")
+
                 if (response.isSuccessful) {
                     val loginResponse = response.body()
+                    Log.d("ServerResponse", "서버 응답 (성공): $loginResponse")
+
                     val accessToken = loginResponse?.data?.accessToken ?: ""
 
                     if (accessToken.isNotEmpty()) {
@@ -83,24 +88,35 @@ class LoginActivity : AppCompatActivity() {
                         startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
                         finish()
                     } else {
-                        Toast.makeText(this@LoginActivity, "로그인 실패: 토큰 없음", Toast.LENGTH_SHORT).show()
+                        Log.d("Login", "로그인 실패: 서버에서 토큰을 받지 못함")
                     }
                 } else {
-                    Toast.makeText(this@LoginActivity, "일치하는 정보가 존재하지 않습니다.: ${response.message()}", Toast.LENGTH_SHORT).show()
+                    val errorBody = response.errorBody()?.string()
+                    Log.d("ServerResponse", "서버 응답 (실패): $errorBody")
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@LoginActivity, "네트워크 오류: ${e.message}", Toast.LENGTH_SHORT).show()
-                Log.e("Login", "로그인 오류", e)
+                Log.e("Login", "네트워크 오류", e)
             }
         }
     }
 
     private fun saveAccessToken(token: String) {
         val sharedPref = getSharedPreferences("AppPrefs", MODE_PRIVATE)
-        with(sharedPref.edit()) {
-            putString("accessToken", token)
-            apply()
+        val editor = sharedPref.edit()
+        editor.putString("accessToken", token)
+
+        // apply() 대신 commit() 사용
+        val isSaved = editor.commit()
+
+        if (isSaved) {
+            Log.d("Token", "✅ 토큰이 정상적으로 저장됨: $token")
+        } else {
+            Log.e("Token", "❌ 토큰 저장 실패!")
         }
+
+        // 저장된 값 다시 확인
+        val savedToken = sharedPref.getString("accessToken", "저장된 값 없음")
+        Log.d("Token", "SharedPreferences에 저장된 토큰 확인: $savedToken")
     }
 
 }

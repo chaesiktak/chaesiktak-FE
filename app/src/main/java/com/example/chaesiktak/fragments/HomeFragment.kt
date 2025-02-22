@@ -128,6 +128,8 @@ class HomeFragment : Fragment() {
         }
     }
 
+
+    //하단 네비게이션 ( home -> scanner , home -> myinfo)
     private fun setupBottomNavigation() {
         binding.scannerTap.setOnClickListener {
             it.findNavController().navigate(R.id.action_homeFragment_to_scannerFragment)
@@ -137,12 +139,14 @@ class HomeFragment : Fragment() {
         }
     }
 
+    // 카드뷰 클릭 -> 디테일 <RECIPE_ID> 넘김
     private fun navigateToRecipeDetail(recipe: RecommendRecipe) {
         val intent = Intent(requireContext(), RecipeDetailActivity::class.java).apply {
             putExtra("RECIPE_ID", recipe.id) // ID만 전달
         }
         recipeDetailLauncher.launch(intent)
     }
+
 
 
     private val recipeDetailLauncher = registerForActivityResult(
@@ -163,7 +167,6 @@ class HomeFragment : Fragment() {
     private fun fetchAllRecipes() {
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                // 1, 2, 3번 ID만 사용하도록 하드코딩
                 val recipeIds = listOf(1, 2, 3, 4, 5, 6, 7, 8)
 
                 // 병렬로 개별 레시피 정보 요청
@@ -176,7 +179,7 @@ class HomeFragment : Fragment() {
                 recipeList.addAll(recipeDetails.filterNotNull())
 
                 tagRecipeList.clear()
-                tagRecipeList.addAll(recipeDetails.filterNotNull())
+                tagRecipeList.addAll(recipeDetails.filterNotNull().take(6))
 
                 // 어댑터 갱신
                 recommendRecipeAdapter.notifyDataSetChanged()

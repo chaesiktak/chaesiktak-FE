@@ -23,7 +23,7 @@
             android:scaleType="centerCrop"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:src="@color/banner_bottom_indicator_grey"
+            android:src="@drawable/placeholder_image"
             android:background="@drawable/rounded_image"
         />
 

@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/sample_image" />
+                android:src="@drawable/placeholder_image" />
         </androidx.cardview.widget.CardView>
 
         <!-- 카드 타이틀과 아이콘 -->
