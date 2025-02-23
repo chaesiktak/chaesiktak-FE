@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    private const val BASE_URL = "http://chaesiktak2.duckdns.org:8080/"
+    private const val BASE_URL = "http://52.78.99.122:8080/"
     private const val BASE_AI_URL = "http://chaesiktakimgseg.duckdns.org:5000/"
 
     private var retrofit: Retrofit? = null
