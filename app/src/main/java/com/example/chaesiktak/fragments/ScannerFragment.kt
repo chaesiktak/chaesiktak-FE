@@ -1,60 +1,170 @@
 package com.example.chaesiktak.fragments
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.camera.core.*
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.example.chaesiktak.R
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
+import androidx.camera.view.PreviewView
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ScannerFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ScannerFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var previewView: PreviewView
+    private lateinit var cameraExecutor: ExecutorService
+    private var imageCapture: ImageCapture? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_scanner, container, false)
+    ): View {
+        val view = inflater.inflate(R.layout.fragment_scanner, container, false)
+
+        previewView = view.findViewById(R.id.previewView)
+
+        // 네비게이션 버튼 동작 추가
+        view.findViewById<ImageView>(R.id.homeTap).setOnClickListener {
+            view.findNavController().navigate(R.id.action_scannerFragment_to_homeFragment)
+        }
+        view.findViewById<ImageView>(R.id.myinfoTap).setOnClickListener {
+            view.findNavController().navigate(R.id.action_scannerFragment_to_myInfoFragment)
+        }
+
+        // 촬영 버튼 클릭 리스너
+        view.findViewById<ImageView>(R.id.captureButton).setOnClickListener {
+            takePhoto()
+        }
+
+        // 카메라 권한 체크
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
+            == PackageManager.PERMISSION_GRANTED) {
+            startCamera()
+        } else {
+            requestPermissions(arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_REQUEST)
+        }
+
+        cameraExecutor = Executors.newSingleThreadExecutor()
+
+        return view
+    }
+
+    private fun startCamera() {
+        val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
+
+        cameraProviderFuture.addListener({
+            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+
+            val preview = Preview.Builder().build().also {
+                it.setSurfaceProvider(previewView.surfaceProvider)
+            }
+
+            imageCapture = ImageCapture.Builder().build()
+
+            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+
+            try {
+                cameraProvider.unbindAll()
+                cameraProvider.bindToLifecycle(viewLifecycleOwner, cameraSelector, preview, imageCapture)
+            } catch (exc: Exception) {
+                Log.e("CameraX", "카메라 바인딩 실패", exc)
+            }
+        }, ContextCompat.getMainExecutor(requireContext()))
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == CAMERA_PERMISSION_REQUEST) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startCamera()
+            } else {
+                Toast.makeText(requireContext(), "카메라 권한이 필요합니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        cameraExecutor.shutdown()
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ScannerFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ScannerFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        private const val CAMERA_PERMISSION_REQUEST = 1001
+    }
+
+    private fun takePhoto() {
+        val imageCapture = imageCapture ?: return
+
+        // 저장할 파일 생성
+        val photoFile = File(
+            requireContext().externalMediaDirs.firstOrNull(),
+            SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(System.currentTimeMillis()) + ".jpg"
+        )
+
+        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+
+        imageCapture.takePicture(
+            outputOptions,
+            ContextCompat.getMainExecutor(requireContext()),
+            object : ImageCapture.OnImageSavedCallback {
+                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                    val savedUri = Uri.fromFile(photoFile)
+                    Log.d("CameraX", "사진 저장됨: $savedUri")
+                    Toast.makeText(requireContext(), "사진 저장됨: $savedUri", Toast.LENGTH_SHORT).show()
+
+                    // 촬영한 이미지를 서버로 전송
+                    uploadImageToServer(photoFile)
+                }
+
+                override fun onError(exception: ImageCaptureException) {
+                    Log.e("CameraX", "사진 촬영 실패", exception)
                 }
             }
+        )
+    }
+
+    private fun uploadImageToServer(imageFile: File) {
+        lifecycleScope.launch {
+            try {
+                val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), imageFile)
+                val imagePart = MultipartBody.Part.createFormData("image", imageFile.name, requestFile)
+
+                val response = withContext(Dispatchers.IO) {
+                    RetrofitClient.getAIinstance(requireContext()).uploadImage(imagePart)
+                }
+
+                if (response.isSuccessful) {
+                    Log.d("Upload", "이미지 업로드 성공")
+                    Toast.makeText(requireContext(), "이미지 분석 완료!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Log.e("Upload", "서버 오류: ${response.errorBody()?.string()}")
+                    Toast.makeText(requireContext(), "서버 오류 발생", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Log.e("Upload", "예외 발생: ${e.message}")
+                Toast.makeText(requireContext(), "네트워크 오류 발생", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }

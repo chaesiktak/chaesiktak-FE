@@ -1,0 +1,5 @@
+<!-- res/drawable/rounded_image.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@android:color/white"/>  <!-- 배경색을 흰색으로 설정 (필요에 따라 다른 색상으로 설정 가능) -->
+    <corners android:radius="7dp"/>  <!-- 둥근 모서리 설정 (16dp는 조정 가능) -->
+</shape>

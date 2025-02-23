@@ -17,6 +17,7 @@ import okhttp3.*
 import java.io.IOException
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.chaesiktak.activities.IntroActivity
 import com.example.chaesiktak.fragments.MyInfoFragment
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 

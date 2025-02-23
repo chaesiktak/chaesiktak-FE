@@ -3,7 +3,6 @@
     <!-- Unchecked -->
     <item android:state_checked="false">
         <layer-list>
-            <!-- 이미지 영역 -->
             <item
                 android:drawable="@drawable/unchecked"
                 android:top="4dp"

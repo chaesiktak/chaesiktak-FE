@@ -38,6 +38,26 @@ android {
 
 dependencies {
 
+    //retrofit library
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
+    //카메라
+    val camerax_version = "1.3.0"
+
+    implementation("androidx.camera:camera-core:$camerax_version")
+    implementation("androidx.camera:camera-camera2:$camerax_version")
+    implementation("androidx.camera:camera-lifecycle:$camerax_version")
+    implementation("androidx.camera:camera-view:$camerax_version")
+
+    //coil 라이브러리 - place-holder
+    implementation("io.coil-kt:coil:2.5.0") // 최신 버전 사용 가능
+
+
+
+    //homefragment - 하단 indicator
+    implementation("me.relex:circleindicator:2.1.6")
+
     //ViewPager2
     implementation("androidx.viewpager2:viewpager2:1.1.0")
     implementation("androidx.cardview:cardview:1.0.0")
@@ -47,9 +67,6 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-    // OkHttp 라이브러리 추가
-    implementation("com.squareup.okhttp3:okhttp:4.9.1")
-
     dependencies {
         implementation(libs.androidx.core.ktx) // Core KTX
         implementation(libs.androidx.appcompat) // AppCompat

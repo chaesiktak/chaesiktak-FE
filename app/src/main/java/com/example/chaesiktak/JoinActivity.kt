@@ -10,6 +10,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.chaesiktak.activities.HomeActivity
+import com.example.chaesiktak.activities.LoginActivity
+import com.example.chaesiktak.activities.SignUpCompleteActivity
+import com.example.chaesiktak.activities.TOSActivity
 
 class JoinActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,10 +28,6 @@ class JoinActivity : AppCompatActivity() {
 
         val checkEmailbutton: Button = findViewById(R.id.checkEmailButton)
         val checkNickname: Button = findViewById(R.id.checkNicknameButton)
-
-        // 현재 설정된 이름과 닉네임
-        val currentName = "현재 이름"
-        val currentNickname = "현재 닉네임"
 
         checkEmailbutton.setOnClickListener {
             checkEmailbutton.isEnabled = false

@@ -1,4 +1,4 @@
-package com.example.chaesiktak
+package com.example.chaesiktak.activities
 
 import android.app.Activity
 import android.content.Context
@@ -10,6 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.chaesiktak.R
 
 class MainActivity : AppCompatActivity() {
 

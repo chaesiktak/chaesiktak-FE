@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="20dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="18dp">
+
+            <ImageView
+                android:src="@drawable/placeholder_image"
+                android:scaleType="centerCrop"
+                android:id="@+id/searching_content_img"
+                android:layout_width="162dp"
+                android:layout_height="162dp" />
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="5dp">
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/searching_content_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ibm_plex_sans_kr_bold"
+                android:text="title"
+                android:textColor="@color/black_replacement" />
+
+            <ImageView
+                android:id="@+id/searching_content_isfavorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/likebutton" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/searching_content_prevtext"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:fontFamily="@font/inter"
+            android:text="레시피 미리보기"
+            android:textSize="10sp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginVertical="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="5dp">
+
+            <android.widget.TextView
+                android:id="@+id/searching_content_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ibm_plex_sans_kr_bold"
+                android:gravity="center"
+                android:paddingHorizontal="8dp"
+                android:stateListAnimator="@null"
+                android:text="tag"
+                android:textColor="@color/black_replacement"
+                android:textSize="12sp" />
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.chaesiktak.activities.LoginActivity
 
 class ResetPassword2 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -7,6 +7,10 @@
 
     <!-- General Colors -->
     <color name="black_replacement">#4A4743</color>
+    <color name="ingredient_quantity_color">#6A6A6A</color>
+    <color name="recipe_content_color">#7B7B7B</color>
+    <color name="search_panel_color">#FAF8F8</color>
+
 
     <!-- Default Buttons, 기본 버튼 -->
     <color name="default_button_lg_gradient_left">#80CC53</color>
@@ -19,11 +23,28 @@
     <color name="cancel_button_gradient_left">#CCCCCC</color>
     <color name="cancel_button_gradient_right">#A4A4A4</color>
 
+    <!-- tag color-->
+    <color name="color_vegan">#EBF1E9</color> <!-- 비건 -->
+    <color name="color_lacto">#F8F2D6</color> <!-- 락토 -->
+    <color name="color_ovo">#F8EAD8</color>   <!-- 오보 -->
+    <color name="color_lacto_ovo">#FBE8E9</color> <!-- 락토오보 -->
+    <color name="color_pesco">#E5F1F7</color> <!-- 페스코 -->
+    <color name="color_pollo">#EFEFED</color> <!-- 폴로 -->
+
     <!-- etc, 기타-->
     <color name="tooltip_box">#F4F4F4</color>
     <color name="saved_item_heart_onclick">#FF1F73</color>
     <color name="error_message_red">#FF0000</color>
     <color name="searching_bar_text_color">#F1F1F1</color>
     <color name="banner1_background">#58BB65</color>
+    <color name="card_subtext">#C2C2C2</color>
+    <color name="banner_bottom_indicator_grey">#D9D9D9</color>
+    <color name="banner_bottom_indicator_green">#58BB65</color>
+    <color name="kcal_color">#759533</color>
+
+    <!-- filter-->
+    <color name="filter_unclicked">#B8B8B8</color>
+    <color name="filter_clicked">#58BB65</color>
+
 
 </resources>
