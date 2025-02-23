@@ -24,7 +24,7 @@ class NoticeBoard : AppCompatActivity() {
 
     private lateinit var noticeRecyclerView: RecyclerView
     private lateinit var noticeAdapter: NoticeAdapter
-    private val noticeList = mutableListOf<Noticeitem>()
+    private var noticeList = mutableListOf<Noticeitem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +46,12 @@ class NoticeBoard : AppCompatActivity() {
         noticeAdapter = NoticeAdapter(noticeList)
         noticeRecyclerView.adapter = noticeAdapter
 
+        noticeAdapter.setOnItemClickListener { notice ->
+            val intent = Intent(this, NoticeDetail::class.java)
+            intent.putExtra("notice_item", notice)
+            startActivityForResult(intent, REQUEST_NOTICE_DETAIL)
+        }
+
         // AddNoticeActivity로부터 데이터 받기
         val addNoticeButton = findViewById<Button>(R.id.addNoticeButton)
         addNoticeButton.setOnClickListener {
@@ -58,24 +64,29 @@ class NoticeBoard : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_ADD_NOTICE && resultCode == Activity.RESULT_OK) {
-            data?.getParcelableExtra<Noticeitem>("new_notice")?.let { newNotice ->
-                // 같은 ID를 가진 공지사항이 있는지 확인
-                val existingNoticeIndex = noticeList.indexOfFirst { it.id == newNotice.id }
-
-                if (existingNoticeIndex != -1) {
-                    // 기존 공지사항을 수정하는 경우
-                    noticeList[existingNoticeIndex] = newNotice
-                } else {
-                    // 새 공지사항인 경우 추가
-                    noticeList.add(newNotice)
-                }
+            // 새로운 공지 추가 처리
+            data?.getParcelableExtra<Noticeitem>("new_notice")?.let {
+                noticeList.add(it)
                 noticeAdapter.notifyDataSetChanged()
+            }
+        } else if (requestCode == REQUEST_NOTICE_DETAIL && resultCode == Activity.RESULT_OK) {
+            // 공지 삭제 처리
+            val deletedNoticeId = data?.getIntExtra("deleted_notice_id", -1)
+
+            if (deletedNoticeId != null && deletedNoticeId != -1) {
+                val indexToRemove = noticeList.indexOfFirst { it.id == deletedNoticeId }
+
+                if (indexToRemove != -1) {
+                    noticeList.removeAt(indexToRemove)
+                    noticeAdapter.notifyItemRemoved(indexToRemove)
+                }
             }
         }
     }
 
     companion object {
         const val REQUEST_ADD_NOTICE = 1
+        const val REQUEST_NOTICE_DETAIL = 2
     }
 
     private fun loadNoticesFromSharedPreferences() {
