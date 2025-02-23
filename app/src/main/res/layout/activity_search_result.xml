@@ -85,6 +85,12 @@
             android:textColor="@color/filter_unclicked"
             android:textSize="16sp" />
 
+        <ImageView
+            android:id="@+id/ingredient_filter"
+            android:src="@drawable/ingredient_filter_selector"
+            android:layout_width="60dp"
+            android:layout_height="30dp"/>
+
             <ImageView
                 android:id="@+id/filter_text"
                 android:src="@drawable/filter_text_selector"

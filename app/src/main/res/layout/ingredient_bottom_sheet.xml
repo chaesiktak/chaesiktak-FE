@@ -261,7 +261,7 @@
                 android:orientation="horizontal">
 
                 <android.widget.CheckBox
-                    android:id="@+id/checkboxGinger"
+                    android:id="@+id/checkboxGarlic"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
                     android:background="@drawable/subtract_checkbox"
@@ -272,7 +272,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
                     android:fontFamily="@font/ibm_plex_sans_kr_regular"
-                    android:text="생강"
+                    android:text="마늘"
                     android:textColor="@color/black_replacement"
                     android:textSize="14sp" />
             </LinearLayout>
