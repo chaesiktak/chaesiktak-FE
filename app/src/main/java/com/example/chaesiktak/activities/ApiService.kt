@@ -1,7 +1,11 @@
 
 import com.example.chaesiktak.ApiResponse
+import com.example.chaesiktak.EmailCheckRequestBody
+import com.example.chaesiktak.EmailCheckResponse
 import com.example.chaesiktak.LoginRequest
 import com.example.chaesiktak.LoginResponse
+import com.example.chaesiktak.NickNameCheckRequestBody
+import com.example.chaesiktak.NickNameCheckResponse
 import com.example.chaesiktak.Recipe
 import com.example.chaesiktak.RecipeDetailResponse
 import com.example.chaesiktak.ResetPasswordRequest
@@ -24,6 +28,13 @@ interface ApiService {
 
     @POST("api/sign-up")
     suspend fun signUp(@Body request: SignUpRequest): Response<ApiResponse<User>>
+
+    @POST("api/check/email")
+    suspend fun CheckEmailDupe(@Body request: EmailCheckRequestBody): Response<EmailCheckResponse>
+
+
+    @POST("api/check/nickname")
+    suspend fun CheckNickNameDupe(@Body request: NickNameCheckRequestBody): Response<NickNameCheckResponse>
 
     //로그인 API
 
@@ -54,3 +65,4 @@ interface ApiService {
         @Part image: MultipartBody.Part
     ): Response<ResponseBody>
 }
+

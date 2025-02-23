@@ -38,6 +38,8 @@ android {
 
 dependencies {
 
+    //Jackson
+    implementation ("com.fasterxml.jackson.core:jackson-databind:2.14.1")
     //retrofit library
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")

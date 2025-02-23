@@ -2,7 +2,6 @@ package com.example.chaesiktak.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Message
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -15,30 +14,27 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import com.example.chaesiktak.ApiResponse
+import com.example.chaesiktak.EmailCheckRequestBody
+import com.example.chaesiktak.NickNameCheckRequestBody
 import com.example.chaesiktak.R
 import com.example.chaesiktak.SignUpRequest
-import com.example.chaesiktak.User
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class JoinActivity : AppCompatActivity() {
 
-    private lateinit var emailEditText: EditText
-    private lateinit var passwordEditText: EditText
-    private lateinit var confirmPasswordEditText: EditText
-    private lateinit var nameEditText: EditText
-    private lateinit var nicknameEditText: EditText
+    private lateinit var emailEditText: EditText //이메일 입력
+    private lateinit var passwordEditText: EditText //비밀번호 입력
+    private lateinit var confirmPasswordEditText: EditText //비밀번호 확인 (비밀번호 입력값과 동일)
+    private lateinit var nameEditText: EditText //본명 입력
+    private lateinit var nicknameEditText: EditText //닉네임 입력
     private lateinit var signupButton: Button
-    private lateinit var tosCheckbox: CheckBox
-    private lateinit var emailErrortext: TextView
-    private lateinit var pwErrortext: TextView
-    private  lateinit var nicknameErrortext:TextView
+
+    private lateinit var tosCheckbox: CheckBox //약관확인 checkbox
+    private lateinit var emailErrortext: TextView //이메일 에러 표시 text
+    private lateinit var pwErrortext: TextView //비밀번호 에러 표시 text
+    private  lateinit var nicknameErrortext:TextView //닉네임 에러 표시 text
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,22 +52,56 @@ class JoinActivity : AppCompatActivity() {
         pwErrortext = findViewById(R.id.passwordError)
         nicknameErrortext = findViewById(R.id.NicknameError)
 
+
         val backarrow: ImageView = findViewById(R.id.backArrow)
         val homeicon: ImageView = findViewById(R.id.homeIcon)
         val tosText: TextView = findViewById(R.id.TOStext)
         val signupbutton: Button = findViewById(R.id.signUpbutton)
 
         val checkEmailbutton: Button = findViewById(R.id.checkEmailButton)
-        val checkNickname: Button = findViewById(R.id.checkNicknameButton)
+        val checkNicknameButton: Button = findViewById(R.id.checkNicknameButton)
 
         checkEmailbutton.setOnClickListener {
-            checkEmailbutton.isEnabled = false
-            checkEmailbutton.setBackgroundResource(R.drawable.button_disabled_background)
+            runOnUiThread {
+                checkEmailbutton.isEnabled = false // 버튼 비활성화
+                checkEmailbutton.setBackgroundResource(R.drawable.button_disabled_background)
+            }
+
+            lifecycleScope.launch {
+                val result = checkEmailDupe() // checkEmailDupe이 suspend 함수여야 함
+
+                runOnUiThread {
+                    if (result == 1) {
+                        // 이메일이 사용 중일 때 버튼 비활성화 유지
+                        checkEmailbutton.isEnabled = false
+                        checkEmailbutton.setBackgroundResource(R.drawable.button_disabled_background)
+                    } else {
+                        // 이메일이 사용 가능할 때 버튼 다시 활성화
+                        checkEmailbutton.isEnabled = true
+                        checkEmailbutton.setBackgroundResource(R.drawable.default_button_md)
+                    }
+                }
+            }
         }
 
-        checkNickname.setOnClickListener {
-            checkNickname.isEnabled = false
-            checkNickname.setBackgroundResource(R.drawable.button_disabled_background)
+        checkNicknameButton.setOnClickListener {
+            runOnUiThread {
+                checkNicknameButton.isEnabled = false // 버튼 비활성화
+                checkNicknameButton.setBackgroundResource(R.drawable.button_disabled_background)
+            }
+            lifecycleScope.launch {
+                val result = checkNickNameDupe()
+
+                runOnUiThread {
+                    if (result == 1) {
+                        checkNicknameButton.isEnabled = false
+                        checkNicknameButton.setBackgroundResource(R.drawable.button_disabled_background)
+                    } else {
+                        checkNicknameButton.isEnabled = true
+                        checkNicknameButton.setBackgroundResource(R.drawable.default_button_md)
+                    }
+                }
+            }
         }
 
         passwordEditText.addTextChangedListener(passwordTextWatcher)
@@ -91,14 +121,6 @@ class JoinActivity : AppCompatActivity() {
 
         passwordEditText.addTextChangedListener(passwordTextWatcher)
         confirmPasswordEditText.addTextChangedListener(confirmPasswordTextWatcher)
-
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-
     }
 
     private val passwordTextWatcher = object : TextWatcher {
@@ -136,17 +158,17 @@ class JoinActivity : AppCompatActivity() {
     }
 
     private fun showEmailError(errorMessage: String) {
-        emailErrortext.text = errorMessage
+        emailErrortext.text = " $errorMessage"
         emailErrortext.visibility = View.VISIBLE
     }
 
     private fun showPasswordError(errorMessage: String) {
-        pwErrortext.text = errorMessage
+        pwErrortext.text = "⚠ $errorMessage"
         pwErrortext.visibility = View.VISIBLE
     }
 
     private fun showNicknameError(errorMessage: String) {
-        nicknameErrortext.text = errorMessage
+        nicknameErrortext.text = "⚠ $errorMessage"
         nicknameErrortext.visibility = View.VISIBLE
     }
 
@@ -214,9 +236,104 @@ class JoinActivity : AppCompatActivity() {
                 Log.e("JoinActivity", "회원가입 요청 실패", e)
             }
         }
+    }
 
+    //이메일 중복 확인
+    suspend fun checkEmailDupe(): Int {
+        val email = emailEditText.text.toString().trim()
+
+        if (email.isEmpty()) {
+            showEmailError("이메일을 입력해주세요.")
+            return 0
+        }
+
+        val request = EmailCheckRequestBody(email)
+
+        return try {
+            val response = RetrofitClient.instance(this@JoinActivity).CheckEmailDupe(request)
+
+            if (response.isSuccessful) {
+                val responseBody = response.body()
+
+                if (responseBody != null) {
+                    val message = responseBody.message ?: "이메일 중복 확인 실패"
+
+                    return if (responseBody.success) {
+                        emailErrortext.apply {
+                            text = "✅ $message"
+                            setTextColor(ContextCompat.getColor(this@JoinActivity, R.color.banner_bottom_indicator_green))
+                            visibility = View.VISIBLE
+                        }
+                        1 // 이메일 사용 가능
+                    } else {
+                        showEmailError("⚠ $message")
+                        0
+                    }
+                } else {
+                    showEmailError("서버 응답 오류: 이메일 중복 확인 실패")
+                    0
+                }
+            } else {
+                val errorResponse = response.errorBody()?.string() ?: "이메일 중복 확인 실패"
+                showEmailError("⚠ $errorResponse")
+                0
+            }
+        } catch (e: Exception) {
+            Toast.makeText(this@JoinActivity, "네트워크 오류: ${e.message}", Toast.LENGTH_LONG).show()
+            Log.e("JoinActivity", "이메일 중복 확인 요청 실패", e)
+            0
+        }
     }
 
 
+    //닉네임 중복 확인
+    suspend fun checkNickNameDupe(): Int {
+        val nickname = nicknameEditText.text.toString().trim()
+
+        if (nickname.isEmpty()) {
+            showNicknameError("닉네임을 입력해주세요.")
+            return 0
+        }
+
+        val request = NickNameCheckRequestBody(nickname)
+
+        return try {
+            Log.d("JoinActivity", "닉네임 중복 확인 요청 보냄: $nickname") // 요청 보낼 때 로그 추가
+            val response = RetrofitClient.instance(this@JoinActivity).CheckNickNameDupe(request)
+
+            if (response.isSuccessful) {
+                val responseBody = response.body()
+                Log.d("JoinActivity", "닉네임 중복 확인 응답: ${responseBody?.message}") // 서버 응답 로그 추가
+
+                if (responseBody != null) {
+                    val message = responseBody.message ?: "닉네임 중복 확인 실패"
+
+                    if (responseBody.success) { //닉네임 사용 가능 (return 1)
+                        nicknameErrortext.apply {
+                            nicknameErrortext.text = message
+                            nicknameErrortext.setTextColor(ContextCompat.getColor(this@JoinActivity, R.color.banner_bottom_indicator_green))
+                            visibility = View.VISIBLE
+                        }
+                        nicknameErrortext.visibility = View.GONE
+                        return 1
+                    } else {
+                        showNicknameError(message)
+                        return 0
+                    }
+                } else {
+                    showNicknameError("서버 응답 오류: 닉네임 중복 확인 실패")
+                    return 0
+                }
+            } else {
+                val errorResponse = response.errorBody()?.string() ?: "닉네임 중복 확인 실패"
+                showNicknameError(errorResponse)
+                return 0
+            }
+        } catch (e: Exception) {
+            Toast.makeText(this@JoinActivity, "네트워크 오류: ${e.message}", Toast.LENGTH_LONG).show()
+            Log.e("JoinActivity", "닉네임 중복 확인 요청 실패", e)
+            return 0
+        }
+    }
 
 }

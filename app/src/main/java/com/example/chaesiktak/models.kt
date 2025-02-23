@@ -33,12 +33,6 @@ data class LoginResponse(
     val email: String
 )
 
-
-// 보호된 데이터 응답 예제
-data class ProtectedData(
-    val message: String
-)
-
 // API 응답을 감싸는 공통 구조
 data class ApiResponse<T>(
     val status: Int,
@@ -182,3 +176,28 @@ data class ImageRequestBody(
     val image: String
 )
 
+//이메일 중복 확인 요청
+data class EmailCheckRequestBody(
+    val email: String
+)
+
+//닉네임 중복 확인 요청
+data class NickNameCheckRequestBody(
+    val userNickName: String
+)
+
+//이메일 중복 확인 응답
+data class EmailCheckResponse(
+    val status: Int,
+    val success: Boolean,
+    val message: String,
+    val data: Boolean
+)
+
+//닉네임 중복 확인 응답
+data class NickNameCheckResponse(
+    val status: Int,
+    val success: Boolean,
+    val message: String,
+    val data: Boolean
+)
