@@ -1,4 +1,4 @@
-package com.example.chaesiktak.activities
+package com.example.chaesiktak
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,14 +7,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.chaesiktak.R
+import com.example.chaesiktak.activities.LoginActivity
 
-class FindingPasswordActivity2 : AppCompatActivity() {
+class ResetPassword2 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        setContentView(R.layout.activity_finding_password2)
+        setContentView(R.layout.activity_reset_password2)
 
         val returnToLogin: Button = findViewById(R.id.return_to_button)
 
@@ -23,5 +22,10 @@ class FindingPasswordActivity2 : AppCompatActivity() {
             startActivity(intent)
         }
 
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
     }
 }

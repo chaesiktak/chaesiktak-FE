@@ -1,5 +1,3 @@
-import com.android.tools.r8.internal.me
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -36,35 +34,33 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        viewBinding = true  // View Binding 활성화
-    }
 }
 
 dependencies {
-    val camerax_version = "1.3.0"
-
-    //coil 라이브러리
-    implementation("io.coil-kt:coil:2.5.0") // 최신 버전 사용 가능
-    
-    implementation("androidx.camera:camera-core:$camerax_version")
-    implementation("androidx.camera:camera-camera2:$camerax_version")
-    implementation("androidx.camera:camera-lifecycle:$camerax_version")
-    implementation("androidx.camera:camera-view:$camerax_version")
-
-    //ViewPager2
-    implementation("androidx.viewpager2:viewpager2:1.1.0")
-    implementation("androidx.cardview:cardview:1.0.0")
-
-    //indicator library
-    implementation("me.relex:circleindicator:2.1.6")
 
     //retrofit library
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
+    //카메라
+    val camerax_version = "1.3.0"
+
+    implementation("androidx.camera:camera-core:$camerax_version")
+    implementation("androidx.camera:camera-camera2:$camerax_version")
+    implementation("androidx.camera:camera-lifecycle:$camerax_version")
+    implementation("androidx.camera:camera-view:$camerax_version")
+
+    //coil 라이브러리 - place-holder
+    implementation("io.coil-kt:coil:2.5.0") // 최신 버전 사용 가능
 
 
+
+    //homefragment - 하단 indicator
+    implementation("me.relex:circleindicator:2.1.6")
+
+    //ViewPager2
+    implementation("androidx.viewpager2:viewpager2:1.1.0")
+    implementation("androidx.cardview:cardview:1.0.0")
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)

@@ -4,18 +4,211 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#673AB7"
+    android:background="@color/white"
     tools:context=".fragments.MyInfoFragment">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment"
+        android:layout_width="3dp"
+        android:layout_height="wrap_content"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <!-- 상단바 -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/MyPage"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+                android:gravity="center"
+                android:text="마이페이지"
+                android:textColor="#4A4743"
+                android:textSize="20dp"/>
+
+
+        </RelativeLayout>
+
+
+
+        <!-- 프로필버튼 -->
+        <RelativeLayout
+            android:id="@+id/Profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/MyPage">
+
+            <Button
+                android:id="@+id/profileButton"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@drawable/border_button"/>
+
+            <ImageView
+                android:id="@+id/profileImage"
+                android:layout_width="120dp"
+                android:layout_height="70dp"
+                android:layout_centerVertical="true"
+                android:paddingLeft="20dp"
+                android:src="@drawable/profile"/>
+
+            <TextView
+                android:id="@+id/Nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/profileImage"
+                android:paddingTop="20dp"
+                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+                android:textColor="#4A4743"
+                android:text="#닉네임#"
+                android:textSize="20dp"/>
+
+            <TextView
+                android:id="@+id/Email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/profileImage"
+                android:paddingTop="50dp"
+                android:fontFamily="@font/ibm_plex_sans_kr_regular"
+                android:textColor="#717171"
+                android:text="#123456@gmail.com#"
+                android:textSize="15dp"/>
+
+            <ImageView
+                android:id="@+id/profileArrow"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/arrow_next"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+
+
+
+        <!-- 최근 본 항목 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="22dp"
+            android:paddingTop="15dp"
+            android:text="최근 본 레시피"
+            android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+            android:textSize="18dp"
+            android:textColor="#4A4743"/>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recentRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="145dp"
+            android:layout_below="@+id/Profile"
+            android:layout_margin="5dp"
+            android:orientation="horizontal" />
+
+
+
+        <!-- 환경설정 목록 (진행중)-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="95dp">
+
+            <Button
+                android:id="@+id/passwordChangeBtn"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/border_button"
+                android:text="비밀번호 재설정"
+                android:gravity="center_vertical"
+                android:paddingLeft="30dp"
+                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+                android:textSize="16dp"
+                android:textColor="#4A4743"/>
+            <Button
+                android:id="@+id/likeListBtn"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_below="@+id/passwordChangeBtn"
+                android:background="@drawable/border_button"
+                android:text="저장한 항목"
+                android:gravity="center_vertical"
+                android:paddingLeft="30dp"
+                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+                android:textSize="16dp"
+                android:textColor="#4A4743"/>
+            <!-- 공지사항 버튼 -->
+            <Button
+                android:id="@+id/noticeButton"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_below="@+id/likeListBtn"
+                android:background="@drawable/border_button"
+                android:text="공지사항"
+                android:gravity="center_vertical"
+                android:paddingLeft="30dp"
+                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+                android:textSize="16dp"
+                android:textColor="#4A4743" />
+
+            <Button
+                android:id="@+id/deactivationBtn"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_below="@+id/noticeButton"
+                android:background="@drawable/border_button"
+                android:text="탈퇴하기"
+                android:gravity="center_vertical"
+                android:paddingLeft="30dp"
+                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+                android:textSize="16dp"
+                android:textColor="#4A4743"/>
+
+            <Button
+                android:id="@+id/logoutBtn"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_below="@+id/deactivationBtn"
+                android:background="@drawable/border_button"
+                android:text="로그아웃"
+                android:gravity="center_vertical"
+                android:paddingLeft="30dp"
+                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+                android:textSize="16dp"
+                android:textColor="#4A4743"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="95dp"
             android:background="@color/white"
             android:padding="20dp"
+            android:layout_gravity="bottom"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <ImageView
@@ -42,7 +235,7 @@
                 android:src="@drawable/myinfo_onclicked" />
 
         </LinearLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </FrameLayout>

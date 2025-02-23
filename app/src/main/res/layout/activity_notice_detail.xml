@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".NoticeDetail">
+
+    <!-- 상단바 -->
+    <RelativeLayout
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="@color/white">
+
+        <ImageButton
+            android:id="@+id/backArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/backarrow_logo"
+            android:background="@color/white"
+            android:layout_centerVertical="true"
+            android:layout_margin="16dp"/>
+
+        <TextView
+            android:id="@+id/notice"
+            android:layout_width="wrap_content"
+            android:layout_height="58dp"
+            android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+            android:gravity="center"
+            android:text="공지사항"
+            android:textColor="#4A4743"
+            android:textSize="20dp"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:id="@+id/noticeDetailTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="공지사항 제목"
+            android:textSize="24sp"
+            android:textColor="#4A4743"
+            android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/noticeDetailWriter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="작성자: 관리자"
+            android:textSize="14sp"
+            android:textColor="#717171"
+            android:fontFamily="@font/ibm_plex_sans_kr_regular"
+            app:layout_constraintTop_toBottomOf="@id/noticeDetailContent" />
+
+        <TextView
+            android:id="@+id/noticeDetailDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="작성일: 2025-02-06"
+            android:textSize="14sp"
+            android:textColor="#717171"
+            android:fontFamily="@font/ibm_plex_sans_kr_regular"
+            app:layout_constraintTop_toBottomOf="@id/noticeDetailWriter" />
+
+        <TextView
+            android:id="@+id/noticeDetailHits"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="조회수: 0"
+            android:textSize="14sp"
+            android:textColor="#717171"
+            android:fontFamily="@font/ibm_plex_sans_kr_regular"
+            app:layout_constraintTop_toBottomOf="@id/noticeDetailDate"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/noticeDetailContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="공지사항 내용"
+            android:textSize="18sp"
+            android:textColor="#4A4743"
+            android:fontFamily="@font/ibm_plex_sans_kr_regular"
+            app:layout_constraintTop_toBottomOf="@id/noticeDetailTitle"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/noticeDetailUpdatedTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="수정일: 2025-02-21"
+            android:textSize="14sp"
+            android:textColor="#717171"
+            android:fontFamily="@font/ibm_plex_sans_kr_regular" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- 수정 버튼 -->
+            <android.widget.Button
+                android:id="@+id/deleteButton"
+                android:layout_width="309dp"
+                android:layout_height="61dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="57dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="24dp"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/default_button_lg"
+                android:fontFamily="@font/inter_bold"
+                android:text="삭제"
+                android:textColor="@color/white"
+                android:textSize="25sp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

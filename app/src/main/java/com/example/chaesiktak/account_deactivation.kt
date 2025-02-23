@@ -1,0 +1,112 @@
+package com.example.chaesiktak
+
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.Spinner
+import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import okhttp3.*
+import java.io.IOException
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.example.chaesiktak.activities.IntroActivity
+import com.example.chaesiktak.fragments.MyInfoFragment
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+
+class account_deactivation : AppCompatActivity() {
+
+    private lateinit var nicknameTextView: TextView
+    private lateinit var deactiveAgreeCheckBox: CheckBox
+    private lateinit var deactivateButton: Button
+    private lateinit var deactiveEditText: EditText
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_account_deactivation)
+
+        nicknameTextView = findViewById(R.id.nicknameTextView)
+        deactiveAgreeCheckBox = findViewById(R.id.deactiveAgreeCheckBox)
+        deactivateButton = findViewById(R.id.deactivateButton)
+        deactiveEditText = findViewById(R.id.deactiveEditText)
+
+        /* 체크박스 on/off && 탈퇴하기 버튼
+        val deactiveAgreeCheckBox: CheckBox = findViewById(R.id.deactiveAgreeCheckBox)
+        val deactivateButton: Button = findViewById(R.id.deactivateButton)
+         */
+
+
+        // SharedPreferences에서 현재 설정된 닉네임 가져오기
+        val sharedPref = getSharedPreferences("UserProfile", Context.MODE_PRIVATE)
+        val currentNickname = sharedPref.getString("nickname", "닉네임") ?: "닉네임"
+
+        nicknameTextView.text = "$currentNickname 님 정말 탈퇴하실건가요?" // Nickname 설정
+
+
+        // 탈퇴 사유 작성란
+        val deactiveEditText: EditText = findViewById(R.id.deactiveEditText)
+
+        // 탈퇴하기 버튼 클릭 리스너 설정
+        deactivateButton.setOnClickListener {
+            if (deactiveAgreeCheckBox.isChecked) {
+                val deactiveReason = deactiveEditText.text.toString()
+                sendDeactivationReasonToServer(currentNickname, deactiveReason)
+            } else {
+                Toast.makeText(this@account_deactivation, "탈퇴 사항에 동의하여 주세요.", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
+        // 뒤로가기 버튼 클릭 시 마이페이지 탭으로 이동
+        val backArrow = findViewById<ImageButton>(R.id.backArrow)
+        backArrow.setOnClickListener {
+            val intent = Intent(this, MyInfoFragment::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun sendDeactivationReasonToServer(nickname: String, reason: String) {
+        val client = OkHttpClient()
+        val url = "http://yourserverurl/deactivate"
+        val json = """{"nickname":"$nickname", "reason":"$reason"}"""
+        val body = RequestBody.create("application/json; charset=utf-8".toMediaTypeOrNull(), json)
+        val request = Request.Builder()
+            .url(url)
+            .post(body)
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                runOnUiThread {
+                    Toast.makeText(this@account_deactivation, "서버와 통신 중 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful) {
+                    runOnUiThread {
+                        Toast.makeText(this@account_deactivation, "탈퇴가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                        // 로그아웃 처리를 하고 첫 화면으로 이동
+                        val intent = Intent(this@account_deactivation, IntroActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
+                        finish()
+                    }
+                } else {
+                    runOnUiThread {
+                        Toast.makeText(this@account_deactivation, "탈퇴 처리에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
+
+    }
+}
