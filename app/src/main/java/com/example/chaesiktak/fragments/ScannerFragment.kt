@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
@@ -23,18 +24,26 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import androidx.camera.view.PreviewView
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.Dispatchers
+import com.example.chaesiktak.ImageAnalyzeRequest
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 
 class ScannerFragment : Fragment() {
 
     private lateinit var previewView: PreviewView
     private lateinit var cameraExecutor: ExecutorService
     private var imageCapture: ImageCapture? = null
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                startCamera()
+            } else {
+                Toast.makeText(requireContext(), "카메라 권한이 필요합니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,12 +66,12 @@ class ScannerFragment : Fragment() {
             takePhoto()
         }
 
-        // 카메라 권한 체크
+        // 카메라 권한 체크 및 요청
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
             == PackageManager.PERMISSION_GRANTED) {
             startCamera()
         } else {
-            requestPermissions(arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_REQUEST)
+            requestPermissionLauncher.launch(Manifest.permission.CAMERA)
         }
 
         cameraExecutor = Executors.newSingleThreadExecutor()
@@ -93,32 +102,16 @@ class ScannerFragment : Fragment() {
         }, ContextCompat.getMainExecutor(requireContext()))
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == CAMERA_PERMISSION_REQUEST) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startCamera()
-            } else {
-                Toast.makeText(requireContext(), "카메라 권한이 필요합니다.", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         cameraExecutor.shutdown()
     }
 
-    companion object {
-        private const val CAMERA_PERMISSION_REQUEST = 1001
-    }
-
     private fun takePhoto() {
         val imageCapture = imageCapture ?: return
 
-        // 저장할 파일 생성
         val photoFile = File(
-            requireContext().externalMediaDirs.firstOrNull(),
+            requireContext().getExternalFilesDir(null),
             SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(System.currentTimeMillis()) + ".jpg"
         )
 
@@ -133,8 +126,9 @@ class ScannerFragment : Fragment() {
                     Log.d("CameraX", "사진 저장됨: $savedUri")
                     Toast.makeText(requireContext(), "사진 저장됨: $savedUri", Toast.LENGTH_SHORT).show()
 
-                    // 촬영한 이미지를 서버로 전송
-                    uploadImageToServer(photoFile)
+                    lifecycleScope.launch {
+                        uploadImage(photoFile)
+                    }
                 }
 
                 override fun onError(exception: ImageCaptureException) {
@@ -144,27 +138,43 @@ class ScannerFragment : Fragment() {
         )
     }
 
-    private fun uploadImageToServer(imageFile: File) {
-        lifecycleScope.launch {
-            try {
-                val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), imageFile)
-                val imagePart = MultipartBody.Part.createFormData("image", imageFile.name, requestFile)
+    private suspend fun uploadImage(imageFile: File) {
+        val requestBody = imageFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
+        val imagePart = MultipartBody.Part.createFormData("image", imageFile.name, requestBody)
 
-                val response = withContext(Dispatchers.IO) {
-                    RetrofitClient.getAIinstance(requireContext()).uploadImage(imagePart)
-                }
+        try {
+            val response = RetrofitClient.instance(requireContext()).uploadImage(imagePart)
+            if (response.success) {
+                Log.d("ImageUpload", "업로드 성공: ${response.message}")
+                Toast.makeText(requireContext(), "이미지 업로드 성공", Toast.LENGTH_SHORT).show()
 
-                if (response.isSuccessful) {
-                    Log.d("Upload", "이미지 업로드 성공")
-                    Toast.makeText(requireContext(), "이미지 분석 완료!", Toast.LENGTH_SHORT).show()
-                } else {
-                    Log.e("Upload", "서버 오류: ${response.errorBody()?.string()}")
-                    Toast.makeText(requireContext(), "서버 오류 발생", Toast.LENGTH_SHORT).show()
-                }
-            } catch (e: Exception) {
-                Log.e("Upload", "예외 발생: ${e.message}")
-                Toast.makeText(requireContext(), "네트워크 오류 발생", Toast.LENGTH_SHORT).show()
+                // 업로드 성공 후 분석 API 호출
+                ImageAnalyze(response.data)
+                Log.d("응답 데이터", "${response.data}")
+            } else {
+                Log.e("ImageUpload", "업로드 실패: ${response.message}")
+                Toast.makeText(requireContext(), "이미지 업로드 실패: ${response.message}", Toast.LENGTH_SHORT).show()
             }
+        } catch (e: Exception) {
+            Log.e("ImageUpload", "네트워크 오류", e)
+            Toast.makeText(requireContext(), "네트워크 오류 발생", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private suspend fun ImageAnalyze(imageUrl: String) {
+        try {
+            val request = ImageAnalyzeRequest(imageUrl)
+            val response = RetrofitClient.instance(requireContext()).ImageAnalyze(request)
+            if (response.success) {
+                Log.d("SecondAPI", "전송 성공: ${response.message}")
+                Toast.makeText(requireContext(), "이미지 분석 성공", Toast.LENGTH_SHORT).show()
+            } else {
+                Log.e("SecondAPI", "전송 실패: ${response.message}")
+                Toast.makeText(requireContext(), "이미지 분석 실패: ${response.message}", Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: Exception) {
+            Log.e("SecondAPI", "네트워크 오류", e)
+            Toast.makeText(requireContext(), "네트워크 오류 발생", Toast.LENGTH_SHORT).show()
         }
     }
 }

@@ -2,6 +2,8 @@
 import com.example.chaesiktak.ApiResponse
 import com.example.chaesiktak.EmailCheckRequestBody
 import com.example.chaesiktak.EmailCheckResponse
+import com.example.chaesiktak.ImageAnalyzeRequest
+import com.example.chaesiktak.ImageAnalyzeResponse
 import com.example.chaesiktak.LoginRequest
 import com.example.chaesiktak.LoginResponse
 import com.example.chaesiktak.NickNameCheckRequestBody
@@ -12,6 +14,8 @@ import com.example.chaesiktak.ResetPasswordRequest
 import com.example.chaesiktak.ResetPasswordResponse
 import com.example.chaesiktak.SignUpRequest
 import com.example.chaesiktak.User
+import com.example.chaesiktak.uploadImageRequest
+import com.example.chaesiktak.uploadImageResponse
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -58,11 +62,20 @@ interface ApiService {
         @Body request: ResetPasswordRequest
     ): Response<ResetPasswordResponse>
 
-    // LLM 이미지 분석
+    //client -> server (이미지 업로드)
+//    @POST("api/image/upload")
+//    suspend fun uploadImage(@Body request: uploadImageRequest): Response<uploadImageResponse>
+
     @Multipart
-    @POST("analyze-image")
+    @POST("api/image/upload")
     suspend fun uploadImage(
         @Part image: MultipartBody.Part
-    ): Response<ResponseBody>
+    ): uploadImageResponse
+
+    @POST("api/analyze-image") // 여기에 두 번째 API의 경로 입력
+    suspend fun ImageAnalyze(
+        @Body request: ImageAnalyzeRequest
+    ): ImageAnalyzeResponse
+
 }
 

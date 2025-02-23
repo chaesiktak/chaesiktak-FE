@@ -2,6 +2,7 @@ package com.example.chaesiktak
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 
 // 회원가입 요청
 data class SignUpRequest(
@@ -156,7 +157,7 @@ data class RecipeStep(
         override fun newArray(size: Int) = arrayOfNulls<RecipeStep?>(size)
     }
 }
-
+/**비밀번호 찾기 FindingPassword Activity **/
 // 비밀번호 찾기 - 요청 데이터 클래스
 data class ResetPasswordRequest(
     val email: String,
@@ -171,11 +172,7 @@ data class ResetPasswordResponse(
     val data: String?
 )
 
-//LLM
-data class ImageRequestBody(
-    val image: String
-)
-
+/**회원가입 Join Activity **/
 //이메일 중복 확인 요청
 data class EmailCheckRequestBody(
     val email: String
@@ -200,4 +197,34 @@ data class NickNameCheckResponse(
     val success: Boolean,
     val message: String,
     val data: Boolean
+)
+
+/**LLM - Scanner **/
+//이미지 업로드 요청
+data class uploadImageRequest(
+    val Image: String
+)
+
+//이미지 업로드 응답
+data class uploadImageResponse(
+    val status: Int,
+    val success: Boolean,
+    val message: String,
+    val data: String
+)
+
+data class ImageAnalyzeRequest(
+    val Image: String
+)
+
+data class ImageAnalyzeResponse(
+    val status: Int,
+    val success: Boolean,
+    val message: String,
+    val data: LLMResponse
+)
+
+data class LLMResponse(
+    val response: String,
+    @SerializedName("output_dict") val outputDict: Map<String, String>
 )
