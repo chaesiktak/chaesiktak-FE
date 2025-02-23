@@ -80,7 +80,7 @@ class LoginActivity : AppCompatActivity() {
                         saveAccessToken(accessToken)
                         Log.d("Login", "로그인 성공: AccessToken=$accessToken")
 
-                        // ✅ 다이얼로그 닫기
+                        //다이얼로그 닫기
                         loadingDialog.stopAnimation()
 
                         startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
@@ -107,20 +107,17 @@ class LoginActivity : AppCompatActivity() {
     private fun saveAccessToken(token: String) {
         val sharedPref = getSharedPreferences("AppPrefs", MODE_PRIVATE)
         val editor = sharedPref.edit()
-        editor.putString("accessToken", token)
-
-        // apply() 대신 commit() 사용
-        val isSaved = editor.commit()
+        val isSaved = editor.putString("accessToken", token).commit() // 🚀 즉시 저장!
 
         if (isSaved) {
-            Log.d("Token", "토큰이 정상적으로 저장됨: $token")
+            Log.d("Token", "토큰 저장 완료: $token")
         } else {
             Log.e("Token", "토큰 저장 실패")
         }
 
-        // 저장된 값 다시 확인
+        //저장된 토큰을 다시 확인
         val savedToken = sharedPref.getString("accessToken", "저장된 값 없음")
-        Log.d("Token", "SharedPreferences에 저장된 토큰 확인: $savedToken")
+        Log.d("Token", "SharedPreferences에 저장된 토큰: $savedToken")
     }
 
 }
