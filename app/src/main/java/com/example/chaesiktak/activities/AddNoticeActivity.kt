@@ -1,4 +1,4 @@
-package com.example.chaesiktak
+package com.example.chaesiktak.activities
 
 import android.app.Activity
 import android.content.Context
@@ -11,13 +11,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.example.chaesiktak.Noticeitem
+import com.example.chaesiktak.R
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class AddNotice : AppCompatActivity() {
+class AddNoticeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -42,7 +42,7 @@ class AddNotice : AppCompatActivity() {
         // 뒤로가기 버튼 클릭 시 공지사항 목록 탭으로 이동
         val backArrow = findViewById<ImageButton>(R.id.backArrow)
         backArrow.setOnClickListener {
-            val intent = Intent(this, NoticeBoard::class.java)
+            val intent = Intent(this, NoticeBoardActivity::class.java)
             startActivity(intent)
         }
 

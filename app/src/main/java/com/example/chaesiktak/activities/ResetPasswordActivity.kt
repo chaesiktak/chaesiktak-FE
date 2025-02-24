@@ -1,4 +1,4 @@
-package com.example.chaesiktak
+package com.example.chaesiktak.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,10 +7,9 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.example.chaesiktak.R
 
-class ResetPassword : AppCompatActivity() {
+class ResetPasswordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -70,7 +69,7 @@ class ResetPassword : AppCompatActivity() {
                     // 예: 서버에 요청을 보내거나 데이터베이스를 업데이트하는 작업
 
                     // 비밀번호 재설정 후 성공 화면으로 이동
-                    val intent = Intent(this, ResetPassword2::class.java)
+                    val intent = Intent(this, ResetPasswordActivity2::class.java)
                     startActivity(intent)
                     finish()
                 }

@@ -10,24 +10,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.chaesiktak.BookmarkActivity
-import com.example.chaesiktak.NoticeBoard
-import com.example.chaesiktak.ProfileEditActivity
+import com.example.chaesiktak.activities.BookmarkActivity
+import com.example.chaesiktak.activities.NoticeBoardActivity
+import com.example.chaesiktak.activities.ProfileEditActivity
 import com.example.chaesiktak.R
 import com.example.chaesiktak.RecentAdapter
 import com.example.chaesiktak.RecentItem
 import com.example.chaesiktak.RecentRecipeData
-import com.example.chaesiktak.ResetPassword
-import com.example.chaesiktak.account_deactivation
+import com.example.chaesiktak.activities.ResetPasswordActivity
+import com.example.chaesiktak.activities.AccountDeactivationActivity
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -117,13 +115,13 @@ class MyInfoFragment : Fragment() {
         // 공지사항 버튼 클릭 이벤트
         val noticeButton = view.findViewById<Button>(R.id.noticeButton)
         noticeButton.setOnClickListener {
-            val intent = Intent(activity, NoticeBoard::class.java)
+            val intent = Intent(activity, NoticeBoardActivity::class.java)
             startActivity(intent)
         }
         // 비밀번호 재설정 버튼 클릭 이벤트 설정
         val passwordChangeBtn = view.findViewById<Button>(R.id.passwordChangeBtn)
         passwordChangeBtn.setOnClickListener {
-            val intent = Intent(activity, ResetPassword::class.java)
+            val intent = Intent(activity, ResetPasswordActivity::class.java)
             startActivity(intent)
         }
         // 저장된 항목 버튼 클릭 이벤트 설정
@@ -135,7 +133,7 @@ class MyInfoFragment : Fragment() {
         // 탈퇴하기 클릭 이벤트 설정
         val deactivationButton = view.findViewById<Button>(R.id.deactivationBtn)
         deactivationButton.setOnClickListener {
-            val intent = Intent(activity, account_deactivation::class.java)
+            val intent = Intent(activity, AccountDeactivationActivity::class.java)
             startActivity(intent)
         }
         // 로그아웃 클릭 이벤트 설정
