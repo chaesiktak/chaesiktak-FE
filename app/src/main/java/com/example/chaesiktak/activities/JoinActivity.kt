@@ -34,7 +34,6 @@ class JoinActivity : AppCompatActivity() {
     private lateinit var nameEditText: EditText //본명 입력
     private lateinit var nicknameEditText: EditText //닉네임 입력
 
-
     private lateinit var tosCheckbox: CheckBox //약관확인 checkbox
     private lateinit var emailErrortext: TextView //이메일 에러 표시 text
     private lateinit var pwErrortext: TextView //비밀번호 에러 표시 text
@@ -123,9 +122,8 @@ class JoinActivity : AppCompatActivity() {
         tosText.setOnClickListener {
             startActivity(Intent(this, TOSActivity::class.java)) //약관확인
         }
-//        homeicon.setOnClickListener {
-//            startActivity(Intent(this, HomeActivity::class.java)) //home으로 가는 icon
-//        }
+
+
         backarrow.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java)) //뒤로 돌아가기
         }
@@ -298,7 +296,6 @@ class JoinActivity : AppCompatActivity() {
             0
         }
     }
-
 
     //닉네임 중복 확인
     suspend fun checkNickNameDupe(): Int {
