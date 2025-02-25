@@ -1,6 +1,6 @@
 package com.example.chaesiktak.activities
 
-import android.content.Context
+import CustomToast
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -27,9 +27,10 @@ class BookmarkActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.recyclerView)
 
-        adapter = SavedItemAdapter(bookmarkList) { recipe ->
-            navigateToRecipeDetail(recipe)
-        }
+        adapter = SavedItemAdapter(bookmarkList,
+            { recipe -> navigateToRecipeDetail(recipe) },
+            { recipe -> deleteFavorite(recipe) } // 삭제 함수 호출
+        )
 
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -54,11 +55,11 @@ class BookmarkActivity : AppCompatActivity() {
                     bookmarkList.addAll(favoriteRecipes)
                     adapter.notifyDataSetChanged()
                 } else {
-                    Toast.makeText(this@BookmarkActivity, "즐겨찾기 목록을 불러올 수 없습니다.", Toast.LENGTH_SHORT).show()
+                    CustomToast.show(this@BookmarkActivity, "즐겨찾기 목록을 불러올 수 없습니다.")
                 }
             } catch (e: Exception) {
                 Log.e("BookmarkActivity", "네트워크 오류: ${e.message}")
-                Toast.makeText(this@BookmarkActivity, "네트워크 오류 발생", Toast.LENGTH_SHORT).show()
+                CustomToast.show(this@BookmarkActivity, "네트워크 오류 발생")
             }
         }
     }
@@ -69,5 +70,26 @@ class BookmarkActivity : AppCompatActivity() {
             putExtra("IS_FAVORITE", recipe.isFavorite)
         }
         startActivity(intent)
+    }
+
+    private fun deleteFavorite(recipe: RecommendRecipe) {
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitClient.instance(this@BookmarkActivity).DeleteFavorite(recipe.id)
+
+                if (response.isSuccessful) {
+                    CustomToast.show(this@BookmarkActivity, "즐겨찾기에서 삭제되었습니다.")
+
+                    // 리스트에서 해당 레시피 삭제 후 UI 업데이트
+                    bookmarkList.remove(recipe)
+                    adapter.notifyDataSetChanged()
+                } else {
+                    Toast.makeText(this@BookmarkActivity, "삭제 실패: ${response.code()}", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Log.e("BookmarkActivity", "네트워크 오류: ${e.message}")
+                CustomToast.show(this@BookmarkActivity, "네트워크 오류 발생")
+            }
+        }
     }
 }

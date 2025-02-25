@@ -13,7 +13,8 @@ import com.example.chaesiktak.RecommendRecipe
 
 class SavedItemAdapter(
     private val savedRecipeList: ArrayList<RecommendRecipe>,
-    private val onItemClick: (RecommendRecipe) -> Unit  // 🔹 클릭 이벤트 추가
+    private val onItemClick: (RecommendRecipe) -> Unit,
+    private val onDeleteClick: (RecommendRecipe) -> Unit
 ) : RecyclerView.Adapter<SavedItemAdapter.SavedRecipeViewHolder>() {
 
     class SavedRecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -21,6 +22,7 @@ class SavedItemAdapter(
         val titleView: TextView = itemView.findViewById(R.id.saveditemtitme)
         val subtextView: TextView = itemView.findViewById(R.id.saveditemsubtitle)
         val tagView: TextView = itemView.findViewById(R.id.saveditemtag) // 태그View 추가
+        val deleteView: ImageView = itemView.findViewById(R.id.delete_item) // 저장항목 삭제 버튼
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SavedRecipeViewHolder {
@@ -55,7 +57,10 @@ class SavedItemAdapter(
         }
         holder.tagView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, tagColor))
 
-        // 🔹 클릭 리스너 추가
+        // 클릭 이벤트 > DetailActivity로
         holder.itemView.setOnClickListener { onItemClick(recipe) }
+
+        // X 버튼 클릭 시 삭제 이벤트 호출
+        holder.deleteView.setOnClickListener { onDeleteClick(recipe) }
     }
 }
