@@ -11,9 +11,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,16 +30,7 @@ import com.example.chaesiktak.RecentRecipeData
 import com.example.chaesiktak.activities.ResetPasswordActivity
 import com.example.chaesiktak.activities.AccountDeactivationActivity
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [MyInfoFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MyInfoFragment : Fragment() {
 
     private lateinit var nicknameTextView: TextView
@@ -106,38 +100,38 @@ class MyInfoFragment : Fragment() {
 
 
         // 프로필 버튼 클릭 이벤트 설정
-        val profileButton = view.findViewById<Button>(R.id.profileButton)
+        val profileButton = view.findViewById<RelativeLayout>(R.id.profileButton)
         profileButton.setOnClickListener {
             val intent = Intent(activity, ProfileEditActivity::class.java)
             startActivity(intent)
         }
 
         // 공지사항 버튼 클릭 이벤트
-        val noticeButton = view.findViewById<Button>(R.id.noticeButton)
+        val noticeButton = view.findViewById<LinearLayoutCompat>(R.id.noticeButton)
         noticeButton.setOnClickListener {
             val intent = Intent(activity, NoticeBoardActivity::class.java)
             startActivity(intent)
         }
         // 비밀번호 재설정 버튼 클릭 이벤트 설정
-        val passwordChangeBtn = view.findViewById<Button>(R.id.passwordChangeBtn)
+        val passwordChangeBtn = view.findViewById<LinearLayoutCompat>(R.id.passwordChangeBtn)
         passwordChangeBtn.setOnClickListener {
             val intent = Intent(activity, ResetPasswordActivity::class.java)
             startActivity(intent)
         }
         // 저장된 항목 버튼 클릭 이벤트 설정
-        val likeListButton = view.findViewById<Button>(R.id.likeListBtn)
+        val likeListButton = view.findViewById<LinearLayoutCompat>(R.id.likeListBtn)
         likeListButton.setOnClickListener {
             val intent = Intent(activity, BookmarkActivity::class.java)
             startActivity(intent)
         }
         // 탈퇴하기 클릭 이벤트 설정
-        val deactivationButton = view.findViewById<Button>(R.id.deactivationBtn)
+        val deactivationButton = view.findViewById<LinearLayoutCompat>(R.id.deactivationBtn)
         deactivationButton.setOnClickListener {
             val intent = Intent(activity, AccountDeactivationActivity::class.java)
             startActivity(intent)
         }
         // 로그아웃 클릭 이벤트 설정
-        val logoutButton = view.findViewById<Button>(R.id.logoutBtn)
+        val logoutButton = view.findViewById<LinearLayoutCompat>(R.id.logoutBtn)
         logoutButton.setOnClickListener {
             // 로그아웃 확인 대화상자 표시
             AlertDialog.Builder(activity)
@@ -175,23 +169,4 @@ class MyInfoFragment : Fragment() {
         nicknameTextView.text = currentNickname
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MyInfoFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MyInfoFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

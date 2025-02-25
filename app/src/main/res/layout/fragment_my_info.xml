@@ -38,9 +38,11 @@
                 android:textSize="20dp" />
         </RelativeLayout>
 
-        <!-- 프로필버튼 -->
+        <!-- 프로필 레이아웃 -->
         <RelativeLayout
-            android:id="@+id/Profile"
+            android:id="@+id/profileButton"
+            android:clickable="true"
+            android:focusable="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/MyPage">
@@ -82,7 +84,6 @@
                 android:textSize="15dp" />
 
             <ImageView
-                android:id="@+id/profileArrow"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_alignParentRight="true"
@@ -113,89 +114,199 @@
 
 
         <!-- 환경설정 목록 (진행중)-->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingBottom="95dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </LinearLayout>
-
-            <Button
+            <!-- 비밀번호 재설정-->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:focusable="true"
+                android:clickable="true"
                 android:id="@+id/passwordChangeBtn"
+                android:layout_marginHorizontal="20dp"
+                android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@drawable/border_button"
-                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
-                android:gravity="center_vertical"
-                android:paddingLeft="30dp"
-                android:text="비밀번호 재설정"
-                android:textColor="#4A4743"
-                android:textSize="16dp" />
+                android:layout_height="69dp">
+                <ImageView
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/passwordcheck"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
-            <Button
+                <TextView
+                    android:textColor="@color/black_replacement"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+                    android:text="비밀번호 재설정"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <ImageView
+                    android:src="@drawable/nextarrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!-- 저장한 항목-->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:focusable="true"
+                android:clickable="true"
                 android:id="@+id/likeListBtn"
+                android:layout_marginHorizontal="20dp"
+                android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_below="@+id/passwordChangeBtn"
-                android:layout_weight="1"
-                android:background="@drawable/border_button"
-                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
-                android:gravity="center_vertical"
-                android:paddingLeft="30dp"
-                android:text="저장한 항목"
-                android:textColor="#4A4743"
-                android:textSize="16dp" />
-            <!-- 공지사항 버튼 -->
-            <Button
+                android:layout_height="69dp">
+
+                <ImageView
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/likebutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:textColor="@color/black_replacement"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+                    android:text="저장한 항목"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <ImageView
+                    android:src="@drawable/nextarrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <!-- 비밀번호 재설정-->
+            <!-- 비밀번호 재설정-->
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:focusable="true"
+                android:layout_width="match_parent"
+                android:layout_height="69dp"
+                android:layout_marginHorizontal="20dp"
+                android:clickable="true"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/tos" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+                    android:text="이용약관"
+                    android:textColor="@color/black_replacement"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/nextarrow" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:focusable="true"
                 android:id="@+id/noticeButton"
+                android:layout_marginHorizontal="20dp"
+                android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_below="@+id/likeListBtn"
-                android:layout_weight="1"
-                android:background="@drawable/border_button"
-                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
-                android:gravity="center_vertical"
-                android:paddingLeft="30dp"
-                android:text="공지사항"
-                android:textColor="#4A4743"
-                android:textSize="16dp" />
+                android:layout_height="69dp">
 
-            <Button
+                <ImageView
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/alarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:textColor="@color/black_replacement"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+                    android:text="공지사항"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <ImageView
+                    android:src="@drawable/nextarrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <!-- 탈퇴하기-->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:focusable="true"
+                android:clickable="true"
                 android:id="@+id/deactivationBtn"
+                android:layout_marginHorizontal="20dp"
+                android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_below="@+id/noticeButton"
-                android:layout_weight="1"
-                android:background="@drawable/border_button"
-                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
-                android:gravity="center_vertical"
-                android:paddingLeft="30dp"
-                android:text="탈퇴하기"
-                android:textColor="#4A4743"
-                android:textSize="16dp" />
+                android:layout_height="69dp">
+                <ImageView
 
-            <Button
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/profile_delete"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
+                <TextView
+                    android:textColor="@color/black_replacement"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+                    android:text="탈퇴하기"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <ImageView
+                    android:src="@drawable/nextarrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!-- 로그아웃-->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:clickable="true"
                 android:id="@+id/logoutBtn"
+                android:layout_marginHorizontal="20dp"
+                android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_below="@+id/deactivationBtn"
-                android:layout_weight="1"
-                android:background="@drawable/border_button"
-                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
-                android:gravity="center_vertical"
-                android:paddingLeft="30dp"
-                android:text="로그아웃"
-                android:textColor="#4A4743"
-                android:textSize="16dp" />
-        </LinearLayout>
+                android:layout_height="69dp">
 
+                <ImageView
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/logout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:textColor="@color/black_replacement"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+                    android:text="로그아웃"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <ImageView
+                    android:src="@drawable/nextarrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </LinearLayout>
+        </ScrollView>
     </LinearLayout>
+
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
