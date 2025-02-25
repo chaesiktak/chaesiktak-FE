@@ -18,6 +18,8 @@ import com.example.chaesiktak.ResetPasswordRequest
 import com.example.chaesiktak.ResetPasswordResponse
 import com.example.chaesiktak.SignUpRequest
 import com.example.chaesiktak.User
+import com.example.chaesiktak.passwordUpdateRequest
+import com.example.chaesiktak.passwordUpdateResponse
 import com.example.chaesiktak.uploadImageRequest
 import com.example.chaesiktak.uploadImageResponse
 import okhttp3.MultipartBody
@@ -32,6 +34,10 @@ import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface ApiService {
+
+    //비밀번호 재설정
+    @POST("api/verify/passwordUpdate")
+    suspend fun passwordUpdate(@Body request: passwordUpdateRequest): Response<passwordUpdateResponse>
 
     //회원가입 API
 

@@ -6,6 +6,24 @@ import com.google.gson.annotations.SerializedName
 
 /*
 *
+* 비밀번호 재설정
+* */
+data class passwordUpdateRequest(
+    val email: String,
+    val currentPassword: String,
+    val newPassword: String
+)
+
+data class passwordUpdateResponse(
+    val status: Int,
+    val success: Boolean,
+    val message: String,
+    val data: String
+)
+
+
+/*
+*
 * 회원가입 응답 & 요청
 * */
 // 회원가입 요청
