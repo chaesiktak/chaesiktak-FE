@@ -31,6 +31,7 @@ import com.example.chaesiktak.RecentItem
 import com.example.chaesiktak.RecentRecipeData
 import com.example.chaesiktak.activities.ResetPasswordActivity
 import com.example.chaesiktak.activities.AccountDeactivationActivity
+import com.example.chaesiktak.activities.LoginActivity
 import com.example.chaesiktak.activities.TOSActivity
 import kotlinx.coroutines.launch
 
@@ -153,7 +154,7 @@ class MyInfoFragment : Fragment() {
                     // 확인 버튼 클릭 시 로그아웃 처리
                     Toast.makeText(activity, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
                     // 첫 화면으로 이동
-                    val intent = Intent(activity, HomeFragment::class.java)
+                    val intent = Intent(activity, LoginActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
                     activity?.finish()
