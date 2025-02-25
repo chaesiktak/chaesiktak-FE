@@ -50,16 +50,21 @@
                 android:fontFamily="@font/ibm_plex_sans_kr_bold"
                 android:gravity="center"
                 android:text="회원가입"
-                android:textColor="@color/black"
+                android:textColor="@color/black_replacement"
                 android:textSize="20sp" />
 
-            <!-- Home Icon -->
+<!--            &lt;!&ndash; Home Icon &ndash;&gt;-->
+<!--            <ImageView-->
+<!--                android:id="@+id/homeIcon"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:contentDescription="Home"-->
+<!--                android:src="@drawable/home_logo" />-->
             <ImageView
-                android:id="@+id/homeIcon"
-                android:layout_width="wrap_content"
+                android:layout_width="10dp"
                 android:layout_height="wrap_content"
-                android:contentDescription="Home"
-                android:src="@drawable/home_logo" />
+                android:layout_marginEnd="10dp"
+                android:contentDescription="Back" />
         </LinearLayout>
 
         <View
@@ -85,7 +90,7 @@
                 android:text="이메일 아이디"
                 android:textSize="16sp"
                 android:fontFamily="@font/ibm_plex_sans_kr_bold"
-                android:textColor="@color/black" />
+                android:textColor="@color/black_replacement" />
 
             <!-- Email Input Row -->
             <LinearLayout
@@ -150,7 +155,7 @@
                 android:text="비밀번호"
                 android:textSize="16sp"
                 android:fontFamily="@font/ibm_plex_sans_kr_bold"
-                android:textColor="@color/black" />
+                android:textColor="@color/black_replacement"/>
 
             <!-- Password Input Row -->
             <LinearLayout
@@ -216,7 +221,7 @@
                 android:text="이름"
                 android:textSize="16sp"
                 android:fontFamily="@font/ibm_plex_sans_kr_bold"
-                android:textColor="@color/black" />
+                android:textColor="@color/black_replacement" />
 
             <!-- Email Input Row -->
             <LinearLayout
@@ -260,7 +265,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ibm_plex_sans_kr_bold"
                 android:text="닉네임"
-                android:textColor="@color/black"
+                android:textColor="@color/black_replacement"
                 android:textSize="16sp" />
 
             <!-- Email Input Row -->
@@ -351,21 +356,19 @@
         </LinearLayout>
 
 
-
         <android.widget.Button
             android:id="@+id/signUpbutton"
             android:layout_width="309dp"
             android:layout_height="61dp"
-            android:layout_marginTop="57dp"
+            android:layout_gravity="center"
             android:layout_marginStart="32dp"
+            android:layout_marginTop="57dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="24dp"
-            android:layout_gravity="center"
-            android:text="가입하기"
-            android:textSize="25sp"
-            android:fontFamily="@font/inter_bold"
-            android:textColor="@color/white"
             android:background="@drawable/default_button_lg"
-            />
+            android:fontFamily="@font/inter_bold"
+            android:text="가입하기"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
     </LinearLayout>
 </ScrollView>

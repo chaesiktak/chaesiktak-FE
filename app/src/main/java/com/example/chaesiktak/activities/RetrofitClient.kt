@@ -38,25 +38,4 @@ object RetrofitClient {
 
         return retrofit!!.create(ApiService::class.java)
     }
-
-    fun getAIinstance(context: Context): ApiService {
-        if (aiRetrofit == null) {
-            val loggingInterceptor = HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            }
-
-            val client = OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor)
-                .addInterceptor(AuthInterceptor(context))
-                .build()
-
-            aiRetrofit = Retrofit.Builder()
-                .baseUrl(BASE_AI_URL)
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create(gson)) // ⭐ 수정
-                .build()
-        }
-
-        return aiRetrofit!!.create(ApiService::class.java)
-    }
 }

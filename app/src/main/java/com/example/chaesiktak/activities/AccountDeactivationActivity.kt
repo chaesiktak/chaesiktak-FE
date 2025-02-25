@@ -50,16 +50,16 @@ class AccountDeactivationActivity : AppCompatActivity() {
         // 탈퇴 사유 작성란
         val deactiveEditText: EditText = findViewById(R.id.deactiveEditText)
 
-        // 탈퇴하기 버튼 클릭 리스너 설정
-        deactivateButton.setOnClickListener {
-            if (deactiveAgreeCheckBox.isChecked) {
-                val deactiveReason = deactiveEditText.text.toString()
-                sendDeactivationReasonToServer(currentNickname, deactiveReason)
-            } else {
-                Toast.makeText(this@AccountDeactivationActivity, "탈퇴 사항에 동의하여 주세요.", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
+        // 탈퇴하기 버튼 클릭 리스너 설정 -> 이거 오류때문에 일단 클릭 못하게 막아놓을게요!
+//        deactivateButton.setOnClickListener {
+//            if (deactiveAgreeCheckBox.isChecked) {
+//                val deactiveReason = deactiveEditText.text.toString()
+//                sendDeactivationReasonToServer(currentNickname, deactiveReason)
+//            } else {
+//                Toast.makeText(this@AccountDeactivationActivity, "탈퇴 사항에 동의하여 주세요.", Toast.LENGTH_SHORT)
+//                    .show()
+//            }
+//        }
 
         // 뒤로가기 버튼 클릭 시 마이페이지 탭으로 이동
         val backArrow = findViewById<ImageButton>(R.id.backArrow)

@@ -1,5 +1,6 @@
 package com.example.chaesiktak.activities
 
+import LoadingDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -21,20 +22,25 @@ import com.example.chaesiktak.NickNameCheckRequestBody
 import com.example.chaesiktak.R
 import com.example.chaesiktak.SignUpRequest
 import kotlinx.coroutines.launch
+import kotlin.math.sign
 
 class JoinActivity : AppCompatActivity() {
+
+    private lateinit var loadingDialog: LoadingDialog
 
     private lateinit var emailEditText: EditText //이메일 입력
     private lateinit var passwordEditText: EditText //비밀번호 입력
     private lateinit var confirmPasswordEditText: EditText //비밀번호 확인 (비밀번호 입력값과 동일)
     private lateinit var nameEditText: EditText //본명 입력
     private lateinit var nicknameEditText: EditText //닉네임 입력
-    private lateinit var signupButton: Button
+
 
     private lateinit var tosCheckbox: CheckBox //약관확인 checkbox
     private lateinit var emailErrortext: TextView //이메일 에러 표시 text
     private lateinit var pwErrortext: TextView //비밀번호 에러 표시 text
     private  lateinit var nicknameErrortext:TextView //닉네임 에러 표시 text
+
+    private lateinit var signupButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,15 +57,18 @@ class JoinActivity : AppCompatActivity() {
         emailErrortext = findViewById(R.id.emailError)
         pwErrortext = findViewById(R.id.passwordError)
         nicknameErrortext = findViewById(R.id.NicknameError)
+        signupButton = findViewById(R.id.signUpbutton)
 
 
         val backarrow: ImageView = findViewById(R.id.backArrow)
-        val homeicon: ImageView = findViewById(R.id.homeIcon)
         val tosText: TextView = findViewById(R.id.TOStext)
         val signupbutton: Button = findViewById(R.id.signUpbutton)
 
         val checkEmailbutton: Button = findViewById(R.id.checkEmailButton)
         val checkNicknameButton: Button = findViewById(R.id.checkNicknameButton)
+
+        // 로딩 다이얼로그 초기화
+        loadingDialog = LoadingDialog(this)
 
         checkEmailbutton.setOnClickListener {
             runOnUiThread {
@@ -107,16 +116,18 @@ class JoinActivity : AppCompatActivity() {
         passwordEditText.addTextChangedListener(passwordTextWatcher)
 
         signupbutton.setOnClickListener {
+            loadingDialog.show()
+            loadingDialog.startAnimation()
             performSignUp()
         }
         tosText.setOnClickListener {
-            startActivity(Intent(this, TOSActivity::class.java))
+            startActivity(Intent(this, TOSActivity::class.java)) //약관확인
         }
-        homeicon.setOnClickListener {
-            startActivity(Intent(this, HomeActivity::class.java))
-        }
+//        homeicon.setOnClickListener {
+//            startActivity(Intent(this, HomeActivity::class.java)) //home으로 가는 icon
+//        }
         backarrow.setOnClickListener {
-            startActivity(Intent(this, LoginActivity::class.java))
+            startActivity(Intent(this, LoginActivity::class.java)) //뒤로 돌아가기
         }
 
         passwordEditText.addTextChangedListener(passwordTextWatcher)
@@ -211,14 +222,16 @@ class JoinActivity : AppCompatActivity() {
                     val user = response.body()?.data
                     Toast.makeText(
                         this@JoinActivity,
-                        "회원가입 성공! ${user?.userName}",
+                        "회원가입을 환영합니다 ${user?.userName}",
                         Toast.LENGTH_LONG
                     ).show()
+                    loadingDialog.stopAnimation()
                     startActivity(Intent(this@JoinActivity, SignUpCompleteActivity::class.java))
                     finish()
                 } else {
                     val errorResponse = response.errorBody()?.string()
                     Log.e("API Response", "회원가입 실패: $errorResponse")
+                    loadingDialog.stopAnimation()
 
                     when {
                         errorResponse?.contains("이메일") == true -> showEmailError("이미 존재하는 이메일입니다.")
@@ -233,6 +246,7 @@ class JoinActivity : AppCompatActivity() {
                 }
             } catch (e: Exception) {
                 Toast.makeText(this@JoinActivity, "오류 발생: ${e.message}", Toast.LENGTH_LONG).show()
+                loadingDialog.stopAnimation()
                 Log.e("JoinActivity", "회원가입 요청 실패", e)
             }
         }
