@@ -1,11 +1,14 @@
 
 import com.example.chaesiktak.ApiResponse
+import com.example.chaesiktak.DeleteFavoriteResponse
 import com.example.chaesiktak.EmailCheckRequestBody
 import com.example.chaesiktak.EmailCheckResponse
 import com.example.chaesiktak.ImageAnalyzeRequest
 import com.example.chaesiktak.ImageAnalyzeResponse
 import com.example.chaesiktak.LoginRequest
 import com.example.chaesiktak.LoginResponse
+import com.example.chaesiktak.MyFavoriteListResponse
+import com.example.chaesiktak.MyFavoriteResponse
 import com.example.chaesiktak.MypageResponse
 import com.example.chaesiktak.NickNameCheckRequestBody
 import com.example.chaesiktak.NickNameCheckResponse
@@ -21,6 +24,7 @@ import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
@@ -78,8 +82,18 @@ interface ApiService {
         @Body request: ImageAnalyzeRequest
     ): ImageAnalyzeResponse
 
+    /*내 정보 조회*/
     @GET("api/verify/mypage")
     suspend fun UserInfo(): Response<MypageResponse>
 
+    /*좋아요 클릭 -> recipeId값 전달*/
+    @POST("api/verify/mypage/favorite/{recipeID}")
+    suspend fun saveFavorite(@Path("recipeID") recipdId: Int): Response<MyFavoriteResponse>
+
+    @DELETE("api/verify/mypage/favorite/{recipeID}")
+    suspend fun DeleteFavorite(@Path("recipeID") recipdId: Int): Response<DeleteFavoriteResponse>
+
+    @GET("api/verify/mypage/favorite")
+    suspend fun GetFavoriteList(): Response<MyFavoriteListResponse>
 }
 

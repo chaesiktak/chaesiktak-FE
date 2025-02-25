@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.chaesiktak.*
 import com.example.chaesiktak.activities.RecipeDetailActivity
+
 import com.example.chaesiktak.activities.SearchPanelActivity
 import com.example.chaesiktak.adapters.TagRecipeAdapter
 import com.example.chaesiktak.databinding.FragmentHomeBinding
@@ -67,7 +68,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerViews() {
-        recommendRecipeAdapter = RecommendRecipeAdapter(recipeList).apply {
+        recommendRecipeAdapter = RecommendRecipeAdapter(recipeList){recipeId -> toggleFavorite(recipeId)
+        }.apply {
             onItemClick = { navigateToRecipeDetail(it) }
         }
         binding.recipeRecyclerView.apply {
@@ -139,10 +141,11 @@ class HomeFragment : Fragment() {
         }
     }
 
-    // 카드뷰 클릭 -> 디테일 <RECIPE_ID> 넘김
+    // 카드뷰 클릭 -> 디테일 <RECIPE_ID>, <isFavorite> 값 전달
     private fun navigateToRecipeDetail(recipe: RecommendRecipe) {
         val intent = Intent(requireContext(), RecipeDetailActivity::class.java).apply {
-            putExtra("RECIPE_ID", recipe.id) // ID만 전달
+            putExtra("RECIPE_ID", recipe.id) // ID전달
+            putExtra("IS_Favorite", recipe.isFavorite) //'저장'값 전달
         }
         recipeDetailLauncher.launch(intent)
     }
@@ -215,4 +218,55 @@ class HomeFragment : Fragment() {
     private fun showError(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
+
+    //retrofit -> saveFavorite response 함수
+//    private fun saveFavorite(recipeId: Int) {
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            try {
+//                val response = RetrofitClient.instance(requireContext()).saveFavorite(recipeId)
+//
+//                if (response.isSuccessful) {
+//                    Toast.makeText(requireContext(), "저장목록에 담았습니다.", Toast.LENGTH_SHORT).show()
+//                } else {
+//                    showError("즐겨찾기 업데이트 실패: ${response.code()}")
+//                }
+//            } catch (e: Exception) {
+//                showError("네트워크 오류: ${e.message}")
+//            }
+//        }
+//    }
+
+    private fun toggleFavorite(recipeId: Int) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                // 1. 현재 즐겨찾기 여부 확인
+                val checkResponse = RetrofitClient.instance(requireContext()).GetFavoriteList()
+
+                if (checkResponse.isSuccessful) {
+                    val isFavorite = checkResponse.body() as? Boolean?: false
+
+                    //  즐겨찾기 상태에 따라 POST 또는 DELETE 요청 전송
+                    val response = if (isFavorite) {
+                        RetrofitClient.instance(requireContext()).DeleteFavorite(recipeId)
+                    } else {
+                        RetrofitClient.instance(requireContext()).saveFavorite(recipeId)
+                    }
+
+                    // 3. 요청 결과에 따른 처리
+                    if (response.isSuccessful) {
+                        val message = if (isFavorite) "저장목록에서 제거되었습니다." else "저장목록에 담았습니다."
+                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                    } else {
+                        showError("즐겨찾기 업데이트 실패: ${response.code()}")
+                    }
+                } else {
+                    showError("즐겨찾기 확인 실패: ${checkResponse.code()}")
+                }
+            } catch (e: Exception) {
+               Log.e("error","네트워크 오류: ${e.message}")
+            }
+        }
+    }
+
+
 }

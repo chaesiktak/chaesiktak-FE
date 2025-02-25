@@ -261,10 +261,18 @@ data class MyFavoriteResponse(
     val data: String
 )
 
+/*IsFavorite 저장 요청 & 응답*/
+data class DeleteFavoriteResponse(
+    val status: Int,
+    val success: Boolean,
+    val message: String,
+    val data: Any
+)
+
 /*IsFavorite인 목록 가져오기*/
 data class MyFavoriteListResponse(
     val status: Int,
     val success: Boolean,
     val message: String,
-    val data: RecommendRecipe
+    val data: List<RecommendRecipe>
 )

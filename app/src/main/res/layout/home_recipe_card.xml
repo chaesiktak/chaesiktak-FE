@@ -57,13 +57,13 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <android.widget.ImageView
-                android:id="@+id/scrapButton"
-                android:layout_marginTop="5dp"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginEnd="10dp"
-                android:src="@drawable/click_scrapbtn" />
+<!--            <android.widget.ImageView-->
+<!--                android:id="@+id/scrapButton"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:layout_width="24dp"-->
+<!--                android:layout_height="24dp"-->
+<!--                android:layout_marginEnd="10dp"-->
+<!--                android:src="@drawable/click_scrapbtn" />-->
         </LinearLayout>
 
         <!-- 카드 서브 텍스트 -->

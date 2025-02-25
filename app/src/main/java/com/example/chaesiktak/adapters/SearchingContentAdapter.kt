@@ -19,7 +19,7 @@ class SearchingContentAdapter(private var searchingContentList: MutableList<Reco
         val imageView: ImageView = itemView.findViewById(R.id.searching_content_img)
         val titleView: TextView = itemView.findViewById(R.id.searching_content_title)
         val prevtextView: TextView = itemView.findViewById(R.id.searching_content_prevtext)
-        val favorView: ImageView = itemView.findViewById(R.id.searching_content_isfavorite)
+//        val favorView: ImageView = itemView.findViewById(R.id.searching_content_isfavorite)
         val tagView: TextView = itemView.findViewById(R.id.searching_content_tag) // 태그 View 추가
     }
 
@@ -50,22 +50,22 @@ class SearchingContentAdapter(private var searchingContentList: MutableList<Reco
             onItemClick?.invoke(recipe) // 클릭된 레시피 객체 전달
         }
 
-        // '좋아요' 버튼 상태 설정
-        holder.favorView.setImageResource(
-            if (recipe.isFavorite) R.drawable.likebutton_onclicked else R.drawable.likebutton
-        )
-
-        // '좋아요' 클릭 리스너
-        holder.favorView.setOnClickListener {
-            recipe.isFavorite = !recipe.isFavorite
-            notifyItemChanged(position) // 상태 변경 후 해당 아이템만 새로고침
-        }
-
-        // 태그 설정 및 색상 변경
-        holder.tagView.text = recipe.tag
-        holder.tagView.setBackgroundColor(
-            ContextCompat.getColor(holder.itemView.context, getTagColor(recipe.tag))
-        )
+//        // '좋아요' 버튼 상태 설정
+//        holder.favorView.setImageResource(
+//            if (recipe.isFavorite) R.drawable.likebutton_onclicked else R.drawable.likebutton
+//        )
+//
+//        // '좋아요' 클릭 리스너
+//        holder.favorView.setOnClickListener {
+//            recipe.isFavorite = !recipe.isFavorite
+//            notifyItemChanged(position) // 상태 변경 후 해당 아이템만 새로고침
+//        }
+//
+//        // 태그 설정 및 색상 변경
+//        holder.tagView.text = recipe.tag
+//        holder.tagView.setBackgroundColor(
+//            ContextCompat.getColor(holder.itemView.context, getTagColor(recipe.tag))
+//        )
     }
 
     // 태그에 맞는 색상 반환

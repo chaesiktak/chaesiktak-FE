@@ -9,14 +9,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
     private const val BASE_URL = "http://52.78.99.122:8080/"
-    private const val BASE_AI_URL = "http://chaesiktakimgseg.duckdns.org:5000/"
 
     private val gson: Gson = GsonBuilder()
         .setLenient()
         .create()
 
     private var retrofit: Retrofit? = null
-    private var aiRetrofit: Retrofit? = null
 
     fun instance(context: Context): ApiService {
         if (retrofit == null) {
@@ -32,7 +30,7 @@ object RetrofitClient {
             retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(client)
-                .addConverterFactory(GsonConverterFactory.create(gson)) // ⭐ 수정
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
         }
 

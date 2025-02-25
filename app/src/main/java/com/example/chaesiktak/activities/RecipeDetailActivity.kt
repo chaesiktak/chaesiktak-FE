@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import coil.load
 import com.example.chaesiktak.R
 import com.example.chaesiktak.RecommendRecipe
@@ -16,7 +17,8 @@ import kotlinx.coroutines.withContext
 class RecipeDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRecipeDetailBinding
     private var recipe: RecommendRecipe? = null
-    private var recipeId: Int = -1  // 레시피 ID 저장
+    private var recipeId: Int = -1
+    private var isFavorite: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,39 +26,38 @@ class RecipeDetailActivity : AppCompatActivity() {
         binding = ActivityRecipeDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Intent에서 레시피 ID 가져오기
         recipeId = intent.getIntExtra("RECIPE_ID", -1)
+        isFavorite = intent.getBooleanExtra("IS_FAVORITE", false)
 
         if (recipeId != -1) {
-            fetchRecipeDetail(recipeId) // API 호출
+            fetchRecipeDetail(recipeId)
         } else {
             Toast.makeText(this, "레시피 정보를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show()
             finish()
         }
 
-        binding.backArrowIcon.setOnClickListener {
-            finish()
-        }
+        binding.backArrowIcon.setOnClickListener { finish() }
 
         binding.ingredientArrow.setOnClickListener {
             recipe?.let {
-                val intent = Intent(this@RecipeDetailActivity, IngredientDetailActivity::class.java).apply {
-                    putExtra("RECIPE_ID", it.id) // recipeId 전달
-                }
+                val intent = Intent(this, IngredientDetailActivity::class.java)
+                intent.putExtra("RECIPE_ID", it.id)
                 startActivity(intent)
             } ?: Toast.makeText(this, "레시피 정보를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show()
         }
 
         binding.recipeArrow.setOnClickListener {
             recipe?.let {
-                val intent =
-                    Intent(this@RecipeDetailActivity, RecipeContentsActivity::class.java).apply {
-                        putExtra("RECIPE_ID", it.id) // recipeId 전달
-                    }
+                val intent = Intent(this, RecipeContentsActivity::class.java)
+                intent.putExtra("RECIPE_ID", it.id)
                 startActivity(intent)
             } ?: Toast.makeText(this, "레시피 정보를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show()
         }
+
+        binding.detailLike.setOnClickListener {
+            toggleFavorite()
         }
+    }
 
     private fun fetchRecipeDetail(recipeId: Int) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -68,7 +69,7 @@ class RecipeDetailActivity : AppCompatActivity() {
                     val responseBody = response.body()!!
 
                     if (responseBody.success) {
-                        recipe = responseBody.data // RecommendRecipe 데이터 가져오기
+                        recipe = responseBody.data
 
                         withContext(Dispatchers.Main) {
                             bindRecipeData()
@@ -106,11 +107,39 @@ class RecipeDetailActivity : AppCompatActivity() {
             }
 
             updateLikeButtonUI(it.isFavorite)
-
-            binding.detailLike.setOnClickListener {
-                toggleLike()
-            }
         }
+    }
+
+    private fun toggleFavorite() {
+        recipe?.let {
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val response = RetrofitClient.instance(this@RecipeDetailActivity)
+                        .saveFavorite(it.id)
+
+                    withContext(Dispatchers.Main) {
+                        if (response.isSuccessful && response.body() != null) {
+                            val responseBody = response.body()!!
+                            if (responseBody.success) {
+                                isFavorite = !isFavorite
+                                updateLikeButtonUI(isFavorite)
+                                CustomToast.show(this@RecipeDetailActivity, "레시피를 저장하였습니다.")
+//                                Toast.makeText(this@RecipeDetailActivity,"레시피를 저장하였습니다.", Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(this@RecipeDetailActivity,"이미 저장한 레시피 입니다.", Toast.LENGTH_SHORT).show()
+                            }
+                        } else {
+                            Toast.makeText(this@RecipeDetailActivity,"이미 저장한 레시피 입니다.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } catch (e: Exception) {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(this@RecipeDetailActivity, "네트워크 오류: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        } ?:  CustomToast.show(this, "레시피 정보를 불러올 수 없습니다. ")
+
     }
 
     private fun updateLikeButtonUI(isFavorite: Boolean) {
@@ -118,16 +147,5 @@ class RecipeDetailActivity : AppCompatActivity() {
             if (isFavorite) R.drawable.likebutton_onclicked else R.drawable.likebutton
         )
     }
-
-    private fun toggleLike() {
-        recipe?.let {
-            it.isFavorite = !it.isFavorite
-            updateLikeButtonUI(it.isFavorite)
-
-            val resultIntent = Intent().apply {
-                putExtra("UPDATED_RECIPE", it)
-            }
-            setResult(RESULT_OK, resultIntent)
-        }
-    }
 }
+

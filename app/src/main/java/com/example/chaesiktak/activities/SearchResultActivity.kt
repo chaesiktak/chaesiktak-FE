@@ -23,7 +23,6 @@ class SearchResultActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySearchResultBinding
     private val recipeList: ArrayList<RecommendRecipe> = arrayListOf()
     private lateinit var searchingContentAdapter: SearchingContentAdapter
-    private var selectedFilterID: Int = -1
     private val selectedIngredients: MutableList<String> = mutableListOf()
     private val dislikedIngredients: MutableList<String> = mutableListOf()
     private var selectedFilterTag: String? = null

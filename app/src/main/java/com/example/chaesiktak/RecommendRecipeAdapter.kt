@@ -8,8 +8,11 @@ import com.example.chaesiktak.R
 import com.example.chaesiktak.RecommendRecipe
 import coil.load
 
-class RecommendRecipeAdapter(private val recipeList: ArrayList<RecommendRecipe>) :
-    RecyclerView.Adapter<RecommendRecipeAdapter.FoodViewHolder>() {
+class RecommendRecipeAdapter(
+    private val recipeList: ArrayList<RecommendRecipe>,
+    private val onFavoriteClick: (Int) -> Unit
+
+    ) : RecyclerView.Adapter<RecommendRecipeAdapter.FoodViewHolder>() {
 
         var onItemClick : ((RecommendRecipe) -> Unit)? = null
 
@@ -17,7 +20,7 @@ class RecommendRecipeAdapter(private val recipeList: ArrayList<RecommendRecipe>)
         val imageView: ImageView = itemView.findViewById(R.id.home_recipe_card_imageview)
         val titleView: TextView = itemView.findViewById(R.id.recipe_card_title)
         val subtextView: TextView = itemView.findViewById(R.id.recipe_card_subtext)
-        val likebtnView: ImageView = itemView.findViewById(R.id.scrapButton)
+//        val likebtnView: ImageView = itemView.findViewById(R.id.scrapButton)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodViewHolder {
@@ -46,12 +49,20 @@ class RecommendRecipeAdapter(private val recipeList: ArrayList<RecommendRecipe>)
             onItemClick?.invoke(recipe)
         }
 
-        holder.likebtnView.setImageResource(if (recipe.isFavorite) R.drawable.likebutton_onclicked else R.drawable.likebutton)
+//        holder.likebtnView.setImageResource(if (recipe.isFavorite) R.drawable.likebutton_onclicked else R.drawable.likebutton)
 
-        holder.likebtnView.setOnClickListener {
-            recipe.isFavorite = !recipe.isFavorite
-            notifyItemChanged(position)
-        }
+        // 좋아요 버튼 클릭 방지 처리
+//        if (recipe.isFavorite) {
+//            holder.likebtnView.isEnabled = false // 이미 눌린 경우 비활성화
+//        } else {
+//            holder.likebtnView.setOnClickListener {
+//                recipe.isFavorite = true // 한 번 누르면 true로 고정
+//                holder.likebtnView.setImageResource(R.drawable.likebutton_onclicked)
+//                holder.likebtnView.isEnabled = false // 클릭 후 비활성화
+//
+//                onFavoriteClick(recipe.id) // homefragment로 전달
+//            }
+//        }
     }
 }
 
