@@ -294,3 +294,4 @@ data class MyFavoriteListResponse(
     val message: String,
     val data: List<RecommendRecipe>
 )
+

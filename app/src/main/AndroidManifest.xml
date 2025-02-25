@@ -29,9 +29,8 @@
         <activity
             android:name=".activities.AddNoticeActivity"
             android:exported="false" />
-        <activity
-            android:name=".activities.BookmarkActivity"
-            android:exported="false" />
+        <activity android:name=".activities.BookmarkActivity"
+            android:exported="false"/>
         <activity
             android:name=".activities.NoticeBoardActivity"
             android:exported="false" />

@@ -1,62 +1,73 @@
 package com.example.chaesiktak.activities
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.chaesiktak.BookmarkAdapter
-import com.example.chaesiktak.BookmarkItem
 import com.example.chaesiktak.R
-
+import com.example.chaesiktak.RecommendRecipe
+import com.example.chaesiktak.adapters.SavedItemAdapter
+import kotlinx.coroutines.launch
 
 class BookmarkActivity : AppCompatActivity() {
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: SavedItemAdapter
+    private val bookmarkList = ArrayList<RecommendRecipe>() // 즐겨찾기된 레시피 목록
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bookmark)
 
-        // SharedPreferences 초기화
-        val sharedPreferences = getSharedPreferences("Bookmarks", Context.MODE_PRIVATE)
-        val savedItems = mutableListOf<BookmarkItem>()
+        recyclerView = findViewById(R.id.recyclerView)
 
-        /*
-        !! 사용자가 좋아요 버튼 클릭 시 항목을 추가하는 코드가 추가로 작성되어야 작동 가능한 코드 !!
-        // 저장된 항목 불러오기
-        sharedPreferences.all.forEach { (key, value) ->
-            // JSON 문자열을 BookmarkItem으로 변환
-            val jsonValue = value as? String // value가 String인지 확인
-            if (jsonValue != null) {
-                val bookmarkItem = Gson().fromJson(jsonValue, BookmarkItem::class.java) // JSON을 BookmarkItem으로 변환
-                savedItems.add(bookmarkItem) // 변환된 BookmarkItem을 리스트에 추가
+        adapter = SavedItemAdapter(bookmarkList) { recipe ->
+            navigateToRecipeDetail(recipe)
+        }
+
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        // 뒤로가기 버튼 설정
+        val backArrow = findViewById<ImageButton>(R.id.backArrow)
+        backArrow.setOnClickListener { finish() }
+
+        // 즐겨찾기된 레시피 목록 가져오기
+        fetchFavoriteRecipes()
+    }
+
+    private fun fetchFavoriteRecipes() {
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitClient.instance(this@BookmarkActivity).GetFavoriteList()
+
+                if (response.isSuccessful && response.body() != null) {
+                    val favoriteRecipes = response.body()?.data ?: emptyList()
+
+                    bookmarkList.clear()
+                    bookmarkList.addAll(favoriteRecipes)
+                    adapter.notifyDataSetChanged()
+                } else {
+                    Toast.makeText(this@BookmarkActivity, "즐겨찾기 목록을 불러올 수 없습니다.", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Log.e("BookmarkActivity", "네트워크 오류: ${e.message}")
+                Toast.makeText(this@BookmarkActivity, "네트워크 오류 발생", Toast.LENGTH_SHORT).show()
             }
         }
+    }
 
-         */
-
-        // 리사이클러뷰 초기화
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        val adapter = BookmarkAdapter(savedItems)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this) // 리사이클러뷰 레이아웃 매니저 설정
-
-
-        // 뒤로가기 버튼 클릭 리스너 설정
-        val backArrow = findViewById<ImageButton>(R.id.backArrow)
-        backArrow.setOnClickListener {
-            // 현재 액티비티 종료하여 이전 화면으로 돌아가기
-            finish()
+    private fun navigateToRecipeDetail(recipe: RecommendRecipe) {
+        val intent = Intent(this, RecipeDetailActivity::class.java).apply {
+            putExtra("RECIPE_ID", recipe.id)
+            putExtra("IS_FAVORITE", recipe.isFavorite)
         }
-
-        // 예제 북마크 항목 리스트
-        val bookmarkItemList = mutableListOf(
-            BookmarkItem(R.drawable.food1, "비건 라따뚜이"),
-            BookmarkItem(R.drawable.food1, "채식 버거"),
-            BookmarkItem(R.drawable.food1, "두부 스테이크")
-        )
-
+        startActivity(intent)
     }
 }
-
-
-

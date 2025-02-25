@@ -22,7 +22,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.chaesiktak.activities.BookmarkActivity
 import com.example.chaesiktak.activities.NoticeBoardActivity
 import com.example.chaesiktak.activities.ProfileEditActivity
 import com.example.chaesiktak.R
@@ -31,6 +30,7 @@ import com.example.chaesiktak.RecentItem
 import com.example.chaesiktak.RecentRecipeData
 import com.example.chaesiktak.activities.ResetPasswordActivity
 import com.example.chaesiktak.activities.AccountDeactivationActivity
+import com.example.chaesiktak.activities.BookmarkActivity
 import com.example.chaesiktak.activities.LoginActivity
 import com.example.chaesiktak.activities.TOSActivity
 import kotlinx.coroutines.launch

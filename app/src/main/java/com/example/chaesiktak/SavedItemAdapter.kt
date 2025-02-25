@@ -11,10 +11,10 @@ import coil.load
 import com.example.chaesiktak.R
 import com.example.chaesiktak.RecommendRecipe
 
-class SavedItemAdapter(private val savedRecipeList: ArrayList<RecommendRecipe>) :
-    RecyclerView.Adapter<SavedItemAdapter.SavedRecipeViewHolder>() {
-
-    var onItemClick: ((RecommendRecipe) -> Unit)? = null // 클릭 리스너
+class SavedItemAdapter(
+    private val savedRecipeList: ArrayList<RecommendRecipe>,
+    private val onItemClick: (RecommendRecipe) -> Unit  // 🔹 클릭 이벤트 추가
+) : RecyclerView.Adapter<SavedItemAdapter.SavedRecipeViewHolder>() {
 
     class SavedRecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.saveditemimg)
@@ -28,9 +28,7 @@ class SavedItemAdapter(private val savedRecipeList: ArrayList<RecommendRecipe>) 
         return SavedRecipeViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return savedRecipeList.size
-    }
+    override fun getItemCount(): Int = savedRecipeList.size
 
     override fun onBindViewHolder(holder: SavedRecipeViewHolder, position: Int) {
         val recipe = savedRecipeList[position]
@@ -47,42 +45,17 @@ class SavedItemAdapter(private val savedRecipeList: ArrayList<RecommendRecipe>) 
         holder.tagView.text = recipe.tag  // 태그 타입 텍스트 설정
 
         // 태그 배경 색상 동적으로 설정
-        when (recipe.tag) {
-            "VEGAN" -> {
-                holder.tagView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context,
-                    R.color.color_vegan
-                ))
-            }
-            "LACTO" -> {
-                holder.tagView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context,
-                    R.color.color_lacto
-                ))
-            }
-            "OVO" -> {
-                holder.tagView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context,
-                    R.color.color_ovo
-                ))
-            }
-            "LACTO_OVO" -> {
-                holder.tagView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context,
-                    R.color.color_lacto_ovo
-                ))
-            }
-            "PESCO" -> {
-                holder.tagView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context,
-                    R.color.color_pesco
-                ))
-            }
-            else -> {
-                holder.tagView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context,
-                    R.color.color_pollo
-                ))
-            }
+        val tagColor = when (recipe.tag) {
+            "VEGAN" -> R.color.color_vegan
+            "LACTO" -> R.color.color_lacto
+            "OVO" -> R.color.color_ovo
+            "LACTO_OVO" -> R.color.color_lacto_ovo
+            "PESCO" -> R.color.color_pesco
+            else -> R.color.color_pollo
         }
+        holder.tagView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, tagColor))
 
-        // 클릭 리스너 추가
-        holder.itemView.setOnClickListener {
-            onItemClick?.invoke(recipe)  // 클릭된 레시피 객체 전달
-        }
+        // 🔹 클릭 리스너 추가
+        holder.itemView.setOnClickListener { onItemClick(recipe) }
     }
 }
