@@ -9,11 +9,12 @@
     tools:context=".activities.TOSActivity">
     <LinearLayout
         android:layout_width="match_parent"
-        android:paddingHorizontal="15dp"
+        android:paddingHorizontal="20dp"
         android:paddingTop="86dp"
         android:orientation="vertical"
         android:layout_height="match_parent">
         <TextView
+            android:textColor="@color/black_replacement"
             android:layout_width="wrap_content"
             android:fontFamily="@font/ibm_plex_sans_kr_bold"
             android:textSize="26dp"
@@ -38,7 +39,7 @@
                     android:contentDescription="Overlay text description" />
                 </ScrollView>
         <android.widget.Button
-            android:layout_marginTop="42dp"
+            android:layout_marginVertical="42dp"
             android:id="@+id/close_button"
             android:layout_width="334dp"
             android:layout_height="66dp"
@@ -48,9 +49,6 @@
             android:textColor="@color/white"
             android:background="@drawable/default_button_lg"
             android:layout_gravity="center" />
-
-
-
     </LinearLayout>
 
 </ScrollView>

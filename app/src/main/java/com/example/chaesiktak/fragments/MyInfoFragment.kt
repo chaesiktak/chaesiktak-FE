@@ -29,6 +29,7 @@ import com.example.chaesiktak.RecentItem
 import com.example.chaesiktak.RecentRecipeData
 import com.example.chaesiktak.activities.ResetPasswordActivity
 import com.example.chaesiktak.activities.AccountDeactivationActivity
+import com.example.chaesiktak.activities.TOSActivity
 
 
 class MyInfoFragment : Fragment() {
@@ -124,6 +125,14 @@ class MyInfoFragment : Fragment() {
             val intent = Intent(activity, BookmarkActivity::class.java)
             startActivity(intent)
         }
+
+        //이용약관 항목 버튼 클릭 이벤트 설정
+        val goTOSActivity = view.findViewById<LinearLayoutCompat>(R.id.goTos)
+        goTOSActivity.setOnClickListener {
+            val intent = Intent(activity, TOSActivity::class.java)
+            startActivity(intent)
+        }
+
         // 탈퇴하기 클릭 이벤트 설정
         val deactivationButton = view.findViewById<LinearLayoutCompat>(R.id.deactivationBtn)
         deactivationButton.setOnClickListener {
