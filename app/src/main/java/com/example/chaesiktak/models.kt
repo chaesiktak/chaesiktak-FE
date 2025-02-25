@@ -238,6 +238,7 @@ data class LLMResponse(
     @SerializedName("output_dict") val outputDict: Map<String, String>
 )
 
+/*마이페이지(닉네임, 이메일) 조회 응답*/
 data class MypageResponse(
     val status: Int,
     val success: Boolean,
@@ -250,4 +251,20 @@ data class Mypage(
     val userNickName: String,
     val userName: String,
     val veganType: String
+)
+
+/*IsFavorite 저장 요청 & 응답*/
+data class MyFavoriteResponse(
+    val status: Int,
+    val success: Boolean,
+    val message: String,
+    val data: String
+)
+
+/*IsFavorite인 목록 가져오기*/
+data class MyFavoriteListResponse(
+    val status: Int,
+    val success: Boolean,
+    val message: String,
+    val data: RecommendRecipe
 )
