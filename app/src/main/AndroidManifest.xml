@@ -24,6 +24,31 @@
         android:useEmbeddedDex="true"
         tools:targetApi="31">
         <activity
+            android:name=".activities.AccountDeactivationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AddNoticeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.BookmarkActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.NoticeBoardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.NoticeDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfileEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ResetPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ResetPasswordActivity2"
+            android:exported="false" />
+
+        <activity
             android:name=".activities.SearchResultActivity"
             android:exported="false" />
         <activity

@@ -1,4 +1,4 @@
-package com.example.chaesiktak
+package com.example.chaesiktak.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,9 +7,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.chaesiktak.activities.LoginActivity
+import com.example.chaesiktak.R
 
-class ResetPassword2 : AppCompatActivity() {
+class ResetPasswordActivity2 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

@@ -1,20 +1,19 @@
-package com.example.chaesiktak
+package com.example.chaesiktak.activities
 
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.chaesiktak.R
 
-class NoticeDetail : AppCompatActivity() {
+class NoticeDetailActivity : AppCompatActivity() {
 
     private var noticeId: Int = -1 // 공지 ID를 저장할 변수 추가
 
@@ -44,7 +43,7 @@ class NoticeDetail : AppCompatActivity() {
         // 뒤로가기 버튼 클릭 시 공지사항 목록 탭으로 이동
         val backArrow = findViewById<ImageButton>(R.id.backArrow)
         backArrow.setOnClickListener {
-            val intent = Intent(this, NoticeBoard::class.java)
+            val intent = Intent(this, NoticeBoardActivity::class.java)
             startActivity(intent)
         }
 

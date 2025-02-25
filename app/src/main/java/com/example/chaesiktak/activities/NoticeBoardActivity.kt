@@ -1,26 +1,23 @@
-package com.example.chaesiktak
+package com.example.chaesiktak.activities
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.chaesiktak.NoticeAdapter
+import com.example.chaesiktak.Noticeitem
+import com.example.chaesiktak.R
 import com.example.chaesiktak.fragments.MyInfoFragment
 import org.json.JSONObject
 
 // 메인 액티비티 클래스
-class NoticeBoard : AppCompatActivity() {
+class NoticeBoardActivity : AppCompatActivity() {
 
     private lateinit var noticeRecyclerView: RecyclerView
     private lateinit var noticeAdapter: NoticeAdapter
@@ -47,7 +44,7 @@ class NoticeBoard : AppCompatActivity() {
         noticeRecyclerView.adapter = noticeAdapter
 
         noticeAdapter.setOnItemClickListener { notice ->
-            val intent = Intent(this, NoticeDetail::class.java)
+            val intent = Intent(this, NoticeDetailActivity::class.java)
             intent.putExtra("notice_item", notice)
             startActivityForResult(intent, REQUEST_NOTICE_DETAIL)
         }
@@ -55,7 +52,7 @@ class NoticeBoard : AppCompatActivity() {
         // AddNoticeActivity로부터 데이터 받기
         val addNoticeButton = findViewById<Button>(R.id.addNoticeButton)
         addNoticeButton.setOnClickListener {
-            val intent = Intent(this, AddNotice::class.java)
+            val intent = Intent(this, AddNoticeActivity::class.java)
             startActivityForResult(intent, REQUEST_ADD_NOTICE)
         }
     }
@@ -97,14 +94,16 @@ class NoticeBoard : AppCompatActivity() {
             val title = sharedPreferences.getString("noticeTitle_$index", null)
             val content = sharedPreferences.getString("noticeContent_$index", null)
             if (title != null && content != null) {
-                noticeList.add(Noticeitem(
+                noticeList.add(
+                    Noticeitem(
                     id = index, // 인덱스를 ID로 사용
                     noticeWriter = "관리자", // 작성자 정보를 수정할 필요가 있다면 추가
                     noticeTitle = title,
                     noticeContent = content,
                     noticeHits = 0, // 초기 조회수
                     noticeCreatedTime = "2025-02-07T12:51:07.212947" // 생성시간은 필요한 형식으로 수정
-                ))
+                )
+                )
             }
         }
     }

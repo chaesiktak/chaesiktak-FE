@@ -4,9 +4,9 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.chaesiktak.activities.NoticeDetailActivity
 
 class NoticeAdapter(private val itemList: List<Noticeitem>) :
     RecyclerView.Adapter<NoticeAdapter.ViewHolder>() {
@@ -42,7 +42,7 @@ class NoticeAdapter(private val itemList: List<Noticeitem>) :
         // 항목 클릭 리스너 설정
         holder.itemView.setOnClickListener {
             val context = holder.itemView.context
-            val intent = Intent(context, NoticeDetail::class.java).apply {
+            val intent = Intent(context, NoticeDetailActivity::class.java).apply {
                 putExtra("noticeId", item.id)
                 putExtra("noticeTitle", item.noticeTitle)
                 putExtra("noticeContent", item.noticeContent)

@@ -1,27 +1,23 @@
-package com.example.chaesiktak
+package com.example.chaesiktak.activities
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.example.chaesiktak.R
 import okhttp3.*
 import java.io.IOException
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.chaesiktak.activities.IntroActivity
 import com.example.chaesiktak.fragments.MyInfoFragment
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 
-class account_deactivation : AppCompatActivity() {
+class AccountDeactivationActivity : AppCompatActivity() {
 
     private lateinit var nicknameTextView: TextView
     private lateinit var deactiveAgreeCheckBox: CheckBox
@@ -60,7 +56,7 @@ class account_deactivation : AppCompatActivity() {
                 val deactiveReason = deactiveEditText.text.toString()
                 sendDeactivationReasonToServer(currentNickname, deactiveReason)
             } else {
-                Toast.makeText(this@account_deactivation, "탈퇴 사항에 동의하여 주세요.", Toast.LENGTH_SHORT)
+                Toast.makeText(this@AccountDeactivationActivity, "탈퇴 사항에 동의하여 주세요.", Toast.LENGTH_SHORT)
                     .show()
             }
         }
@@ -86,23 +82,23 @@ class account_deactivation : AppCompatActivity() {
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 runOnUiThread {
-                    Toast.makeText(this@account_deactivation, "서버와 통신 중 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@AccountDeactivationActivity, "서버와 통신 중 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onResponse(call: Call, response: Response) {
                 if (response.isSuccessful) {
                     runOnUiThread {
-                        Toast.makeText(this@account_deactivation, "탈퇴가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@AccountDeactivationActivity, "탈퇴가 완료되었습니다.", Toast.LENGTH_SHORT).show()
                         // 로그아웃 처리를 하고 첫 화면으로 이동
-                        val intent = Intent(this@account_deactivation, IntroActivity::class.java)
+                        val intent = Intent(this@AccountDeactivationActivity, IntroActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
                         finish()
                     }
                 } else {
                     runOnUiThread {
-                        Toast.makeText(this@account_deactivation, "탈퇴 처리에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@AccountDeactivationActivity, "탈퇴 처리에 실패했습니다.", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
