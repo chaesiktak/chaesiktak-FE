@@ -4,6 +4,10 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
+/*
+*
+* 회원가입 응답 & 요청
+* */
 // 회원가입 요청
 data class SignUpRequest(
     val email: String,
@@ -20,6 +24,11 @@ data class User(
     val userNickName: String, // 닉네임
     val role: String       // 역할 (예: "USER", "ADMIN")
 )
+
+/*
+*
+* 로그인 응답 & 요청
+* */
 
 // 로그인 요청
 data class LoginRequest(
@@ -227,4 +236,18 @@ data class ImageAnalyzeResponse(
 data class LLMResponse(
     val response: String,
     @SerializedName("output_dict") val outputDict: Map<String, String>
+)
+
+data class MypageResponse(
+    val status: Int,
+    val success: Boolean,
+    val message: String,
+    val data: Mypage
+)
+
+data class Mypage(
+    val email: String,
+    val userNickName: String,
+    val userName: String,
+    val veganType: String
 )

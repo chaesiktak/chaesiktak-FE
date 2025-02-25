@@ -193,7 +193,7 @@ class HomeFragment : Fragment() {
 
     private suspend fun fetchRecipeDetail(recipeId: Int): RecommendRecipe? {
         return try {
-            if (recipeId !in 1..12) {
+            if (recipeId !in 1..12) { //일단 하드코딩으로 둠
                 Log.e("fetchRecipeDetail", "허용되지 않은 recipeId: $recipeId")
                 return null
             }

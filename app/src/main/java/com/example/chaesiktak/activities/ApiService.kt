@@ -6,6 +6,7 @@ import com.example.chaesiktak.ImageAnalyzeRequest
 import com.example.chaesiktak.ImageAnalyzeResponse
 import com.example.chaesiktak.LoginRequest
 import com.example.chaesiktak.LoginResponse
+import com.example.chaesiktak.MypageResponse
 import com.example.chaesiktak.NickNameCheckRequestBody
 import com.example.chaesiktak.NickNameCheckResponse
 import com.example.chaesiktak.Recipe
@@ -76,6 +77,9 @@ interface ApiService {
     suspend fun ImageAnalyze(
         @Body request: ImageAnalyzeRequest
     ): ImageAnalyzeResponse
+
+    @GET("api/verify/mypage")
+    suspend fun UserInfo(): Response<MypageResponse>
 
 }
 

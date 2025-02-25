@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,18 +32,19 @@ import com.example.chaesiktak.RecentRecipeData
 import com.example.chaesiktak.activities.ResetPasswordActivity
 import com.example.chaesiktak.activities.AccountDeactivationActivity
 import com.example.chaesiktak.activities.TOSActivity
+import kotlinx.coroutines.launch
 
 
 class MyInfoFragment : Fragment() {
 
+    //initialize
     private lateinit var nicknameTextView: TextView
+    private lateinit var emailTextView: TextView
     private lateinit var recentRecyclerView: RecyclerView
     private lateinit var recentAdapter: RecentAdapter
     private val recentItems = listOf(
         RecentRecipeData(R.drawable.food1)
     )
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,13 +53,13 @@ class MyInfoFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_my_info, container, false)
 
-        // Nickname 텍스트뷰
-        nicknameTextView = view.findViewById(R.id.Nickname)
-
         // SharedPreferences에서 현재 설정된 이름과 닉네임 가져오기
         val sharedPref = requireActivity().getSharedPreferences("UserProfile", Context.MODE_PRIVATE)
         val currentName = sharedPref.getString("name", "이름") ?: "이름"
         val currentNickname = sharedPref.getString("nickname", "닉네임") ?: "닉네임"
+
+        nicknameTextView = view.findViewById(R.id.Nickname)
+        emailTextView = view.findViewById(R.id.Email)
 
         nicknameTextView.text = currentNickname  // Nickname 설정
 
@@ -159,7 +162,6 @@ class MyInfoFragment : Fragment() {
                 .show()
         }
 
-
         view.findViewById<ImageView>(R.id.homeTap).setOnClickListener {
             view.findNavController().navigate(R.id.action_myInfoFragment_to_homeFragment)
         }
@@ -170,12 +172,40 @@ class MyInfoFragment : Fragment() {
         return view
     }
 
+    private fun fetchUserInfo() { //nickname, email 가져와서 textview에 fetch
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                val response = RetrofitClient.instance(requireContext()).UserInfo()
+                if (response.isSuccessful) {
+                    val userData = response.body()?.data
+                    if (userData != null) {
+                        // 초기화
+                        val nicknameTextView = view?.findViewById<TextView>(R.id.Nickname)
+                        val emailTextView = view?.findViewById<TextView>(R.id.Email)
+                        // 데이터 패치
+                        nicknameTextView?.text = userData.userNickName
+                        emailTextView?.text =userData.email
+                        //로그 확인
+                        Log.d("email","유저 이메일: ${userData.email}")
+                        Log.d("nickname","유저 닉네임: ${userData.userNickName}")
+                    } else {
+                        Log.d("null","데이터가 null")
+                    }
+                } else {
+                    val errorMessage = response.errorBody()?.string() ?: "알 수 없는 오류"
+                    println("오류 메시지: $errorMessage")
+                }
+            } catch (e: Exception) {
+                println("네트워크 오류: ${e.message}")
+            }
+        }
+    }
     // Fragment 다시 보일 때마다 닉네임 업데이트
     override fun onResume() {
         super.onResume()
         val sharedPref = requireActivity().getSharedPreferences("UserProfile", Context.MODE_PRIVATE)
         val currentNickname = sharedPref.getString("nickname", "닉네임") ?: "닉네임"
         nicknameTextView.text = currentNickname
+        fetchUserInfo()
     }
-
 }
