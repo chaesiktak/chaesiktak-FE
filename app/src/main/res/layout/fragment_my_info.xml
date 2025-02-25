@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".fragments.MyInfoFragment">
 
     <androidx.fragment.app.FragmentContainerView
@@ -36,12 +35,8 @@
                 android:gravity="center"
                 android:text="마이페이지"
                 android:textColor="#4A4743"
-                android:textSize="20dp"/>
-
-
+                android:textSize="20dp" />
         </RelativeLayout>
-
-
 
         <!-- 프로필버튼 -->
         <RelativeLayout
@@ -50,11 +45,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/MyPage">
 
-            <Button
-                android:id="@+id/profileButton"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@drawable/border_button"/>
+<!--            <Button-->
+<!--                android:id="@+id/profileButton"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="100dp"-->
+<!--                android:background="@drawable/border_button" />-->
 
             <ImageView
                 android:id="@+id/profileImage"
@@ -62,51 +57,50 @@
                 android:layout_height="70dp"
                 android:layout_centerVertical="true"
                 android:paddingLeft="20dp"
-                android:src="@drawable/profile"/>
+                android:src="@drawable/profile" />
 
             <TextView
                 android:id="@+id/Nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/profileImage"
-                android:paddingTop="20dp"
                 android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
-                android:textColor="#4A4743"
+                android:paddingTop="20dp"
                 android:text="#닉네임#"
-                android:textSize="20dp"/>
+                android:textColor="#4A4743"
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/Email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/profileImage"
-                android:paddingTop="50dp"
                 android:fontFamily="@font/ibm_plex_sans_kr_regular"
-                android:textColor="#717171"
+                android:paddingTop="50dp"
                 android:text="#123456@gmail.com#"
-                android:textSize="15dp"/>
+                android:textColor="#717171"
+                android:textSize="15dp" />
 
             <ImageView
                 android:id="@+id/profileArrow"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@drawable/arrow_next"
+                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"/>
+                android:src="@drawable/arrow_next" />
         </RelativeLayout>
-
 
 
         <!-- 최근 본 항목 -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
             android:paddingLeft="22dp"
             android:paddingTop="15dp"
             android:text="최근 본 레시피"
-            android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
-            android:textSize="18dp"
-            android:textColor="#4A4743"/>
+            android:textColor="#4A4743"
+            android:textSize="18dp" />
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -118,7 +112,6 @@
             android:orientation="horizontal" />
 
 
-
         <!-- 환경설정 목록 (진행중)-->
         <LinearLayout
             android:layout_width="match_parent"
@@ -126,73 +119,80 @@
             android:orientation="vertical"
             android:paddingBottom="95dp">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </LinearLayout>
+
             <Button
                 android:id="@+id/passwordChangeBtn"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:background="@drawable/border_button"
-                android:text="비밀번호 재설정"
+                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
                 android:gravity="center_vertical"
                 android:paddingLeft="30dp"
-                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
-                android:textSize="16dp"
-                android:textColor="#4A4743"/>
+                android:text="비밀번호 재설정"
+                android:textColor="#4A4743"
+                android:textSize="16dp" />
+
             <Button
                 android:id="@+id/likeListBtn"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
                 android:layout_below="@+id/passwordChangeBtn"
+                android:layout_weight="1"
                 android:background="@drawable/border_button"
-                android:text="저장한 항목"
+                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
                 android:gravity="center_vertical"
                 android:paddingLeft="30dp"
-                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
-                android:textSize="16dp"
-                android:textColor="#4A4743"/>
+                android:text="저장한 항목"
+                android:textColor="#4A4743"
+                android:textSize="16dp" />
             <!-- 공지사항 버튼 -->
             <Button
                 android:id="@+id/noticeButton"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
                 android:layout_below="@+id/likeListBtn"
+                android:layout_weight="1"
                 android:background="@drawable/border_button"
-                android:text="공지사항"
+                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
                 android:gravity="center_vertical"
                 android:paddingLeft="30dp"
-                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
-                android:textSize="16dp"
-                android:textColor="#4A4743" />
+                android:text="공지사항"
+                android:textColor="#4A4743"
+                android:textSize="16dp" />
 
             <Button
                 android:id="@+id/deactivationBtn"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
                 android:layout_below="@+id/noticeButton"
+                android:layout_weight="1"
                 android:background="@drawable/border_button"
-                android:text="탈퇴하기"
+                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
                 android:gravity="center_vertical"
                 android:paddingLeft="30dp"
-                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
-                android:textSize="16dp"
-                android:textColor="#4A4743"/>
+                android:text="탈퇴하기"
+                android:textColor="#4A4743"
+                android:textSize="16dp" />
 
             <Button
                 android:id="@+id/logoutBtn"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
                 android:layout_below="@+id/deactivationBtn"
+                android:layout_weight="1"
                 android:background="@drawable/border_button"
-                android:text="로그아웃"
+                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
                 android:gravity="center_vertical"
                 android:paddingLeft="30dp"
-                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
-                android:textSize="16dp"
-                android:textColor="#4A4743"/>
+                android:text="로그아웃"
+                android:textColor="#4A4743"
+                android:textSize="16dp" />
         </LinearLayout>
 
     </LinearLayout>
@@ -206,9 +206,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="95dp"
+            android:layout_gravity="bottom"
             android:background="@color/white"
             android:padding="20dp"
-            android:layout_gravity="bottom"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <ImageView
