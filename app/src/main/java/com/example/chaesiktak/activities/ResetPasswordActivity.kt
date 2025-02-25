@@ -105,7 +105,7 @@ class ResetPasswordActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             // 서버에 비밀번호 변경 요청
-//            passwordUpdate(email, CurrentPWD, NewPWD)
+//            ㅊ
         }
 
     }
