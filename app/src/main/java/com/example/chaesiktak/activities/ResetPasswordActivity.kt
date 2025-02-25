@@ -2,6 +2,7 @@ package com.example.chaesiktak.activities
 
 import CustomToast
 import LoadingDialog
+import RetrofitClient
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.chaesiktak.R
 import com.example.chaesiktak.ResetPasswordRequest
 import com.example.chaesiktak.passwordUpdateRequest
+import com.example.chaesiktak.utils.UserSessionManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -105,54 +107,64 @@ class ResetPasswordActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             // 서버에 비밀번호 변경 요청
-//            ㅊ
+            passwordUpdate(email, CurrentPWD, NewPWD)
         }
 
     }
 
-//    private fun passwordUpdate(currentPWD: String, newPWD: String, confirmnewPWD: String) {
-//        val token = "Bearer ${UserSessionManager.getToken()}" // 사용자 토큰 가져오기
-//
-//        lifecycleScope.launch(Dispatchers.IO) {
-//            try {
-//                val apiService = RetrofitClient.instance(this@ResetPasswordActivity)
-//                val response = apiService.passwordUpdate(token, passwordUpdateRequest(currentPWD, newPWD, confirmnewPWD))
-//
-//                withContext(Dispatchers.Main) {
-//                    loadingDialog.stopAnimation()
-//                    if (response.isSuccessful) {
-//                        Log.d("PasswordUpdate", "비밀번호 변경 성공")
-//                        startActivity(Intent(this@ResetPasswordActivity, ResetPasswordActivity2::class.java))
-//                        finish()
-//                    } else {
-//                        val errorMsg = response.errorBody()?.string()?.let {
-//                            try {
-//                                JSONObject(it).getString("message")
-//                            } catch (e: Exception) {
-//                                Log.e("PasswordUpdate", "JSON 파싱 오류: ${e.message}")
-//                                "비밀번호 변경 실패"
-//                            }
-//                        } ?: "비밀번호 변경 실패"
-//
-//                        if (response.code() == 401) {
-//                            Log.e("PasswordUpdate", "401 Unauthorized: 인증 실패")
-//                            CustomToast.show(this@ResetPasswordActivity, "로그인이 만료되었습니다. 다시 로그인해주세요.")
-//                            startActivity(Intent(this@ResetPasswordActivity, LoginActivity::class.java))
-//                            finish()
-//                        } else {
-//                            Log.e("PasswordUpdate", "비밀번호 변경 실패: 상태 코드 ${response.code()}, 에러 메시지: $errorMsg")
-//                            CustomToast.show(this@ResetPasswordActivity, errorMsg)
-//                        }
-//                    }
-//                }
-//            } catch (e: Exception) {
-//                withContext(Dispatchers.Main) {
-//                    loadingDialog.stopAnimation()
-//                    Log.e("PasswordUpdate", "네트워크 요청 중 오류 발생", e)
-//                    CustomToast.show(this@ResetPasswordActivity, "네트워크 오류가 발생했습니다.")
-//                }
-//            }
-//        }
-//
-//    }
+    private fun passwordUpdate(email: String, currentPWD: String, newPWD: String) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val token = UserSessionManager.getToken(this@ResetPasswordActivity) ?: ""
+
+                // 로그 추가: 토큰이 null인지 확인
+                Log.d("PasswordUpdate", "사용자 토큰: $token")
+
+                if (token.isEmpty()) {
+                    withContext(Dispatchers.Main) {
+                        loadingDialog.stopAnimation()
+                        Log.e("PasswordUpdate", "토큰이 존재하지 않음")
+                        CustomToast.show(this@ResetPasswordActivity, "로그인이 만료되었습니다. 다시 로그인해주세요.")
+                        startActivity(Intent(this@ResetPasswordActivity, LoginActivity::class.java))
+                        finish()
+                    }
+                    return@launch
+                }
+
+                val apiService = RetrofitClient.instance(this@ResetPasswordActivity)
+                val response = apiService.passwordUpdate(
+                    "Bearer $token",
+                    passwordUpdateRequest(email, currentPWD, newPWD)
+                )
+
+                withContext(Dispatchers.Main) {
+                    loadingDialog.stopAnimation()
+                    if (response.isSuccessful) {
+                        Log.d("PasswordUpdate", "비밀번호 변경 성공")
+                        startActivity(Intent(this@ResetPasswordActivity, ResetPasswordActivity2::class.java))
+                        finish()
+                    } else {
+                        val errorMsg = response.errorBody()?.string()?.let {
+                            try {
+                                JSONObject(it).getString("message")
+                            } catch (e: Exception) {
+                                Log.e("PasswordUpdate", "JSON 파싱 오류: ${e.message}")
+                                "비밀번호 변경 실패"
+                            }
+                        } ?: "비밀번호 변경 실패"
+
+                        Log.e("PasswordUpdate", "비밀번호 변경 실패: 상태 코드 ${response.code()}, 에러 메시지: $errorMsg")
+                        CustomToast.show(this@ResetPasswordActivity, errorMsg)
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    loadingDialog.stopAnimation()
+                    Log.e("PasswordUpdate", "네트워크 요청 중 오류 발생", e)
+                    CustomToast.show(this@ResetPasswordActivity, "네트워크 오류가 발생했습니다.")
+                }
+            }
+        }
+    }
+
 }

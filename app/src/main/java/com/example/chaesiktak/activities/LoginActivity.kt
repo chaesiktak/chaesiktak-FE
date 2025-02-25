@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.chaesiktak.LoginRequest
 import com.example.chaesiktak.R
+import com.example.chaesiktak.utils.UserSessionManager
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
@@ -84,6 +85,10 @@ class LoginActivity : AppCompatActivity() {
                         //다이얼로그 닫기
                         loadingDialog.stopAnimation()
 
+                        val token = loginResponse?.data?.accessToken ?: ""  // 로그인 API 응답에서 토큰 가져오기
+                        if (!token.isNullOrEmpty()) {
+                            UserSessionManager.saveToken(this@LoginActivity, token)
+                        }
                         startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
                         finish()
                     } else {
@@ -108,8 +113,7 @@ class LoginActivity : AppCompatActivity() {
     private fun saveAccessToken(token: String) {
         val sharedPref = getSharedPreferences("AppPrefs", MODE_PRIVATE)
         val editor = sharedPref.edit()
-        val isSaved = editor.putString("accessToken", token).commit() // 🚀 즉시 저장!
-
+        val isSaved = editor.putString("accessToken", token).commit()
         if (isSaved) {
             Log.d("Token", "토큰 저장 완료: $token")
         } else {

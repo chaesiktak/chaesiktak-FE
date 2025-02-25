@@ -28,6 +28,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
@@ -37,8 +38,10 @@ interface ApiService {
 
     //비밀번호 재설정
     @POST("api/verify/passwordUpdate")
-    suspend fun passwordUpdate(@Body request: passwordUpdateRequest): Response<passwordUpdateResponse>
-
+    suspend fun passwordUpdate(
+        @Header("Authorization") token: String, // 🔹 헤더 추가
+        @Body request: passwordUpdateRequest
+    ): Response<passwordUpdateResponse>
     //회원가입 API
 
     @POST("api/sign-up")
