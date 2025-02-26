@@ -5,6 +5,88 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.LLMResultActivity">
+    tools:context=".activities.LLMResultAcitivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <!--분석결과 ; horizontal-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ibm_plex_sans_kr_bold"
+            android:text="분석결과"
+            android:textColor="@color/black_replacement"
+            android:textSize="36sp" />
+
+        <!--대체할 식품을 알려드려요 ; horizontal-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ibm_plex_sans_kr_bold"
+                android:text="대체할 "
+                android:textColor="@color/default_button_md"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ibm_plex_sans_kr_bold"
+                android:text="식품"
+                android:textColor="@color/default_button_md"
+                android:textSize="30sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ibm_plex_sans_kr_bold"
+                android:text="을 알려드려요!"
+                android:textColor="@color/default_button_md"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#F9FFF6"
+
+            android:padding="20dp">
+            <!-- TextView -->
+            <TextView
+                android:id="@+id/textOverlay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:contentDescription="Overlay text description"
+                android:fontFamily="@font/ibm_plex_sans_kr_regular"
+                android:paddingHorizontal="24dp"
+                android:textColor="@color/black_replacement"
+                android:textSize="12sp" />
+        </ScrollView>
+
+        <android.widget.Button
+            android:id="@+id/go_home_button"
+            android:layout_width="309dp"
+            android:layout_height="61dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/default_button_lg"
+            android:fontFamily="@font/inter_bold"
+            android:text="홈으로 가기"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
