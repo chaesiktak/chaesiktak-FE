@@ -1,4 +1,5 @@
 
+import com.example.chaesiktak.AIResponse
 import com.example.chaesiktak.ApiResponse
 import com.example.chaesiktak.DeleteFavoriteResponse
 import com.example.chaesiktak.EmailCheckRequestBody
@@ -76,21 +77,6 @@ interface ApiService {
         @Body request: ResetPasswordRequest
     ): Response<ResetPasswordResponse>
 
-    //client -> server (이미지 업로드)
-//    @POST("api/image/upload")
-//    suspend fun uploadImage(@Body request: uploadImageRequest): Response<uploadImageResponse>
-
-    @Multipart
-    @POST("api/image/upload")
-    suspend fun uploadImage(
-        @Part image: MultipartBody.Part
-    ): uploadImageResponse
-
-    @POST("api/analyze-image") // 여기에 두 번째 API의 경로 입력
-    suspend fun ImageAnalyze(
-        @Body request: ImageAnalyzeRequest
-    ): ImageAnalyzeResponse
-
     /*내 정보 조회*/
     @GET("api/verify/mypage")
     suspend fun UserInfo(): Response<MypageResponse>
@@ -104,5 +90,12 @@ interface ApiService {
 
     @GET("api/verify/mypage/favorite")
     suspend fun GetFavoriteList(): Response<MyFavoriteListResponse>
+
+    // LLM 이미지 분석
+    @Multipart
+    @POST("api/analyze-image")
+    suspend fun AIimage(
+        @Part image: MultipartBody.Part
+    ): Response<AIResponse>
 }
 

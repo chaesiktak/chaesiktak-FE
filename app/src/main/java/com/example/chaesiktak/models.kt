@@ -3,6 +3,7 @@ package com.example.chaesiktak
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 /*
 *
@@ -294,4 +295,18 @@ data class MyFavoriteListResponse(
     val message: String,
     val data: List<RecommendRecipe>
 )
+
+@Parcelize
+data class AIResponse(
+    val status: Int,
+    val success: Boolean,
+    val message: String,
+    val data: ImageAnalysisData
+) : Parcelable
+
+@Parcelize
+data class ImageAnalysisData(
+    val response: String,
+    val output_dict: Map<String, String> // 대체 식품 매핑을 Map으로 처리
+) : Parcelable
 
