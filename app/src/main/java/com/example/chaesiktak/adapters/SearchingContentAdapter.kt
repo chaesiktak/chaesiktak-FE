@@ -60,12 +60,12 @@ class SearchingContentAdapter(private var searchingContentList: MutableList<Reco
 //            recipe.isFavorite = !recipe.isFavorite
 //            notifyItemChanged(position) // 상태 변경 후 해당 아이템만 새로고침
 //        }
-//
-//        // 태그 설정 및 색상 변경
-//        holder.tagView.text = recipe.tag
-//        holder.tagView.setBackgroundColor(
-//            ContextCompat.getColor(holder.itemView.context, getTagColor(recipe.tag))
-//        )
+
+        // 태그 설정 및 색상 변경
+        holder.tagView.text = recipe.tag
+        holder.tagView.setBackgroundColor(
+            ContextCompat.getColor(holder.itemView.context, getTagColor(recipe.tag))
+        )
     }
 
     // 태그에 맞는 색상 반환

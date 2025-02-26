@@ -219,22 +219,6 @@ class HomeFragment : Fragment() {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
-    //retrofit -> saveFavorite response 함수
-//    private fun saveFavorite(recipeId: Int) {
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            try {
-//                val response = RetrofitClient.instance(requireContext()).saveFavorite(recipeId)
-//
-//                if (response.isSuccessful) {
-//                    Toast.makeText(requireContext(), "저장목록에 담았습니다.", Toast.LENGTH_SHORT).show()
-//                } else {
-//                    showError("즐겨찾기 업데이트 실패: ${response.code()}")
-//                }
-//            } catch (e: Exception) {
-//                showError("네트워크 오류: ${e.message}")
-//            }
-//        }
-//    }
 
     private fun toggleFavorite(recipeId: Int) {
         viewLifecycleOwner.lifecycleScope.launch {
