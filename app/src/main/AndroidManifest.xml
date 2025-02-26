@@ -11,7 +11,6 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -22,15 +21,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Chaesiktak"
         android:useEmbeddedDex="true"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".activities.LLMResultActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.AccountDeactivationActivity"
             android:exported="false" />
         <activity
             android:name=".activities.AddNoticeActivity"
             android:exported="false" />
-        <activity android:name=".activities.BookmarkActivity"
-            android:exported="false"/>
+        <activity
+            android:name=".activities.BookmarkActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.NoticeBoardActivity"
             android:exported="false" />
@@ -46,7 +50,6 @@
         <activity
             android:name=".activities.ResetPasswordActivity2"
             android:exported="false" />
-
         <activity
             android:name=".activities.SearchResultActivity"
             android:exported="false" />
