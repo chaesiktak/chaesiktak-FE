@@ -29,7 +29,6 @@ class SearchPanelActivity : AppCompatActivity() {
             }
         }
 
-
         binding.searchGoBtn.setOnClickListener {
             val searchText = binding.searchInput.text.toString().trim()
             if (searchText.isNotEmpty()) {

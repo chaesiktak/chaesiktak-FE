@@ -3,18 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:paddingVertical="30dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.LLMResultAcitivity">
+    tools:context=".activities.LLMResultActivity">
 
     <LinearLayout
-        android:paddingHorizontal="20dp"
+        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
+        android:paddingHorizontal="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp">
         <!--분석결과 ; horizontal-->
         <TextView
             android:layout_width="wrap_content"
@@ -22,7 +26,7 @@
             android:fontFamily="@font/ibm_plex_sans_kr_bold"
             android:text="분석결과"
             android:textColor="@color/black_replacement"
-            android:textSize="36sp" />
+            android:textSize="30sp" />
 
         <!--대체할 식품을 알려드려요 ; horizontal-->
         <LinearLayout
@@ -36,7 +40,7 @@
                 android:fontFamily="@font/ibm_plex_sans_kr_bold"
                 android:text="대체할 "
                 android:textColor="@color/default_button_md"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -44,7 +48,7 @@
                 android:fontFamily="@font/ibm_plex_sans_kr_bold"
                 android:text="식품"
                 android:textColor="@color/default_button_md"
-                android:textSize="30sp" />
+                android:textSize="28sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -52,14 +56,13 @@
                 android:fontFamily="@font/ibm_plex_sans_kr_bold"
                 android:text="을 알려드려요!"
                 android:textColor="@color/default_button_md"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
         </LinearLayout>
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#F9FFF6"
-
             android:padding="20dp">
             <!-- TextView -->
             <TextView
@@ -69,10 +72,38 @@
                 android:layout_gravity="center"
                 android:contentDescription="Overlay text description"
                 android:fontFamily="@font/ibm_plex_sans_kr_regular"
-                android:paddingHorizontal="24dp"
+
                 android:textColor="@color/black_replacement"
-                android:textSize="12sp" />
-        </ScrollView>
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginBottom="50dp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout1"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+            android:paddingHorizontal="20dp"
+            android:text="다음으로 대체하면 좋아요!"
+            android:textColor="@color/black_replacement"
+            android:textSize="20sp" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="20dp"
+            android:scrollbars="vertical" />
+
 
         <android.widget.Button
             android:id="@+id/go_home_button"
@@ -89,5 +120,6 @@
             android:textColor="@color/white"
             android:textSize="25sp" />
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

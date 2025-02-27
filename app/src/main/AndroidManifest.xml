@@ -24,7 +24,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".activities.LLMResultAcitivity"
+            android:name=".activities.LLMResultActivity"
             android:exported="false" />
         <activity
             android:name=".activities.AccountDeactivationActivity"

@@ -74,22 +74,6 @@ class JoinActivity : AppCompatActivity() {
                 checkEmailbutton.isEnabled = false // 버튼 비활성화
                 checkEmailbutton.setBackgroundResource(R.drawable.button_disabled_background)
             }
-
-            lifecycleScope.launch {
-                val result = checkEmailDupe() // checkEmailDupe이 suspend 함수여야 함
-
-                runOnUiThread {
-                    if (result == 1) {
-                        // 이메일이 사용 중일 때 버튼 비활성화 유지
-                        checkEmailbutton.isEnabled = false
-                        checkEmailbutton.setBackgroundResource(R.drawable.button_disabled_background)
-                    } else {
-                        // 이메일이 사용 가능할 때 버튼 다시 활성화
-                        checkEmailbutton.isEnabled = true
-                        checkEmailbutton.setBackgroundResource(R.drawable.default_button_md)
-                    }
-                }
-            }
         }
 
         checkNicknameButton.setOnClickListener {
@@ -321,11 +305,10 @@ class JoinActivity : AppCompatActivity() {
 
                     if (responseBody.success) { //닉네임 사용 가능 (return 1)
                         nicknameErrortext.apply {
-                            nicknameErrortext.text = message
+                            nicknameErrortext.text = "✅ $message"
                             nicknameErrortext.setTextColor(ContextCompat.getColor(this@JoinActivity, R.color.banner_bottom_indicator_green))
                             visibility = View.VISIBLE
                         }
-                        nicknameErrortext.visibility = View.GONE
                         return 1
                     } else {
                         showNicknameError(message)

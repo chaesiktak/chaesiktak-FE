@@ -1,0 +1,30 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="10dp">
+
+
+    <TextView
+        android:fontFamily="@font/ibm_plex_sans_kr_regular"
+        android:text="title"
+        android:id="@+id/txtFoodCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="14sp" />
+
+    <TextView
+        android:fontFamily="@font/ibm_plex_sans_kr_regular"
+        android:text="subtitle"
+        android:id="@+id/txtFoodAlternatives"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp" />
+    <View
+        android:background="@color/banner_bottom_indicator_grey"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+</LinearLayout>

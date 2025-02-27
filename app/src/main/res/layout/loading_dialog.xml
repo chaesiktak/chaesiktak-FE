@@ -21,10 +21,11 @@
         android:src="@drawable/loading1" />
 
     <TextView
+        android:textAlignment="center"
         android:layout_margin="10dp"
         android:textColor="@color/black_replacement"
         android:fontFamily="@font/ibm_plex_sans_kr_regular"
-        android:text="loading .."
+        android:text="로딩중이니 \n 잠시만 기다려주세요!"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     </LinearLayout>

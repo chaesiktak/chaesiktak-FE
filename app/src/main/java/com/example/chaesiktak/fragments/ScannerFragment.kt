@@ -27,7 +27,7 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import androidx.camera.view.PreviewView
 import androidx.lifecycle.lifecycleScope
-import com.example.chaesiktak.activities.LLMResultAcitivity
+import com.example.chaesiktak.activities.LLMResultActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -182,7 +182,7 @@ class ScannerFragment : Fragment() {
                     loadingDialog.stopAnimation()
                     Toast.makeText(requireContext(), "이미지 분석 완료!", Toast.LENGTH_SHORT).show()
                     response.body()?.let { aiResponse -> //응답이 null이 아닌 경우만
-                        val intent = Intent(requireContext(), LLMResultAcitivity::class.java).apply {
+                        val intent = Intent(requireContext(), LLMResultActivity::class.java).apply {
                             putExtra("ai_response", aiResponse) // Parcelable 데이터 전달
                         }
                         startActivity(intent)
