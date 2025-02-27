@@ -36,7 +36,7 @@ class NoticeBoardActivity : AppCompatActivity() {
         // RecyclerView 설정
         noticeRecyclerView = findViewById(R.id.noticeRecyclerView)
         noticeRecyclerView.layoutManager = LinearLayoutManager(this)
-        noticeAdapter = NoticeAdapter(noticeList)
+        noticeAdapter = NoticeAdapter(noticeList, this)
         noticeRecyclerView.adapter = noticeAdapter
 
         // 서버에서 공지사항 가져오기

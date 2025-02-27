@@ -13,340 +13,346 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph" />
 
-
-    <LinearLayout
+    <!-- 최상위 ScrollView 추가 -->
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:fillViewport="true"
+        android:scrollbars="vertical">
 
-
-        <!-- 상단바 -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white">
-
-            <TextView
-                android:id="@+id/MyPage"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
-                android:gravity="center"
-                android:text="마이페이지"
-                android:textColor="#4A4743"
-                android:textSize="20dp" />
-        </RelativeLayout>
-        <View
-
-            android:background="@color/banner_bottom_indicator_grey"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"/>
-
-
-
-        <!-- 프로필 레이아웃 -->
-        <RelativeLayout
-            android:id="@+id/profileButton"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/MyPage">
-
-<!--            <Button-->
-<!--                android:id="@+id/profileButton"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="100dp"-->
-<!--                android:background="@drawable/border_button" />-->
-
-            <ImageView
-                android:id="@+id/profileImage"
-                android:layout_width="120dp"
-                android:layout_height="70dp"
-                android:layout_centerVertical="true"
-                android:paddingLeft="20dp"
-                android:src="@drawable/profile" />
-
-            <TextView
-                android:id="@+id/Nickname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/profileImage"
-                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
-                android:paddingTop="20dp"
-                android:text="#닉네임#"
-                android:textColor="#4A4743"
-                android:textSize="20dp" />
-
-            <TextView
-                android:id="@+id/Email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/profileImage"
-                android:fontFamily="@font/ibm_plex_sans_kr_regular"
-                android:paddingTop="50dp"
-                android:text="#123456@gmail.com#"
-                android:textColor="#717171"
-                android:textSize="15dp" />
-
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/arrow_next" />
-        </RelativeLayout>
-        <View
-            android:layout_marginTop="10dp"
-            android:background="@color/banner_bottom_indicator_grey"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"/>
-
-        <!-- 최근 본 항목 -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
-            android:paddingLeft="22dp"
-            android:paddingTop="15dp"
-            android:text="최근 본 레시피"
-            android:textColor="#4A4743"
-            android:textSize="18dp" />
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recentRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/Profile"
-            android:layout_margin="5dp"
-            android:orientation="horizontal" />
-
-
-        <!-- 환경설정 목록 (진행중)-->
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingBottom="95dp">
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
 
-            <View
-                android:background="@color/banner_bottom_indicator_grey"
+            <!-- 상단바 -->
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"/>
-
-            <!-- 비밀번호 재설정-->
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:focusable="true"
-                android:clickable="true"
-                android:id="@+id/passwordChangeBtn"
-                android:layout_marginHorizontal="20dp"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-                <ImageView
-                    android:layout_marginEnd="10dp"
-                    android:src="@drawable/passwordcheck"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"/>
+                android:layout_height="wrap_content"
+                android:background="@color/white">
 
                 <TextView
-                    android:textColor="@color/black_replacement"
-                    android:layout_weight="1"
-                    android:textSize="16sp"
+                    android:id="@+id/MyPage"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
                     android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
-                    android:text="비밀번호 재설정"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:gravity="center"
+                    android:text="마이페이지"
+                    android:textColor="#4A4743"
+                    android:textSize="20dp" />
+            </RelativeLayout>
 
-                <ImageView
-                    android:src="@drawable/nextarrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </androidx.appcompat.widget.LinearLayoutCompat>
             <View
                 android:background="@color/banner_bottom_indicator_grey"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"/>
+                android:layout_height="1dp" />
 
-            <!-- 저장한 항목-->
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:focusable="true"
-                android:clickable="true"
-                android:id="@+id/likeListBtn"
-                android:layout_marginHorizontal="20dp"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-
-
-                <ImageView
-                    android:layout_marginEnd="10dp"
-                    android:src="@drawable/likebutton"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"/>
-                <TextView
-                    android:textColor="@color/black_replacement"
-                    android:layout_weight="1"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
-                    android:text="저장한 항목"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <ImageView
-                    android:src="@drawable/nextarrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </androidx.appcompat.widget.LinearLayoutCompat>
-            <View
-                android:background="@color/banner_bottom_indicator_grey"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
-            <!-- 이용약관-->
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/goTos"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginHorizontal="20dp"
+            <!-- 프로필 레이아웃 -->
+            <RelativeLayout
+                android:id="@+id/profileButton"
                 android:clickable="true"
                 android:focusable="true"
-                android:gravity="center">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="10dp"
-                    android:src="@drawable/tos" />
+                    android:id="@+id/profileImage"
+                    android:layout_width="120dp"
+                    android:layout_height="70dp"
+                    android:layout_centerVertical="true"
+                    android:paddingLeft="20dp"
+                    android:src="@drawable/profile" />
 
                 <TextView
+                    android:id="@+id/Nickname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_toRightOf="@+id/profileImage"
                     android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
-                    android:text="이용약관"
-                    android:textColor="@color/black_replacement"
-                    android:textSize="16sp" />
+                    android:paddingTop="20dp"
+                    android:text="#닉네임#"
+                    android:textColor="#4A4743"
+                    android:textSize="20dp" />
 
-                <ImageView
+                <TextView
+                    android:id="@+id/Email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/nextarrow" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
+                    android:layout_toRightOf="@+id/profileImage"
+                    android:fontFamily="@font/ibm_plex_sans_kr_regular"
+                    android:paddingTop="50dp"
+                    android:text="#123456@gmail.com#"
+                    android:textColor="#717171"
+                    android:textSize="15dp" />
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/arrow_next" />
+            </RelativeLayout>
+
             <View
+                android:layout_marginTop="10dp"
                 android:background="@color/banner_bottom_indicator_grey"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"/>
+                android:layout_height="1dp" />
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:focusable="true"
-                android:id="@+id/noticeButton"
-                android:layout_marginHorizontal="20dp"
-                android:gravity="center"
+            <!-- 최근 본 항목 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+                android:paddingLeft="22dp"
+                android:paddingTop="15dp"
+                android:text="최근 본 레시피"
+                android:textColor="#4A4743"
+                android:textSize="18dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recentRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="horizontal" />
 
-                <ImageView
-                    android:layout_marginEnd="10dp"
-                    android:src="@drawable/alarm"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"/>
-
-                <TextView
-                    android:textColor="@color/black_replacement"
-                    android:layout_weight="1"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
-                    android:text="공지사항"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <ImageView
-                    android:src="@drawable/nextarrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </androidx.appcompat.widget.LinearLayoutCompat>
-            <View
-                android:background="@color/banner_bottom_indicator_grey"
+            <!-- 환경설정 목록 -->
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"/>
-            <!-- 탈퇴하기-->
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:focusable="true"
-                android:clickable="true"
-                android:id="@+id/deactivationBtn"
-                android:layout_marginHorizontal="20dp"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-                <ImageView
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="95dp">
 
-                    android:layout_marginEnd="10dp"
-                    android:src="@drawable/profile_delete"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"/>
-                <TextView
-                    android:textColor="@color/black_replacement"
-                    android:layout_weight="1"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
-                    android:text="탈퇴하기"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                <View
+                    android:background="@color/banner_bottom_indicator_grey"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+                <!-- 환경설정 목록 (진행중)-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fillViewport="true">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingBottom="95dp">
 
-                <ImageView
-                    android:src="@drawable/nextarrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </androidx.appcompat.widget.LinearLayoutCompat>
-            <View
-                android:background="@color/banner_bottom_indicator_grey"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
-            <!-- 로그아웃-->
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:clickable="true"
-                android:id="@+id/logoutBtn"
-                android:layout_marginHorizontal="20dp"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
+<!--                        <View-->
+<!--                            android:background="@color/banner_bottom_indicator_grey"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="1dp"/>-->
 
-                <ImageView
-                    android:layout_marginEnd="10dp"
-                    android:src="@drawable/logout"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"/>
+                        <!-- 비밀번호 재설정-->
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:focusable="true"
+                            android:clickable="true"
+                            android:id="@+id/passwordChangeBtn"
+                            android:layout_marginHorizontal="20dp"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp">
+                            <ImageView
+                                android:layout_marginEnd="10dp"
+                                android:src="@drawable/passwordcheck"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"/>
 
-                <TextView
-                    android:textColor="@color/black_replacement"
-                    android:layout_weight="1"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
-                    android:text="로그아웃"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                            <TextView
+                                android:textColor="@color/black_replacement"
+                                android:layout_weight="1"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+                                android:text="비밀번호 재설정"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
 
-                <ImageView
-                    android:src="@drawable/nextarrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </androidx.appcompat.widget.LinearLayoutCompat>
-            <View
-                android:background="@color/banner_bottom_indicator_grey"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
+                            <ImageView
+                                android:src="@drawable/nextarrow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                        <View
+                            android:background="@color/banner_bottom_indicator_grey"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"/>
+
+                        <!-- 저장한 항목-->
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:focusable="true"
+                            android:clickable="true"
+                            android:id="@+id/likeListBtn"
+                            android:layout_marginHorizontal="20dp"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp">
+
+
+                            <ImageView
+                                android:layout_marginEnd="10dp"
+                                android:src="@drawable/likebutton"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"/>
+                            <TextView
+                                android:textColor="@color/black_replacement"
+                                android:layout_weight="1"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+                                android:text="저장한 항목"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                            <ImageView
+                                android:src="@drawable/nextarrow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                        <View
+                            android:background="@color/banner_bottom_indicator_grey"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"/>
+                        <!-- 이용약관-->
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/goTos"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginHorizontal="20dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_marginEnd="10dp"
+                                android:src="@drawable/tos" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+                                android:text="이용약관"
+                                android:textColor="@color/black_replacement"
+                                android:textSize="16sp" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/nextarrow" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                        <View
+                            android:background="@color/banner_bottom_indicator_grey"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"/>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:focusable="true"
+                            android:id="@+id/noticeButton"
+                            android:layout_marginHorizontal="20dp"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp">
+
+                            <ImageView
+                                android:layout_marginEnd="10dp"
+                                android:src="@drawable/alarm"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"/>
+
+                            <TextView
+                                android:textColor="@color/black_replacement"
+                                android:layout_weight="1"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+                                android:text="공지사항"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                            <ImageView
+                                android:src="@drawable/nextarrow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                        <View
+                            android:background="@color/banner_bottom_indicator_grey"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"/>
+                        <!-- 탈퇴하기-->
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:focusable="true"
+                            android:clickable="true"
+                            android:id="@+id/deactivationBtn"
+                            android:layout_marginHorizontal="20dp"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp">
+                            <ImageView
+
+                                android:layout_marginEnd="10dp"
+                                android:src="@drawable/profile_delete"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"/>
+                            <TextView
+                                android:textColor="@color/black_replacement"
+                                android:layout_weight="1"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+                                android:text="탈퇴하기"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                            <ImageView
+                                android:src="@drawable/nextarrow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                        <View
+                            android:background="@color/banner_bottom_indicator_grey"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"/>
+                        <!-- 로그아웃-->
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:clickable="true"
+                            android:id="@+id/logoutBtn"
+                            android:layout_marginHorizontal="20dp"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp">
+
+                            <ImageView
+                                android:layout_marginEnd="10dp"
+                                android:src="@drawable/logout"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"/>
+
+                            <TextView
+                                android:textColor="@color/black_replacement"
+                                android:layout_weight="1"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/ibm_plex_sans_kr_semi_bold"
+                                android:text="로그아웃"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                            <ImageView
+                                android:src="@drawable/nextarrow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                        <View
+                            android:background="@color/banner_bottom_indicator_grey"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
+    </ScrollView>
 
-
-
+    <!-- 하단 네비게이션 바 -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -383,9 +389,6 @@
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:src="@drawable/myinfo_onclicked" />
-
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </FrameLayout>

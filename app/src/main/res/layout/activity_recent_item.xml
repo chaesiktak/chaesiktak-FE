@@ -4,12 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="6.5dp"
+
     app:cardElevation="1dp"
     app:cardCornerRadius="7dp"
     app:cardUseCompatPadding="true">
 
     <LinearLayout
+        android:gravity="center"
         android:paddingVertical="10dp"
         android:orientation="vertical"
         android:layout_width="wrap_content"
@@ -18,8 +19,8 @@
         <!-- 이미지 뷰 -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
-            android:layout_width="145dp"
-            android:layout_height="145dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="0dp"
             app:cardUseCompatPadding="true"
@@ -36,8 +37,9 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
+            android:textSize="12sp"
             android:textColor="@color/black_replacement"
-            android:fontFamily="@font/ibm_plex_sans_kr_regular"
+            android:fontFamily="@font/ibm_plex_sans_kr_bold"
             android:id="@+id/recentTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

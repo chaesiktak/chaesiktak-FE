@@ -86,7 +86,7 @@
 
         <android.widget.Button
             android:id="@+id/start_button"
-            android:layout_width="334dp"
+            android:layout_width="309dp"
             android:layout_height="66dp"
             android:layout_gravity="center"
             android:layout_marginTop="42dp"
