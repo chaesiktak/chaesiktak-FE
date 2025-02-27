@@ -21,8 +21,6 @@ data class passwordUpdateResponse(
     val message: String,
     val data: String
 )
-
-
 /*
 *
 * 회원가입 응답 & 요청

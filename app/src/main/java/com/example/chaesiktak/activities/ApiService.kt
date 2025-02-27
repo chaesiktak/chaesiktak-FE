@@ -37,13 +37,8 @@ import retrofit2.http.Path
 
 interface ApiService {
 
-    //비밀번호 재설정
-    @POST("api/verify/passwordUpdate")
-    suspend fun passwordUpdate(
-        @Header("Authorization") token: String, // 🔹 헤더 추가
-        @Body request: passwordUpdateRequest
-    ): Response<passwordUpdateResponse>
-    //회원가입 API
+    @POST("api/verify/passwordupdate")
+    suspend fun passwordUpdate(@Body request: passwordUpdateRequest): Response<passwordUpdateResponse>
 
     @POST("api/sign-up")
     suspend fun signUp(@Body request: SignUpRequest): Response<ApiResponse<User>>
