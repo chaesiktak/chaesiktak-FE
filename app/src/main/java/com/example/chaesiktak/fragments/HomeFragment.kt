@@ -176,7 +176,7 @@ class HomeFragment : Fragment() {
     private fun fetchAllRecipes() {
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                val recipeIds = (1..12).toList()
+                val recipeIds = (1..14).toList()
 
                 // 병렬로 개별 레시피 정보 요청
                 val recipeDetails = recipeIds.map { id ->
@@ -207,7 +207,7 @@ class HomeFragment : Fragment() {
 
     private suspend fun fetchRecipeDetail(recipeId: Int): RecommendRecipe? {
         return try {
-            if (recipeId !in 1..12) { //일단 하드코딩으로 둠
+            if (recipeId !in 1..14) { //일단 하드코딩으로 둠
                 Log.e("fetchRecipeDetail", "허용되지 않은 recipeId: $recipeId")
                 return null
             }

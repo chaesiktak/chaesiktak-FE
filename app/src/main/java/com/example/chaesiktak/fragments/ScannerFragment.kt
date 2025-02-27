@@ -1,5 +1,6 @@
 package com.example.chaesiktak.fragments
 
+import CustomToast
 import LoadingDialog
 import android.Manifest
 import android.content.Intent
@@ -191,12 +192,12 @@ class ScannerFragment : Fragment() {
                 } else {
                     Log.e("Upload", "서버 오류: ${response.body()}")
                     loadingDialog.stopAnimation()
-                    Toast.makeText(requireContext(), "서버 오류 발생", Toast.LENGTH_SHORT).show()
+                    CustomToast.show(requireContext(), "LLM 서버 오류발생 ")
                 }
             } catch (e: Exception) {
                 Log.e("Upload", "예외 발생: ${e.message}")
                 loadingDialog.stopAnimation()
-                Toast.makeText(requireContext(), "네트워크 오류 발생", Toast.LENGTH_SHORT).show()
+                CustomToast.show(requireContext(), "네트워크 오류 발생. 관리자에게 문의하거나 네트워크를 확인해주세요.")
             }
         }
     }

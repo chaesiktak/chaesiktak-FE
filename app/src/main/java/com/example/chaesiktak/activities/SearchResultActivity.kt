@@ -371,7 +371,7 @@ class SearchResultActivity : AppCompatActivity() {
 
     private suspend fun fetchAllRecipes(): List<RecommendRecipe> {
         return try {
-            val recipeIds = (1..12).toList() // 하드코딩된 ID 사용
+            val recipeIds = (1..14).toList() // 하드코딩된 ID 사용
             val recipeDetails = recipeIds.mapNotNull { fetchRecipeDetail(it) }
 
             if (recipeDetails.isEmpty()) {

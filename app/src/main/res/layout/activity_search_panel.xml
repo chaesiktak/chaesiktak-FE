@@ -41,7 +41,7 @@
             android:layout_height="50dp"
             android:layout_marginStart="10dp"
             android:background="@drawable/searchingbar"
-            android:hint="검색어를 입력해주세요"
+            android:hint="'비건'을 검색해보세요!"
             android:paddingLeft="40dp"
             android:textColorHint="@color/banner_bottom_indicator_grey"
             app:layout_constraintEnd_toEndOf="parent"

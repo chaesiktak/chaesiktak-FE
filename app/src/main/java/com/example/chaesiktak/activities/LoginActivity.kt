@@ -1,5 +1,6 @@
 package com.example.chaesiktak.activities
 
+import CustomToast
 import LoadingDialog
 import RetrofitClient
 import android.annotation.SuppressLint
@@ -9,7 +10,6 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -17,6 +17,7 @@ import com.example.chaesiktak.LoginRequest
 import com.example.chaesiktak.R
 import com.example.chaesiktak.utils.UserSessionManager
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var loadingDialog: LoadingDialog
@@ -49,11 +50,18 @@ class LoginActivity : AppCompatActivity() {
             val ID = IDEditText.text.toString().trim()
             val PWD = PWEditText.text.toString().trim()
 
-            if (ID.isEmpty() || PWD.isEmpty()) {
-                Toast.makeText(this, "이메일과 비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
+            if (ID.isEmpty() && PWD.isEmpty()) {
+                CustomToast.show(this, "아이디와 비밀번호를 입력해주세요.")
                 return@setOnClickListener
             }
-
+            if (ID.isEmpty()){
+                CustomToast.show(this, "아이디를 입력해주세요.")
+                return@setOnClickListener
+            }
+            if (PWD.isEmpty()){
+            CustomToast.show(this, "비밀번호를 입력해주세요.")
+                return@setOnClickListener
+            }
             Log.d("Login", "로그인 버튼 클릭")
             loadingDialog.show()
             loadingDialog.startAnimation()
@@ -63,6 +71,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     // 로그인 API 호출
+
+
     private fun login(email: String, password: String) {
         lifecycleScope.launch {
             try {
@@ -82,7 +92,7 @@ class LoginActivity : AppCompatActivity() {
                         saveAccessToken(accessToken)
                         Log.d("Login", "로그인 성공: AccessToken=$accessToken")
 
-                        //다이얼로그 닫기
+                        // 다이얼로그 닫기
                         loadingDialog.stopAnimation()
 
                         val token = loginResponse?.data?.accessToken ?: ""  // 로그인 API 응답에서 토큰 가져오기
@@ -93,22 +103,30 @@ class LoginActivity : AppCompatActivity() {
                         finish()
                     } else {
                         Log.d("Login", "로그인 실패: 서버에서 토큰을 받지 못함")
-                        Toast.makeText(this@LoginActivity, "로그인 실패", Toast.LENGTH_SHORT).show()
+                       CustomToast.show(this@LoginActivity, "JWT 토큰 오류")
                     }
                 } else {
+                    // 서버에서 받은 JSON 에러 메시지 추출
                     val errorBody = response.errorBody()?.string()
                     Log.d("ServerResponse", "서버 응답 (실패): $errorBody")
-                    Toast.makeText(this@LoginActivity, "로그인 실패: ${response.message()}", Toast.LENGTH_SHORT).show()
+
+                    val errorMessage = try {
+                        JSONObject(errorBody).getString("message") // JSON에서 "message" 값 가져오기
+                    } catch (e: Exception) {
+                        "로그인 실패" // JSON 파싱 실패 시 기본 메시지
+                    }
+
+                    CustomToast.show(this@LoginActivity, errorMessage)
                 }
             } catch (e: Exception) {
                 Log.e("Login", "네트워크 오류", e)
-                Toast.makeText(this@LoginActivity, "네트워크 오류 발생", Toast.LENGTH_SHORT).show()
+                CustomToast.show(this@LoginActivity, "네트워크 오류 발생. 관리자에게 문의하거나 네트워크를 확인해주세요.")
             } finally {
-
                 loadingDialog.stopAnimation()
             }
         }
     }
+
 
     private fun saveAccessToken(token: String) {
         val sharedPref = getSharedPreferences("AppPrefs", MODE_PRIVATE)
