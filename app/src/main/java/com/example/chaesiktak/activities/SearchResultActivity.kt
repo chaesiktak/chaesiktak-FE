@@ -201,6 +201,10 @@ class SearchResultActivity : AppCompatActivity() {
         }
 
         dialog.show()
+
+        filterbinding.filterClose.setOnClickListener {
+            dialog.dismiss()
+        }
     }
 
 
@@ -261,6 +265,10 @@ class SearchResultActivity : AppCompatActivity() {
         }
 
         dialog.show()
+
+        ingredientBinding.filterClose.setOnClickListener {
+            dialog.dismiss()
+        }
     }
 
 
