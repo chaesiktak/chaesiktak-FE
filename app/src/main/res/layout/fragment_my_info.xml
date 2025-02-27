@@ -118,7 +118,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recentRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="145dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/Profile"
             android:layout_margin="5dp"
             android:orientation="horizontal" />

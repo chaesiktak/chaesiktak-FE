@@ -36,6 +36,7 @@ class HomeFragment : Fragment() {
     private lateinit var tagRecipeAdapter: TagRecipeAdapter
     private lateinit var bannerAdapter: BannerAdapter
     private lateinit var viewPager: ViewPager2
+    private val recentViewManager by lazy { RecentViewManager(requireContext()) }
 
     private val recipeList: ArrayList<RecommendRecipe> = arrayListOf()
     private val tagRecipeList: ArrayList<RecommendRecipe> = arrayListOf()
@@ -44,6 +45,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         setupSearchBar() //검색바
@@ -143,6 +145,8 @@ class HomeFragment : Fragment() {
 
     // 카드뷰 클릭 -> 디테일 <RECIPE_ID>, <isFavorite> 값 전달
     private fun navigateToRecipeDetail(recipe: RecommendRecipe) {
+        recentViewManager.saveRecentItem(recipe.id) // 최근 본 항목 저장
+
         val intent = Intent(requireContext(), RecipeDetailActivity::class.java).apply {
             putExtra("RECIPE_ID", recipe.id) // ID전달
             putExtra("IS_Favorite", recipe.isFavorite) //'저장'값 전달

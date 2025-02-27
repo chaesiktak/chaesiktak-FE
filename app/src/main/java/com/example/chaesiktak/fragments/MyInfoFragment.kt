@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewOutlineProvider
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -28,10 +29,13 @@ import com.example.chaesiktak.R
 import com.example.chaesiktak.RecentAdapter
 import com.example.chaesiktak.RecentItem
 import com.example.chaesiktak.RecentRecipeData
+import com.example.chaesiktak.RecentViewManager
+import com.example.chaesiktak.RecommendRecipe
 import com.example.chaesiktak.activities.ResetPasswordActivity
 import com.example.chaesiktak.activities.AccountDeactivationActivity
 import com.example.chaesiktak.activities.BookmarkActivity
 import com.example.chaesiktak.activities.LoginActivity
+import com.example.chaesiktak.activities.RecipeDetailActivity
 import com.example.chaesiktak.activities.TOSActivity
 import kotlinx.coroutines.launch
 
@@ -43,9 +47,8 @@ class MyInfoFragment : Fragment() {
     private lateinit var emailTextView: TextView
     private lateinit var recentRecyclerView: RecyclerView
     private lateinit var recentAdapter: RecentAdapter
-    private val recentItems = listOf(
-        RecentRecipeData(R.drawable.food1)
-    )
+    private lateinit var recentViewManager: RecentViewManager
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -56,7 +59,6 @@ class MyInfoFragment : Fragment() {
 
         // SharedPreferences에서 현재 설정된 이름과 닉네임 가져오기
         val sharedPref = requireActivity().getSharedPreferences("UserProfile", Context.MODE_PRIVATE)
-        val currentName = sharedPref.getString("name", "이름") ?: "이름"
         val currentNickname = sharedPref.getString("nickname", "닉네임") ?: "닉네임"
 
         nicknameTextView = view.findViewById(R.id.Nickname)
@@ -64,44 +66,9 @@ class MyInfoFragment : Fragment() {
 
         nicknameTextView.text = currentNickname  // Nickname 설정
 
-        // 프로필 수정 결과 처리
-        val editProfileLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data = result.data
-                val newNickname = data?.getStringExtra("newNickname")
-
-                if (!newNickname.isNullOrBlank()) {
-                    // 변경된 이름과 닉네임을 SharedPreferences에 저장
-                    with(sharedPref.edit()) {
-                        putString("nickname", newNickname)
-                        apply()
-                    }
-
-                    nicknameTextView.text = newNickname  // Nickname 설정
-                }
-            }
-        }
-
-        // 최근 본 항목 받기
-        recentRecyclerView = view.findViewById(R.id.recentRecyclerView)
-        recentRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        //recentAdapter = RecentAdapter(recentItems)
-        //recentRecyclerView.adapter = recentAdapter
-        val recentRecipes = listOf(
-            RecentRecipeData(R.drawable.food1),
-            RecentRecipeData(R.drawable.banner_icon),
-            RecentRecipeData(R.drawable.profile)
-        ) // 예제 데이터
-
-        recentAdapter = RecentAdapter(recentRecipes) { recentRecipeData ->
-            val intent = Intent(requireContext(), RecentItem::class.java).apply {
-                putExtra("RECIPE_IMAGE", recentRecipeData.imageResId)
-            }
-            startActivity(intent)
-        }
-        recentRecyclerView.adapter = recentAdapter
+        // 최근 본 항목 RecyclerView 설정
+        recentViewManager = RecentViewManager(requireContext())
+        setupRecentRecyclerView(view)
 
 
         // 프로필 버튼 클릭 이벤트 설정
@@ -185,12 +152,12 @@ class MyInfoFragment : Fragment() {
                         val emailTextView = view?.findViewById<TextView>(R.id.Email)
                         // 데이터 패치
                         nicknameTextView?.text = userData.userNickName
-                        emailTextView?.text =userData.email
+                        emailTextView?.text = userData.email
                         //로그 확인
-                        Log.d("email","유저 이메일: ${userData.email}")
-                        Log.d("nickname","유저 닉네임: ${userData.userNickName}")
+                        Log.d("email", "유저 이메일: ${userData.email}")
+                        Log.d("nickname", "유저 닉네임: ${userData.userNickName}")
                     } else {
-                        Log.d("null","데이터가 null")
+                        Log.d("null", "데이터가 null")
                     }
                 } else {
                     val errorMessage = response.errorBody()?.string() ?: "알 수 없는 오류"
@@ -201,6 +168,7 @@ class MyInfoFragment : Fragment() {
             }
         }
     }
+
     // Fragment 다시 보일 때마다 닉네임 업데이트
     override fun onResume() {
         super.onResume()
@@ -209,4 +177,40 @@ class MyInfoFragment : Fragment() {
         nicknameTextView.text = currentNickname
         fetchUserInfo()
     }
+
+    private fun setupRecentRecyclerView(view: View) {
+        recentRecyclerView = view.findViewById(R.id.recentRecyclerView)
+        recentRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+        val recentRecipeIds = recentViewManager.getRecentItems()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            val recentRecipes = recentRecipeIds.mapNotNull { fetchRecipeDetail(it) } // 서버에서 데이터 가져오기
+
+            recentAdapter = RecentAdapter(recentRecipes) { recipe ->
+                navigateToRecipeDetail(recipe)
+            }
+
+            recentRecyclerView.adapter = recentAdapter
+            recentAdapter.notifyDataSetChanged() // UI 갱신 추가
+        }
+    }
+
+
+    private fun navigateToRecipeDetail(recipe: RecommendRecipe) {
+        val intent = Intent(requireContext(), RecipeDetailActivity::class.java).apply {
+            putExtra("RECIPE_ID", recipe.id)
+        }
+        startActivity(intent)
+    }
+
+    private suspend fun fetchRecipeDetail(recipeId: Int): RecommendRecipe? {
+        return try {
+            val response = RetrofitClient.instance(requireContext()).getRecipeDetail(recipeId)
+            if (response.isSuccessful) response.body()?.data else null
+        } catch (e: Exception) {
+            null
+        }
+    }
+
 }

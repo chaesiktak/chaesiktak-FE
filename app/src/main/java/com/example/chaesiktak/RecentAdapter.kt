@@ -4,36 +4,36 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 
-class RecentAdapter(private val items: List<RecentRecipeData>,
-                    private val onClick: (RecentRecipeData) -> Unit
-) : RecyclerView.Adapter<RecentAdapter.RecentViewHolder>() {
+class RecentAdapter(private val items: List<RecommendRecipe>, private val onItemClick: (RecommendRecipe) -> Unit) :
+    RecyclerView.Adapter<RecentAdapter.ViewHolder>() {
 
-    class RecentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val imageView: ImageView = itemView.findViewById(R.id.recentItemImage)
-
-        fun bind(item: RecentRecipeData, onClick: (RecentRecipeData) -> Unit) {
-            imageView.setImageResource(item.imageResId)
-            itemView.setOnClickListener { onClick(item) }
-        }
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val title: TextView = view.findViewById(R.id.recentTitle)
+        val image: ImageView = view.findViewById(R.id.recentItemImage)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.activity_recent_item, parent, false)
-        return RecentViewHolder(view)
+        return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: RecentViewHolder, position: Int) {
-        //val item = items[position]
-        //holder.imageView.setImageResource(item.imageResId)
-        holder.bind(items[position], onClick)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val recipe = items[position] // 수정된 부분
+
+        holder.title.text = recipe.title // 제목 설정
+
+        holder.image.load(recipe.image) { // 이미지 로드 (Coil 사용)
+            placeholder(R.drawable.placeholder_image)
+            error(R.drawable.placeholder_image)
+            fallback(R.drawable.placeholder_image)
+        }
+
+        holder.itemView.setOnClickListener { onItemClick(recipe) } // 클릭 이벤트
     }
 
-    /*
-    override fun getItemCount(): Int {
-        return items.size
-    }
-     */
-    override fun getItemCount(): Int = items.size
+    override fun getItemCount() = items.size
 }
