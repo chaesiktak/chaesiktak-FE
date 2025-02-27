@@ -1,4 +1,4 @@
-package com.example.chaesiktak
+package com.example.chaesiktak.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.chaesiktak.R
+import com.example.chaesiktak.RecommendRecipe
 
 class RecentAdapter(private val items: List<RecommendRecipe>, private val onItemClick: (RecommendRecipe) -> Unit) :
     RecyclerView.Adapter<RecentAdapter.ViewHolder>() {

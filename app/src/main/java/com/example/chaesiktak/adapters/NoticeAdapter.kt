@@ -1,4 +1,4 @@
-package com.example.chaesiktak
+package com.example.chaesiktak.adapters
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.chaesiktak.Noticeitem
+import com.example.chaesiktak.R
 import com.example.chaesiktak.activities.NoticeDetailActivity
 
 class NoticeAdapter(private val itemList: List<Noticeitem>) :

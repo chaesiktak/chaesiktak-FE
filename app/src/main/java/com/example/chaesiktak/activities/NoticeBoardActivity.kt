@@ -10,10 +10,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.chaesiktak.NoticeAdapter
+import com.example.chaesiktak.adapters.NoticeAdapter
 import com.example.chaesiktak.Noticeitem
 import com.example.chaesiktak.R
-import com.example.chaesiktak.fragments.MyInfoFragment
 import org.json.JSONObject
 
 // 메인 액티비티 클래스

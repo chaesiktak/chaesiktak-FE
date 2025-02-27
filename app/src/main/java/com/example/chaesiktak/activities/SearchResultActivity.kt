@@ -9,9 +9,11 @@ import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.chaesiktak.R
+import com.example.chaesiktak.RecentViewManager
 import com.example.chaesiktak.RecommendRecipe
 import com.example.chaesiktak.databinding.ActivitySearchResultBinding
 import com.example.chaesiktak.databinding.IngredientBottomSheetBinding
@@ -21,6 +23,7 @@ import kotlinx.coroutines.launch
 
 class SearchResultActivity : AppCompatActivity() {
 
+    private val recentViewManager by lazy { RecentViewManager(this) }
     private lateinit var binding: ActivitySearchResultBinding
     private val recipeList: ArrayList<RecommendRecipe> = arrayListOf()
     private lateinit var searchingContentAdapter: SearchingContentAdapter
@@ -110,6 +113,8 @@ class SearchResultActivity : AppCompatActivity() {
     }
 
     private fun navigateToRecipeDetail(recipe: RecommendRecipe) {
+        recentViewManager.saveRecentItem(recipe.id) // 최근 본 항목 저장
+
         val intent = Intent(this, RecipeDetailActivity::class.java).apply {
             putExtra("RECIPE_ID", recipe.id) // ID만 전달
         }

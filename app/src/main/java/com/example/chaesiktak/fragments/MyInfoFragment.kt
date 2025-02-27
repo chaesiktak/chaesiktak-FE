@@ -1,6 +1,5 @@
 package com.example.chaesiktak.fragments
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -10,14 +9,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewOutlineProvider
-import android.widget.Button
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
@@ -26,9 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.chaesiktak.activities.NoticeBoardActivity
 import com.example.chaesiktak.activities.ProfileEditActivity
 import com.example.chaesiktak.R
-import com.example.chaesiktak.RecentAdapter
-import com.example.chaesiktak.RecentItem
-import com.example.chaesiktak.RecentRecipeData
+import com.example.chaesiktak.adapters.RecentAdapter
 import com.example.chaesiktak.RecentViewManager
 import com.example.chaesiktak.RecommendRecipe
 import com.example.chaesiktak.activities.ResetPasswordActivity

@@ -92,7 +92,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-
     private fun setupBanner() {
         val banners = listOf(
             BannerData("비건 라이프를 더 간편하게,", "채식탁으로 시작하세요!", R.drawable.banner_icon),
@@ -116,7 +115,6 @@ class HomeFragment : Fragment() {
                 binding.homeBannerIndicator.animatePageSelected(realPosition)
             }
         })
-
         startAutoScroll(banners.size)
     }
 
@@ -132,7 +130,6 @@ class HomeFragment : Fragment() {
             }
         }
     }
-
 
     //하단 네비게이션 ( home -> scanner , home -> myinfo)
     private fun setupBottomNavigation() {
@@ -154,8 +151,6 @@ class HomeFragment : Fragment() {
         }
         recipeDetailLauncher.launch(intent)
     }
-
-
 
     private val recipeDetailLauncher = registerForActivityResult(
         androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult()
@@ -186,6 +181,7 @@ class HomeFragment : Fragment() {
                 recipeList.clear()
                 recipeList.addAll(recipeDetails.filterNotNull())
 
+                //현재 내정보에서 사용자 타입을 받는 메소드 구현 못함 -> tag값이 VEGAN인 tagRecipe을 보여주는 것으로 하드코딩
                 tagRecipeList.clear()
 //                tagRecipeList.addAll(recipeDetails.filterNotNull().take(6))
                 tagRecipeList.addAll(recipeDetails.filterNotNull()
