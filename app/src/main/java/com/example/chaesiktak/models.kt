@@ -308,3 +308,19 @@ data class ImageAnalysisData(
     val output_dict: Map<String, String> // 대체 식품 매핑을 Map으로 처리
 ) : Parcelable
 
+data class GetNoticeResponse(
+    val status: Int,
+    val success: Boolean,
+    val message: String,
+    val data: List<NoticeItem>
+)
+
+@Parcelize
+data class NoticeItem(
+    val id: Int = 0,
+    val noticeWriter: String,
+    val noticeTitle: String,
+    val noticeContent: String? = "",
+    val noticeHits: Int,
+    val noticeCreatedTime: String
+) : Parcelable

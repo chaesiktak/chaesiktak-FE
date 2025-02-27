@@ -4,6 +4,7 @@ import com.example.chaesiktak.ApiResponse
 import com.example.chaesiktak.DeleteFavoriteResponse
 import com.example.chaesiktak.EmailCheckRequestBody
 import com.example.chaesiktak.EmailCheckResponse
+import com.example.chaesiktak.GetNoticeResponse
 import com.example.chaesiktak.ImageAnalyzeRequest
 import com.example.chaesiktak.ImageAnalyzeResponse
 import com.example.chaesiktak.LoginRequest
@@ -36,6 +37,9 @@ import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface ApiService {
+
+    @GET("notice/")
+    suspend fun getNotice():Response<GetNoticeResponse>
 
     @POST("api/verify/passwordupdate")
     suspend fun passwordUpdate(@Body request: passwordUpdateRequest): Response<passwordUpdateResponse>

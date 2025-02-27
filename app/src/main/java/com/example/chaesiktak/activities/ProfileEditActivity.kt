@@ -1,5 +1,6 @@
 package com.example.chaesiktak.activities
 
+import CustomToast
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -50,7 +51,12 @@ class ProfileEditActivity : AppCompatActivity() {
 
         // 수정 버튼 클릭 시 이름과 닉네임 변경
         val updateButton = findViewById<Button>(R.id.updateButton)
+        /*
         updateButton.setOnClickListener {
+            /*
+
+            나중에 구현
+             */
             val newName = nameEditText.text.toString().trim()
             val newNickname = nicknameEditText.text.toString().trim()
 
@@ -79,7 +85,11 @@ class ProfileEditActivity : AppCompatActivity() {
                 finish()
             }
         }
+        */
 
+        updateButton.setOnClickListener {
+            CustomToast.show(this, "준비중인 기능입니다! ")
+        }
     }
 
     // 이름 유효성 검사

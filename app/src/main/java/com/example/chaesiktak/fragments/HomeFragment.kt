@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.chaesiktak.*
+import com.example.chaesiktak.activities.NoticeBoardActivity
 import com.example.chaesiktak.activities.RecipeDetailActivity
 
 import com.example.chaesiktak.activities.SearchPanelActivity
@@ -99,7 +100,12 @@ class HomeFragment : Fragment() {
             BannerData("환경을 생각하는 선택!", "채식의 시작은 여기서.", R.drawable.banner_icon)
         )
 
-        bannerAdapter = BannerAdapter(banners)
+        bannerAdapter = BannerAdapter(banners) { banner ->
+            // 배너 클릭 시 공지사항 페이지로 이동
+            startActivity(Intent(requireContext(), NoticeBoardActivity::class.java))
+        }
+
+
         viewPager = binding.banner
         viewPager.adapter = bannerAdapter
 
