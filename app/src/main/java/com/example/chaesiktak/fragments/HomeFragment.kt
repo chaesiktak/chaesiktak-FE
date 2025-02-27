@@ -176,7 +176,7 @@ class HomeFragment : Fragment() {
     private fun fetchAllRecipes() {
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                val recipeIds = (1..14).toList()
+                val recipeIds = (1..14).shuffled().take(14)
 
                 // 병렬로 개별 레시피 정보 요청
                 val recipeDetails = recipeIds.map { id ->
