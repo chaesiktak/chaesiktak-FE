@@ -31,8 +31,7 @@ class NoticeBoardActivity : AppCompatActivity() {
         // 뒤로 가기 버튼 클릭 시 마이페이지로 이동
         val backArrow = findViewById<ImageButton>(R.id.backArrow)
         backArrow.setOnClickListener {
-            val intent = Intent(this, MyInfoFragment::class.java)
-            startActivity(intent)
+           finish()
         }
 
         // SharedPreferences에서 공지사항 불러오기

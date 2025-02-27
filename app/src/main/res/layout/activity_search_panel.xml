@@ -36,8 +36,8 @@
 
         <EditText
             android:id="@+id/search_input"
-            android:textSize="16sp"
-            android:layout_width="307dp"
+            android:textSize="14sp"
+            android:layout_width="280dp"
             android:layout_height="50dp"
             android:layout_marginStart="10dp"
             android:background="@drawable/searchingbar"
@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_margin="10dp"
+                android:layout_margin="12dp"
                 android:src="@drawable/searching_icon" />
         </FrameLayout>
         <ImageView

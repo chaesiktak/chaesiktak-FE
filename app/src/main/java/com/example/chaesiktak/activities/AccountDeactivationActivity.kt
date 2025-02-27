@@ -64,8 +64,7 @@ class AccountDeactivationActivity : AppCompatActivity() {
         // 뒤로가기 버튼 클릭 시 마이페이지 탭으로 이동
         val backArrow = findViewById<ImageButton>(R.id.backArrow)
         backArrow.setOnClickListener {
-            val intent = Intent(this, MyInfoFragment::class.java)
-            startActivity(intent)
+            finish()
         }
     }
 

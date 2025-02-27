@@ -7,50 +7,40 @@
     android:layout_height="match_parent"
     android:background="#5DBD5B"
     android:orientation="vertical"
-    android:paddingTop="160dp"
+    android:gravity="center"
     tools:context=".activities.SplashActivity">
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        android:fontFamily="@font/ibm_plex_sans_kr_bold"
-        android:includeFontPadding="false"
-        android:lineSpacingExtra="0dp"
-        android:text="채식탁"
-        android:textColor="#FFFFFF"
-        android:textSize="45sp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/ibm_plex_sans_kr_bold"
+            android:lineSpacingExtra="0dp"
+            android:text="채식탁"
+            android:textColor="#FFFFFF"
+            android:textSize="45sp" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/intro_logo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.537"
-        tools:ignore="MissingConstraints" />
+        <ImageView
+            android:layout_width="321dp"
+            android:layout_height="194dp"
+            android:src="@drawable/intro_logo"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:fontFamily="@font/ibm_plex_sans_kr_bold"
-        android:includeFontPadding="false"
-        android:lineSpacingExtra="0dp"
-        android:text="Chaesiktak"
-        android:textColor="#E8E11C"
-        android:textSize="45sp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ibm_plex_sans_kr_bold"
+            android:includeFontPadding="false"
+            android:text="Chaesiktak"
+            android:textColor="#E8E11C"
+            android:textSize="45sp" />
+    </LinearLayout>
 
 
 </LinearLayout>

@@ -37,6 +37,13 @@
                 android:textColor="#4A4743"
                 android:textSize="20dp" />
         </RelativeLayout>
+        <View
+
+            android:background="@color/banner_bottom_indicator_grey"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+
 
         <!-- 프로필 레이아웃 -->
         <RelativeLayout
@@ -90,7 +97,11 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/arrow_next" />
         </RelativeLayout>
-
+        <View
+            android:layout_marginTop="10dp"
+            android:background="@color/banner_bottom_indicator_grey"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
 
         <!-- 최근 본 항목 -->
         <TextView
@@ -124,6 +135,11 @@
             android:orientation="vertical"
             android:paddingBottom="95dp">
 
+            <View
+                android:background="@color/banner_bottom_indicator_grey"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
             <!-- 비밀번호 재설정-->
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:focusable="true"
@@ -132,12 +148,12 @@
                 android:layout_marginHorizontal="20dp"
                 android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="69dp">
+                android:layout_height="50dp">
                 <ImageView
                     android:layout_marginEnd="10dp"
                     android:src="@drawable/passwordcheck"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"/>
 
                 <TextView
                     android:textColor="@color/black_replacement"
@@ -153,6 +169,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
+            <View
+                android:background="@color/banner_bottom_indicator_grey"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
 
             <!-- 저장한 항목-->
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -162,13 +182,14 @@
                 android:layout_marginHorizontal="20dp"
                 android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="69dp">
+                android:layout_height="50dp">
+
 
                 <ImageView
                     android:layout_marginEnd="10dp"
                     android:src="@drawable/likebutton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"/>
                 <TextView
                     android:textColor="@color/black_replacement"
                     android:layout_weight="1"
@@ -183,21 +204,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
-            <!-- 비밀번호 재설정-->
-            <!-- 비밀번호 재설정-->
-
+            <View
+                android:background="@color/banner_bottom_indicator_grey"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+            <!-- 이용약관-->
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/goTos"
                 android:layout_width="match_parent"
-                android:layout_height="69dp"
+                android:layout_height="50dp"
                 android:layout_marginHorizontal="20dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_marginEnd="10dp"
                     android:src="@drawable/tos" />
 
@@ -215,6 +238,10 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/nextarrow" />
             </androidx.appcompat.widget.LinearLayoutCompat>
+            <View
+                android:background="@color/banner_bottom_indicator_grey"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:focusable="true"
@@ -222,13 +249,13 @@
                 android:layout_marginHorizontal="20dp"
                 android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="69dp">
+                android:layout_height="50dp">
 
                 <ImageView
                     android:layout_marginEnd="10dp"
                     android:src="@drawable/alarm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"/>
 
                 <TextView
                     android:textColor="@color/black_replacement"
@@ -244,6 +271,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
+            <View
+                android:background="@color/banner_bottom_indicator_grey"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
             <!-- 탈퇴하기-->
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:focusable="true"
@@ -252,13 +283,13 @@
                 android:layout_marginHorizontal="20dp"
                 android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="69dp">
+                android:layout_height="50dp">
                 <ImageView
 
                     android:layout_marginEnd="10dp"
                     android:src="@drawable/profile_delete"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"/>
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"/>
                 <TextView
                     android:textColor="@color/black_replacement"
                     android:layout_weight="1"
@@ -273,7 +304,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
-
+            <View
+                android:background="@color/banner_bottom_indicator_grey"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
             <!-- 로그아웃-->
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:clickable="true"
@@ -281,13 +315,13 @@
                 android:layout_marginHorizontal="20dp"
                 android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="69dp">
+                android:layout_height="50dp">
 
                 <ImageView
                     android:layout_marginEnd="10dp"
                     android:src="@drawable/logout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"/>
 
                 <TextView
                     android:textColor="@color/black_replacement"
@@ -303,6 +337,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
+            <View
+                android:background="@color/banner_bottom_indicator_grey"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
         </LinearLayout>
         </ScrollView>
     </LinearLayout>

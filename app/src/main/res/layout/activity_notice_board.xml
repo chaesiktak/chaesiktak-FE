@@ -11,6 +11,7 @@
 
     <!-- 상단바 -->
     <RelativeLayout
+        android:layout_marginTop="20dp"
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="90dp"
@@ -19,8 +20,8 @@
 
         <ImageButton
             android:id="@+id/backArrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@drawable/backarrow_logo"
             android:background="@color/white"
             android:layout_centerVertical="true"
