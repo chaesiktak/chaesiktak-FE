@@ -1,5 +1,6 @@
 package com.example.chaesiktak.fragments
 
+import CustomToast
 import com.example.chaesiktak.adapters.BannerAdapter
 import RecommendRecipeAdapter
 import android.app.Activity
@@ -186,7 +187,11 @@ class HomeFragment : Fragment() {
                 recipeList.addAll(recipeDetails.filterNotNull())
 
                 tagRecipeList.clear()
-                tagRecipeList.addAll(recipeDetails.filterNotNull().take(6))
+//                tagRecipeList.addAll(recipeDetails.filterNotNull().take(6))
+                tagRecipeList.addAll(recipeDetails.filterNotNull()
+                    .filter { recipe -> recipe.tag == "VEGAN" }
+                    .take(6)
+                )
 
                 // 어댑터 갱신
                 recommendRecipeAdapter.notifyDataSetChanged()
@@ -220,7 +225,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun showError(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+       CustomToast.show( requireContext(), message)
     }
 
 
@@ -243,7 +248,7 @@ class HomeFragment : Fragment() {
                     // 3. 요청 결과에 따른 처리
                     if (response.isSuccessful) {
                         val message = if (isFavorite) "저장목록에서 제거되었습니다." else "저장목록에 담았습니다."
-                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                        CustomToast.show( requireContext(), message)
                     } else {
                         showError("즐겨찾기 업데이트 실패: ${response.code()}")
                     }

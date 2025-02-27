@@ -1,5 +1,6 @@
 package com.example.chaesiktak.activities
 
+import CustomToast
 import android.content.Intent
 import android.os.Bundle
 import android.widget.RadioButton
@@ -34,7 +35,7 @@ class SearchPanelActivity : AppCompatActivity() {
             if (searchText.isNotEmpty()) {
                 navigateToSearchResult(searchText)
             } else {
-                binding.searchInput.error = "검색어를 입력하거나 태그를 선택하세요."
+                CustomToast.show(this, "검색어를 입력하거나 태그를 선택해주세요")
             }
         }
         // 뒤로 가기

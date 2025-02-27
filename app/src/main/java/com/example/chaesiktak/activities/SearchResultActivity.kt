@@ -1,5 +1,6 @@
 package com.example.chaesiktak.activities
 
+import CustomToast
 import SearchingContentAdapter
 import android.app.Activity
 import android.content.Intent
@@ -51,7 +52,7 @@ class SearchResultActivity : AppCompatActivity() {
                 filterRecipes(newSearchText) // 새로운 검색어로 필터링 적용
                 updateRecipeCountText()
             } else {
-                Toast.makeText(this, "검색어를 입력하세요", Toast.LENGTH_LONG).show()
+                CustomToast.show(this, "검색어를 입력하세요")
             }
             updateFilterIcon(false)
             updateIngredientIcon(false)
@@ -396,7 +397,7 @@ class SearchResultActivity : AppCompatActivity() {
     }
 
     private fun showError(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        CustomToast.show(this, message)
     }
 
 
